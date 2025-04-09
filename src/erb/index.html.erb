@@ -1,1 +1,332 @@
-Birds go here
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bird Gallery</title>
+  <!-- Tailwind CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <!-- React -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <style>
+    /* Custom icons and styles */
+    .sort-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Icons as component functions
+    const CheckCircleIcon = ({ size = 10 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+    );
+
+    const XCircleIcon = ({ size = 10 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="15" y1="9" x2="9" y2="15"></line>
+        <line x1="9" y1="9" x2="15" y2="15"></line>
+      </svg>
+    );
+
+    const CameraIcon = ({ size = 10 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+        <circle cx="12" cy="13" r="3"></circle>
+      </svg>
+    );
+
+    const VolumeIcon = ({ size = 10 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+      </svg>
+    );
+
+    const EyeIcon = ({ size = 18 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+    );
+
+    const SearchIcon = ({ size = 14 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    );
+
+    const MapPinIcon = ({ size = 16 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+    );
+
+    const CalendarIcon = ({ size = 16 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+      </svg>
+    );
+
+    const SortAscIcon = ({ size = 14 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m3 8 4-4 4 4"></path>
+        <path d="M7 4v16"></path>
+        <path d="M11 12h4"></path>
+        <path d="M11 16h7"></path>
+        <path d="M11 20h10"></path>
+      </svg>
+    );
+
+    const SortDescIcon = ({ size = 14 }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m3 16 4 4 4-4"></path>
+        <path d="M7 20V4"></path>
+        <path d="M11 4h10"></path>
+        <path d="M11 8h7"></path>
+        <path d="M11 12h4"></path>
+      </svg>
+    );
+
+    // Sample data
+    const birdsData = [
+      { id: 1, name: 'Northern Cardinal', family: 'Cardinalidae', seen: true, seenDate: '2024-03-15', hasPhoto: true, hasSound: true },
+      { id: 2, name: 'American Robin', family: 'Turdidae', seen: true, seenDate: '2024-02-28', hasPhoto: false, hasSound: true },
+      { id: 3, name: 'Blue Jay', family: 'Corvidae', seen: false, seenDate: null, hasPhoto: false, hasSound: false },
+      { id: 4, name: 'Red-tailed Hawk', family: 'Accipitridae', seen: true, seenDate: '2024-04-05', hasPhoto: true, hasSound: false },
+      { id: 5, name: 'Great Blue Heron', family: 'Ardeidae', seen: false, seenDate: null, hasPhoto: false, hasSound: false },
+      { id: 6, name: 'Cedar Waxwing', family: 'Bombycillidae', seen: true, seenDate: '2024-03-22', hasPhoto: true, hasSound: true },
+      { id: 7, name: 'Eastern Bluebird', family: 'Turdidae', seen: true, seenDate: '2024-02-10', hasPhoto: false, hasSound: false },
+      { id: 8, name: 'Barn Swallow', family: 'Hirundinidae', seen: false, seenDate: null, hasPhoto: false, hasSound: false },
+      { id: 9, name: 'Bald Eagle', family: 'Accipitridae', seen: true, seenDate: '2024-03-30', hasPhoto: true, hasSound: false },
+      { id: 10, name: 'Common Raven', family: 'Corvidae', seen: true, seenDate: '2024-02-15', hasPhoto: false, hasSound: true },
+      { id: 11, name: 'Ruby-throated Hummingbird', family: 'Trochilidae', seen: false, seenDate: null, hasPhoto: false, hasSound: false },
+      { id: 12, name: 'Wood Duck', family: 'Anatidae', seen: true, seenDate: '2024-04-02', hasPhoto: true, hasSound: true },
+    ];
+
+    function BirdGallery() {
+      // State
+      const [region, setRegion] = React.useState('Northeast US');
+      const [period, setPeriod] = React.useState('Spring 2024');
+      const [filter, setFilter] = React.useState('all');
+      const [sortBy, setSortBy] = React.useState('name');
+      const [sortDirection, setSortDirection] = React.useState('asc');
+      const [searchTerm, setSearchTerm] = React.useState('');
+
+      // Event handlers
+      const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+      };
+
+      const handleFilterChange = (e) => {
+        setFilter(e.target.value);
+      };
+
+      const toggleSort = (field) => {
+        if (sortBy === field) {
+          setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+          setSortBy(field);
+          setSortDirection('asc');
+        }
+      };
+
+      // Filter birds
+      const filteredBirds = birdsData.filter(bird => {
+        // Search filter
+        const matchesSearch = searchTerm === '' || 
+          bird.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          bird.family.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        // Status filter
+        const matchesFilter = 
+          filter === 'all' ? true :
+          filter === 'seen' ? bird.seen :
+          filter === 'not-seen' ? !bird.seen :
+          filter === 'with-photo' ? bird.hasPhoto :
+          filter === 'with-sound' ? bird.hasSound :
+          true;
+        
+        return matchesSearch && matchesFilter;
+      });
+
+      // Sort birds
+      const sortedBirds = [...filteredBirds].sort((a, b) => {
+        let comparison = 0;
+        if (sortBy === 'name') {
+          comparison = a.name.localeCompare(b.name);
+        } else if (sortBy === 'family') {
+          comparison = a.family.localeCompare(b.family);
+        } else if (sortBy === 'date') {
+          if (!a.seenDate) return 1;
+          if (!b.seenDate) return -1;
+          comparison = a.seenDate.localeCompare(b.seenDate);
+        }
+        return sortDirection === 'asc' ? comparison : -comparison;
+      });
+
+      // Sort icon component
+      const SortIcon = ({ field }) => {
+        if (sortBy !== field) return null;
+        return sortDirection === 'asc' ? <SortAscIcon /> : <SortDescIcon />;
+      };
+
+      return (
+        <div className="max-w-6xl mx-auto p-4 bg-gray-50">
+          <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">Bird Gallery</h1>
+              <div className="flex items-center mt-1 text-gray-600 text-sm">
+                <MapPinIcon />
+                <span className="mr-3">{region}</span>
+                <CalendarIcon />
+                <span>{period}</span>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search birds..."
+                  className="w-full sm:w-auto pl-8 pr-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                <div className="absolute left-2.5 top-2 text-gray-400">
+                  <SearchIcon />
+                </div>
+              </div>
+              <select 
+                className="border rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                value={filter}
+                onChange={handleFilterChange}
+              >
+                <option value="all">All Birds</option>
+                <option value="seen">Seen</option>
+                <option value="not-seen">Not Seen</option>
+                <option value="with-photo">With Photos</option>
+                <option value="with-sound">With Sound</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Image
+                    </th>
+                    <th 
+                      scope="col" 
+                      className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                      onClick={() => toggleSort('name')}
+                    >
+                      <div className="flex items-center gap-1">
+                        Bird Name <SortIcon field="name" />
+                      </div>
+                    </th>
+                    <th 
+                      scope="col" 
+                      className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                      onClick={() => toggleSort('family')}
+                    >
+                      <div className="flex items-center gap-1">
+                        Family <SortIcon field="family" />
+                      </div>
+                    </th>
+                    <th scope="col" className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th 
+                      scope="col" 
+                      className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                      onClick={() => toggleSort('date')}
+                    >
+                      <div className="flex items-center gap-1">
+                        Date Seen <SortIcon field="date" />
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {sortedBirds.map(bird => (
+                    <tr key={bird.id} className="hover:bg-gray-50">
+                      <td className="px-3 py-2 whitespace-nowrap">
+                        <div className="w-12 h-12 relative rounded overflow-hidden">
+                          {bird.hasPhoto ? (
+                            <img src="https://via.placeholder.com/48" alt={bird.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500">
+                              {bird.seen ? <EyeIcon /> : <span className="text-base">?</span>}
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-3 py-2 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900">{bird.name}</div>
+                      </td>
+                      <td className="px-3 py-2 whitespace-nowrap">
+                        <div className="text-xs text-gray-500">{bird.family}</div>
+                      </td>
+                      <td className="px-3 py-2 whitespace-nowrap">
+                        <div className="flex space-x-1">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${bird.seen ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                            {bird.seen ? <CheckCircleIcon /> : <XCircleIcon />}
+                            {bird.seen ? 'Seen' : 'Not seen'}
+                          </span>
+                          {bird.hasPhoto && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                              <CameraIcon />
+                              Photo
+                            </span>
+                          )}
+                          {bird.hasSound && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                              <VolumeIcon />
+                              Sound
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-3 py-2 whitespace-nowrap">
+                        <div className="text-xs text-gray-500">
+                          {bird.seenDate ? new Date(bird.seenDate).toLocaleDateString() : '-'}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Render the component to the DOM
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<BirdGallery />);
+  </script>
+</body>
+</html>
