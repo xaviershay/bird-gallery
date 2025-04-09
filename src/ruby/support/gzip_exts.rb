@@ -3,4 +3,5 @@ GZIP_EXTS = %w(
   .css
   .js
   .xml
+  .json
 )

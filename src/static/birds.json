@@ -1,0 +1,14 @@
+[
+    { "id": 1, "name": "Northern Cardinal", "family": "Cardinalidae", "seen": true, "seenDate": "2024-03-15", "hasPhoto": true, "hasSound": true },
+    { "id": 2, "name": "American Robin", "family": "Turdidae", "seen": true, "seenDate": "2024-02-28", "hasPhoto": false, "hasSound": true },
+    { "id": 3, "name": "Blue Jay", "family": "Corvidae", "seen": false, "seenDate": null, "hasPhoto": false, "hasSound": false },
+    { "id": 4, "name": "Red-tailed Hawk", "family": "Accipitridae", "seen": true, "seenDate": "2024-04-05", "hasPhoto": true, "hasSound": false },
+    { "id": 5, "name": "Great Blue Heron", "family": "Ardeidae", "seen": false, "seenDate": null, "hasPhoto": false, "hasSound": false },
+    { "id": 6, "name": "Cedar Waxwing", "family": "Bombycillidae", "seen": true, "seenDate": "2024-03-22", "hasPhoto": true, "hasSound": true },
+    { "id": 7, "name": "Eastern Bluebird", "family": "Turdidae", "seen": true, "seenDate": "2024-02-10", "hasPhoto": false, "hasSound": false },
+    { "id": 8, "name": "Barn Swallow", "family": "Hirundinidae", "seen": false, "seenDate": null, "hasPhoto": false, "hasSound": false },
+    { "id": 9, "name": "Bald Eagle", "family": "Accipitridae", "seen": true, "seenDate": "2024-03-30", "hasPhoto": true, "hasSound": false },
+    { "id": 10, "name": "Common Raven", "family": "Corvidae", "seen": true, "seenDate": "2024-02-15", "hasPhoto": false, "hasSound": true },
+    { "id": 11, "name": "Ruby-throated Hummingbird", "family": "Trochilidae", "seen": false, "seenDate": null, "hasPhoto": false, "hasSound": false },
+    { "id": 12, "name": "Wood Duck", "family": "Anatidae", "seen": true, "seenDate": "2024-04-02", "hasPhoto": true, "hasSound": true }
+]

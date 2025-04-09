@@ -13,7 +13,7 @@ DIGEST_FILE = File.expand_path(".digests.json", File.dirname(__FILE__))
 LAYOUT_FILE = "src/erb/_layout.html.erb"
 
 SRC_FILES = Dir["src/ruby/**/*.rb"]
-STATIC_FILES = Dir["src/static/**/*.{js,css}"]
+STATIC_FILES = Dir["src/static/**/*.{js,css,json}"]
 
 build_plan = BuildPlan.new(digest_file: DIGEST_FILE)
 BuildPlan.logger.level = Logger::INFO
