@@ -1,9 +1,0 @@
-{
-  "src/static/birds.json": "738b6bbef0bedc14e24e77be3c2e58b3",
-  "out/site/birds.json": "72cbef86040e1de1dc8ce7616b21c65a",
-  "src/static/css/custom.css": "d41d8cd98f00b204e9800998ecf8427e",
-  "out/site/css/custom.css": "5d8605eaca5d83e6a634f58fc9c8bb3f",
-  "src/erb/index.html.erb": "1ea1d453549ef8a0b8c9b2d912222345",
-  "src/erb/_layout.html.erb": "153253a27b69a00bf4f822b7799b241c",
-  "out/site/index.html": "4946e8fe8836e250ad8714bbc470e141"
-}

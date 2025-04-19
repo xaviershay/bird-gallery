@@ -109,11 +109,11 @@
 
     function BirdGallery() {
       // State
-      const [region, setRegion] = React.useState('Northeast US');
-      const [period, setPeriod] = React.useState('Spring 2024');
+      const [region, setRegion] = React.useState('All');
+      const [period, setPeriod] = React.useState('Life');
       const [filter, setFilter] = React.useState('all');
-      const [sortBy, setSortBy] = React.useState('name');
-      const [sortDirection, setSortDirection] = React.useState('asc');
+      const [sortBy, setSortBy] = React.useState('seen');
+      const [sortDirection, setSortDirection] = React.useState('desc');
       const [searchTerm, setSearchTerm] = React.useState('');
       const [birdsData, setBirdsData] = React.useState([]);
 
@@ -153,9 +153,9 @@
         // Status filter
         const matchesFilter = 
           filter === 'all' ? true :
-          filter === 'seen' ? bird.seen :
-          filter === 'not-seen' ? !bird.seen :
-          filter === 'with-photo' ? bird.hasPhoto :
+          filter === 'seen' ? bird.newest :
+          filter === 'not-seen' ? !bird.newest :
+          filter === 'with-photo' ? bird.photo :
           filter === 'with-sound' ? bird.hasSound :
           true;
         
@@ -170,9 +170,9 @@
         } else if (sortBy === 'family') {
           comparison = a.family.localeCompare(b.family);
         } else if (sortBy === 'date') {
-          if (!a.seenDate) return 1;
-          if (!b.seenDate) return -1;
-          comparison = a.seenDate.localeCompare(b.seenDate);
+          if (!a.newest) return 1;
+          if (!b.newest) return -1;
+          comparison = a.newest.localeCompare(b.newest);
         }
         return sortDirection === 'asc' ? comparison : -comparison;
       });
@@ -239,6 +239,7 @@
                         Bird Name <SortIcon field="name" />
                       </div>
                     </th>
+                      {false && 
                     <th 
                       scope="col" 
                       className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
@@ -248,6 +249,7 @@
                         Family <SortIcon field="family" />
                       </div>
                     </th>
+      }
                     <th scope="col" className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
                     </th>
@@ -264,31 +266,37 @@
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {sortedBirds.map(bird => (
-                    <tr key={bird.id} className="hover:bg-gray-50">
+                    <tr key={bird.name} className="hover:bg-gray-50">
                       <td className="px-3 py-2 whitespace-nowrap">
-                        <div className="w-12 h-12 relative rounded overflow-hidden">
-                          {bird.hasPhoto ? (
-                            <img src="https://via.placeholder.com/48" alt={bird.name} className="w-full h-full object-cover" />
+                          {bird.thumbnail ? (
+                            <div className="w-24 h-24 relative rounded overflow-hidden">
+                            <img src={bird.thumbnail} alt={bird.name} className="w-full h-full object-cover" />
+                            </div>
                           ) : (
-                            <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500">
-                              {bird.seen ? <EyeIcon /> : <span className="text-base">?</span>}
+                            <div className="w-6 h-6 relative rounded overflow-hidden">
+                            {false &&
+                              <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500">
+                                {bird.newest ? <EyeIcon /> : <span className="text-base">?</span>}
+                              </div>
+    }
                             </div>
                           )}
-                        </div>
                       </td>
                       <td className="px-3 py-2 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">{bird.name}</div>
                       </td>
+                      {false && 
                       <td className="px-3 py-2 whitespace-nowrap">
                         <div className="text-xs text-gray-500">{bird.family}</div>
                       </td>
+                      }
                       <td className="px-3 py-2 whitespace-nowrap">
                         <div className="flex space-x-1">
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${bird.seen ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                            {bird.seen ? <CheckCircleIcon /> : <XCircleIcon />}
-                            {bird.seen ? 'Seen' : 'Not seen'}
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${bird.newest ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                            {bird.newest ? <CheckCircleIcon /> : <XCircleIcon />}
+                            {bird.newest ? 'Seen' : 'Not seen'}
                           </span>
-                          {bird.hasPhoto && (
+                          {bird.photos.length > 0 && (
                             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                               <CameraIcon />
                               Photo
@@ -304,7 +312,7 @@
                       </td>
                       <td className="px-3 py-2 whitespace-nowrap">
                         <div className="text-xs text-gray-500">
-                          {bird.seenDate ? new Date(bird.seenDate).toLocaleDateString() : '-'}
+                          {bird.newest ? new Date(bird.newest).toLocaleDateString() : '-'}
                         </div>
                       </td>
                     </tr>
