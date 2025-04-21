@@ -1,0 +1,10 @@
+name = "typescript-d1-worker"
+main = "src/index.ts"
+compatibility_date = "2025-04-21"
+workers_dev = true
+
+# D1 Database configuration
+[[d1_databases]]
+binding = "DB"
+database_name = "birds"
+database_id = "34b53a13-b1e4-4278-9d8c-8e00478eb057"
