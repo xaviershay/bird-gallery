@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "@cloudflare/workers-types": "^4.20250421.0",
-    "mustache": "^4.2.0"
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "mustache": "^4.2.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@types/mustache": "^4.2.5",

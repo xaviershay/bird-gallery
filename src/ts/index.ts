@@ -1,6 +1,7 @@
 import { Item } from './types';
 import Mustache from 'mustache';
-import indexTemplate from '../../src/templates/list.html.mustache';
+import {HelloWorld} from '../../src/templates/test.tsx';
+import { renderToString } from "react-dom/server";
 
 export interface Env {
   DB: D1Database;
@@ -30,19 +31,7 @@ export default {
     try {
       // Route handling
       if (path.length === 0) {
-
-        const view = {
-          title: "Joe",
-          calc: () => ( 2 + 4 ),
-          birds: [
-            {number: 2, name: "Robin", oldest: '2025-04-22'},
-            {number: 1, name: "Darter", oldest: '2025-04-21'},
-          ]
-        };
-
-        //const template = "{{title}} spends {{calc}}"
-        var template = indexTemplate;
-        var output = Mustache.render(template, view);
+        var output = renderToString(HelloWorld("Test"));
 
         return new Response(output, {
           status: 200,

@@ -5,6 +5,7 @@
     "lib": ["ES2022"],
     "types": ["@cloudflare/workers-types"],
     "moduleResolution": "node",
+    "jsx": "react-jsx",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -16,6 +17,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
     "outDir": "dist"
   },
   "include": ["src/**/*"],
