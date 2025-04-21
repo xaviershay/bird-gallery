@@ -1,4 +1,6 @@
 import { Item } from './types';
+import Mustache from 'mustache';
+import indexTemplate from '../../src/templates/list.html.mustache';
 
 export interface Env {
   DB: D1Database;
@@ -28,8 +30,27 @@ export default {
     try {
       // Route handling
       if (path.length === 0) {
-        // Root path - return health check
-        return respondWith(200, { message: 'TypeScript D1 Worker is running!' }, corsHeaders);
+
+        const view = {
+          title: "Joe",
+          calc: () => ( 2 + 4 ),
+          birds: [
+            {number: 2, name: "Robin", oldest: '2025-04-22'},
+            {number: 1, name: "Darter", oldest: '2025-04-21'},
+          ]
+        };
+
+        //const template = "{{title}} spends {{calc}}"
+        var template = indexTemplate;
+        var output = Mustache.render(template, view);
+
+        return new Response(output, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/html',
+            ...corsHeaders,
+          },
+        });
       }
 
       if (path[0] === 'items') {

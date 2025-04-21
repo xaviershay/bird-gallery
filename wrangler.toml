@@ -3,6 +3,11 @@ main = "src/ts/index.ts"
 compatibility_date = "2025-04-21"
 workers_dev = true
 
+[[rules]]
+type = "Text"
+globs = ["**/*.mustache"]
+fallthrough = true
+
 # D1 Database configuration
 [[d1_databases]]
 binding = "DB"

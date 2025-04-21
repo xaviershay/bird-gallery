@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "@cloudflare/workers-types": "^4.20250421.0",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/mustache": "^4.2.5",
     "wrangler": "^4.12.0"
   }
 }
