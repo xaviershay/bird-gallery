@@ -1,6 +1,6 @@
 import { Item } from './types';
 import Mustache from 'mustache';
-import {HelloWorld} from '../../src/templates/test.tsx';
+import {List} from './jsx/list.tsx';
 import { renderToString } from "react-dom/server";
 
 export interface Env {
@@ -31,7 +31,13 @@ export default {
     try {
       // Route handling
       if (path.length === 0) {
-        var output = renderToString(HelloWorld("Test"));
+        var data = {
+          observations: [
+            {id: 123, slug: 'robin', name: 'Robin', locationId: 'L123', lat: 0, lng: 0, createdAt: new Date("2025-04-20")},
+            {id: 1235, slug: 'starling', name: 'Starling', locationId: 'L123', lat: 0, lng: 0, createdAt: new Date("2025-04-18")},
+          ]
+        }
+        var output = renderToString(List(data));
 
         return new Response(output, {
           status: 200,

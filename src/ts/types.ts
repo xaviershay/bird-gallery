@@ -1,5 +1,19 @@
 // Type definitions for the application
 
+export interface Observation {
+  id: number,
+  slug: string,
+  name: string,
+  locationId: string,
+  createdAt: Date,
+  lat: number,
+  lng: number
+}
+
+export interface PageListData {
+  observations: Array<Observation>
+}
+
 export interface Item {
   id: number;
   name: string;

@@ -1,1 +1,0 @@
-export const HelloWorld = (title : string) => <h1>{title}</h1>;
