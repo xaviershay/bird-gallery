@@ -3,6 +3,10 @@ main = "src/ts/index.ts"
 compatibility_date = "2025-04-21"
 workers_dev = true
 
+[assets]
+directory = "src/static"
+binding = "ASSETS"
+
 [[rules]]
 type = "Text"
 globs = ["**/*.mustache"]

@@ -1,14 +1,23 @@
 import { PageListData } from "../types";
 
-export const List = (data: PageListData) => (
-  <div>
-    <table>
-      {data.observations.map((o) => (
+export const List = (data: PageListData) => <>
+    <table className='bird-list'>
+      <thead>
         <tr>
-          <td>{o.name}</td>
-          <td>{o.createdAt.toISOString().split("T")[0]}</td>
+          <th>#</th>
+          <th>Name</th>
+          <th>First Seen</th>
         </tr>
-      ))}
+      </thead>
+      <tbody>
+        {data.observations.map((o, index) => (
+          <tr key={o.id}>
+            <td>{data.observations.length - index}</td>
+            <td>{o.name}</td>
+            <td>{o.createdAt.toISOString().split("T")[0]}</td>
+          </tr>
+        ))}
+      </tbody>
     </table>
-  </div>
-);
+</>
+;

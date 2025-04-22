@@ -1,0 +1,54 @@
+/* Nav styling */
+nav {
+  display: flex;
+}
+
+nav section {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* Map styling */
+.mapboxgl-popup-tip {
+  display: none;
+}
+.mapboxgl-popup-content {
+  padding: 10px;
+  border-radius: 8px;
+}
+.mapboxgl-popup {
+  max-width: 400px;
+  color: black;
+  text-align: center;
+  font: 12px/20px sans-serif;
+}
+/* Table styling */
+h2 {
+  margin-bottom: 0;
+}
+.bird-list td:nth-child(1),
+.bird-list th:nth-child(1) {
+  text-align: center;
+}
+
+.bird-list td:nth-child(3),
+.bird-list th:nth-child(3) {
+  text-align: center;
+}
+
+#map {
+  height: 300px;
+  width: 100%;
+}
+.marker {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2236%22%20height%3D%2236%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23D32F2F%22%20d%3D%22M12%202C8.13%202%205%205.13%205%209c0%205.25%207%2013%207%2013s7-7.75%207-13c0-3.87-3.13-7-7-7zm0%209.5c-1.38%200-2.5-1.12-2.5-2.5s1.12-2.5%202.5-2.5%202.5%201.12%202.5%202.5-1.12%202.5-2.5%202.5z%22%2F%3E%3C%2Fsvg%3E");
+  background-size: cover;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+.mapboxgl-popup {
+  max-width: 200px;
+}

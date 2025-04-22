@@ -1,5 +1,7 @@
 // Type definitions for the application
 
+import React from "react";
+
 export interface Observation {
   id: number,
   slug: string,
@@ -10,8 +12,24 @@ export interface Observation {
   lng: number
 }
 
+export const enum ListType {
+  List,
+  Photos
+}
+
+export interface Filter {
+  type: ListType,
+  region: string | null,
+  period: string | null
+}
+
+export interface PageLayout {
+  content: React.ReactNode,
+  filter: Filter
+}
+
 export interface PageListData {
-  observations: Array<Observation>
+  observations: Array<Observation>,
 }
 
 export interface Item {

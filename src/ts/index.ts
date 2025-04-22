@@ -1,6 +1,7 @@
-import { Item } from './types';
+import { Filter, Item, ListType } from './types';
 import Mustache from 'mustache';
 import {List} from './jsx/list.tsx';
+import {Layout} from './jsx/layout.tsx';
 import { renderToString } from "react-dom/server";
 
 export interface Env {
@@ -31,13 +32,25 @@ export default {
     try {
       // Route handling
       if (path.length === 0) {
+        const queryParams = url.searchParams;
+        const filter : Filter = {
+          type: queryParams.get('type') === 'list' ? ListType.List : ListType.Photos,
+          region: queryParams.get('region') === 'world' ? null : queryParams.get('region'),
+          period: queryParams.get('period') === 'life' ? null : queryParams.get('period'),
+        };
+
         var data = {
           observations: [
             {id: 123, slug: 'robin', name: 'Robin', locationId: 'L123', lat: 0, lng: 0, createdAt: new Date("2025-04-20")},
             {id: 1235, slug: 'starling', name: 'Starling', locationId: 'L123', lat: 0, lng: 0, createdAt: new Date("2025-04-18")},
-          ]
-        }
-        var output = renderToString(List(data));
+          ],
+        };
+        var layoutPage = {
+          content: List(data),
+          filter: filter,
+        };
+
+        var output = renderToString(Layout(layoutPage));
 
         return new Response(output, {
           status: 200,
