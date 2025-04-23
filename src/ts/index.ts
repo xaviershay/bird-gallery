@@ -1,5 +1,4 @@
 import { Filter, Item, ListType } from './types';
-import Mustache from 'mustache';
 import {List} from './jsx/list.tsx';
 import {Layout} from './jsx/layout.tsx';
 import { renderToString } from "react-dom/server";

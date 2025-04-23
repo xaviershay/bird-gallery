@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -ex
+
+npx tsc --downlevelIteration src/load.ts && node src/load.js > out/load.sql
