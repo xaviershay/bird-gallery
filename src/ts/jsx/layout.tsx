@@ -1,5 +1,6 @@
 import React from "react";
-import { Filter, ListType, PageLayout } from "../types";
+import { ListType, PageLayout } from "../types";
+import { Filter } from '../model/filter';
 
 // Utility function for shallow equality checking
 const objectEqual = (obj1: Record<string, any>, obj2: Record<string, any>): boolean => {
@@ -17,33 +18,16 @@ type PartialFilter = {
 
 export const Layout = (page: PageLayout) => {
   const navLink = (text: string, filterChange: PartialFilter): React.ReactNode => {
-    const newFilter = { ...page.filter, ...filterChange };
+    const newFilter = new Filter(
+      filterChange.type ?? page.filter.type,
+      filterChange.region ?? page.filter.region,
+      filterChange.period ?? page.filter.period
+    );
     if (objectEqual(newFilter, page.filter)) {
       return <span>{text}</span>;
     } else {
-
-      var parts : any = {}
-      switch(newFilter.type) {
-        case ListType.List: parts.type = 'list'; break;
-        case ListType.Photos: parts.type = 'photos'; break;
-        default: throw new Error("Unsupported type")
-      }
-
-      if (newFilter.region == null) {
-        parts.region = 'world'
-      } else {
-        parts.region = newFilter.region
-      }
-
-      if (newFilter.period == null) {
-        parts.period = "life";
-      } else {
-        parts.period = newFilter.period;
-      }
-
-      const queryString = new URLSearchParams(parts).toString();
+      const queryString = newFilter.toQueryString();
       const url = `?${queryString}`;
-
       return <a href={url}>{text}</a>;
     }
   };

@@ -1,4 +1,5 @@
-import { Filter, ListType, Observation } from './types';
+import { ListType, Observation } from './types';
+import { Filter } from './model/filter'
 import {List} from './jsx/list.tsx';
 import {Layout} from './jsx/layout.tsx';
 import { renderToString } from "react-dom/server";
@@ -32,14 +33,15 @@ export default {
       // Route handling
       if (path.length === 0) {
         const queryParams = url.searchParams;
-        const filter : Filter = {
-          type: queryParams.get('type') === 'list' ? ListType.List : ListType.Photos,
-          region: queryParams.get('region') === 'world' ? null : queryParams.get('region'),
-          period: queryParams.get('period') === 'life' ? null : queryParams.get('period'),
-        };
+        const filter = new Filter(
+          queryParams.get('type') === 'list' ? ListType.List : ListType.Photos,
+          queryParams.get('region') === 'world' ? null : queryParams.get('region'),
+          queryParams.get('period') === 'life' ? null : queryParams.get('period')
+        );
 
         var records = await fetchFirsts(env, filter);
         var data = {
+          filter: filter,
           observations: records
           /*
           observations: [
@@ -48,7 +50,7 @@ export default {
           ],
           */
         };
-        var layoutPage = {
+        const layoutPage = {
           content: List(data),
           filter: filter,
         };
@@ -62,6 +64,50 @@ export default {
             ...corsHeaders,
           },
         });
+      }
+
+      if (path[0] === 'firsts.json') {
+        const queryParams = url.searchParams;
+        const filter = new Filter(
+          queryParams.get('type') === 'list' ? ListType.List : ListType.Photos,
+          queryParams.get('region') === 'world' ? null : queryParams.get('region'),
+          queryParams.get('period') === 'life' ? null : queryParams.get('period')
+        );
+
+        var records = await fetchFirsts(env, filter);
+
+        // Group records by locationId
+        const grouped = records.reduce((acc, record) => {
+          if (!acc[record.locationId]) {
+            acc[record.locationId] = [];
+          }
+          acc[record.locationId].push(record);
+          return acc;
+        }, {} as Record<string, Observation[]>);
+
+        var jsonData = {
+          "type": "FeatureCollection",
+          "features": Object.entries(grouped).map(([location, os]) => {
+            const obs = os[0];
+            return {
+              "type": "Feature",
+              "geometry": {
+                "type": "Point",
+                "coordinates": [obs.lng, obs.lat]
+              },
+              "properties": {
+                "locationId": obs.locationId,
+                "name": location
+                  .replace(/\(\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\)/g, '')
+                  .replace(/--/g, ': ')
+                  .trim(),
+                "count": os.length
+              }
+            };
+          })
+        };
+
+        return respondWith(200, jsonData, corsHeaders);
       }
 
       /*

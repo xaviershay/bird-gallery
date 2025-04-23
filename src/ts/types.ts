@@ -20,7 +20,8 @@ export const enum ListType {
 export interface Filter {
   type: ListType,
   region: string | null,
-  period: string | null
+  period: string | null,
+  toQueryString(): string; // Added method declaration
 }
 
 export interface PageLayout {
@@ -29,6 +30,7 @@ export interface PageLayout {
 }
 
 export interface PageListData {
+  filter: Filter, // TODO: should probably be "data source" or something better
   observations: Array<Observation>,
 }
 

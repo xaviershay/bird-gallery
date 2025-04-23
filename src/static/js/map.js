@@ -14,6 +14,7 @@ const map = new mapboxgl.Map({
 });
 
 function initMap(sourceJson) {
+  console.log("Init map: " + sourceJson)
 // Add markers to the map
 map.on("load", async () => {
   map.addSource("birds", {
