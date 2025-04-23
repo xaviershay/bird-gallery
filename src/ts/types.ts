@@ -3,11 +3,11 @@
 import React from "react";
 
 export interface Observation {
-  id: number,
-  slug: string,
+  id: string,
+  speciesId: string,
   name: string,
   locationId: string,
-  createdAt: Date,
+  seenAt: Date,
   lat: number,
   lng: number
 }
@@ -30,14 +30,6 @@ export interface PageLayout {
 
 export interface PageListData {
   observations: Array<Observation>,
-}
-
-export interface Item {
-  id: number;
-  name: string;
-  description: string | null;
-  created_at: string;
-  updated_at: string | null;
 }
 
 // D1 result types

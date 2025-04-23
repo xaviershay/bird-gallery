@@ -1,4 +1,4 @@
-import { Filter, Item, ListType } from './types';
+import { Filter, ListType, Observation } from './types';
 import {List} from './jsx/list.tsx';
 import {Layout} from './jsx/layout.tsx';
 import { renderToString } from "react-dom/server";
@@ -38,11 +38,15 @@ export default {
           period: queryParams.get('period') === 'life' ? null : queryParams.get('period'),
         };
 
+        var records = await fetchFirsts(env, filter);
         var data = {
+          observations: records
+          /*
           observations: [
             {id: 123, slug: 'robin', name: 'Robin', locationId: 'L123', lat: 0, lng: 0, createdAt: new Date("2025-04-20")},
             {id: 1235, slug: 'starling', name: 'Starling', locationId: 'L123', lat: 0, lng: 0, createdAt: new Date("2025-04-18")},
           ],
+          */
         };
         var layoutPage = {
           content: List(data),
@@ -60,6 +64,7 @@ export default {
         });
       }
 
+      /*
       if (path[0] === 'items') {
         if (path.length === 1) {
           // /items endpoint
@@ -77,15 +82,12 @@ export default {
           switch (method) {
             case 'GET':
               return fetchItem(itemId, env);
-            case 'PUT':
-              return updateItem(itemId, request, env);
-            case 'DELETE':
-              return deleteItem(itemId, env);
             default:
               return respondWith(405, { error: 'Method not allowed' }, corsHeaders);
           }
         }
       }
+      */
 
       // If we get here, the route was not found
       return respondWith(404, { error: 'Not found' }, corsHeaders);
@@ -113,117 +115,40 @@ function respondWith(status: number, body: object, headers: HeadersInit = {}): R
 }
 
 // Fetch all items from the database
-async function fetchAllItems(env: Env): Promise<Response> {
-  try {
-    const { results } = await env.DB.prepare('SELECT * FROM items').all<Item>();
-    return respondWith(200, { items: results });
-  } catch (error) {
-    console.error('Database error:', error);
-    return respondWith(500, { error: 'Database error', message: error instanceof Error ? error.message : 'Unknown error' });
-  }
-}
-
-// Fetch a single item by ID
-async function fetchItem(id: string, env: Env): Promise<Response> {
-  try {
-    const { results } = await env.DB.prepare('SELECT * FROM items WHERE id = ?')
-      .bind(id)
-      .all<Item>();
-
-    if (results.length === 0) {
-      return respondWith(404, { error: 'Item not found' });
+async function fetchFirsts(env: Env, filter: Filter): Promise<Observation[]> {
+    const yearCondition = filter.period ? `AND strftime('%Y', seen_at) = ?` : '';
+    const regionCondition = filter.region ? `AND LOWER(state) LIKE LOWER(?) || '%'` : '';
+    const query = `
+      SELECT
+        id,
+        species_id as speciesId,
+        common_name as name,
+        location_id as locationId,
+        lat,
+        lng,
+        seen_at as seenAt
+      FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
+        FROM observation_wide
+        WHERE 1=1
+          ${yearCondition}
+          ${regionCondition}
+      ) AS ranked
+      WHERE row_num = 1
+      ORDER BY seen_at DESC;
+    `;
+    var statement = env.DB.prepare(query);
+    const params: (string | null)[] = [];
+    if (filter.period) {
+      params.push(filter.period);
     }
-
-    return respondWith(200, { item: results[0] });
-  } catch (error) {
-    console.error('Database error:', error);
-    return respondWith(500, { error: 'Database error', message: error instanceof Error ? error.message : 'Unknown error' });
-  }
-}
-
-// Create a new item
-async function createItem(request: Request, env: Env): Promise<Response> {
-  try {
-    const data = await request.json() as Partial<Item>;
-
-    // Validate required fields
-    if (!data.name) {
-      return respondWith(400, { error: 'Name is required' });
+    if (filter.region) {
+      params.push(filter.region);
     }
-
-    // Insert into database
-    const now = new Date().toISOString();
-    const result = await env.DB.prepare(
-      'INSERT INTO items (name, description, created_at) VALUES (?, ?, ?)'
-    )
-      .bind(data.name, data.description || '', now)
-      .run();
-
-    return respondWith(201, {
-      message: 'Item created successfully',
-      itemId: result.meta.last_row_id,
-    });
-  } catch (error) {
-    if (error instanceof SyntaxError) {
-      return respondWith(400, { error: 'Invalid JSON' });
-    }
-    console.error('Database error:', error);
-    return respondWith(500, { error: 'Database error', message: error instanceof Error ? error.message : 'Unknown error' });
-  }
-}
-
-// Update an existing item
-async function updateItem(id: string, request: Request, env: Env): Promise<Response> {
-  try {
-    // First check if the item exists
-    const { results } = await env.DB.prepare('SELECT * FROM items WHERE id = ?')
-      .bind(id)
-      .all<Item>();
-
-    if (results.length === 0) {
-      return respondWith(404, { error: 'Item not found' });
-    }
-
-    const existingItem = results[0];
-    const data = await request.json() as Partial<Item>;
-
-    // Update the item
-    const now = new Date().toISOString();
-    await env.DB.prepare(
-      'UPDATE items SET name = ?, description = ?, updated_at = ? WHERE id = ?'
-    )
-      .bind(
-        data.name || existingItem.name,
-        data.description !== undefined ? data.description : existingItem.description,
-        now,
-        id
-      )
-      .run();
-
-    return respondWith(200, { message: 'Item updated successfully' });
-  } catch (error) {
-    if (error instanceof SyntaxError) {
-      return respondWith(400, { error: 'Invalid JSON' });
-    }
-    console.error('Database error:', error);
-    return respondWith(500, { error: 'Database error', message: error instanceof Error ? error.message : 'Unknown error' });
-  }
-}
-
-// Delete an item
-async function deleteItem(id: string, env: Env): Promise<Response> {
-  try {
-    const result = await env.DB.prepare('DELETE FROM items WHERE id = ?')
-      .bind(id)
-      .run();
-
-    if (result.meta.changes === 0) {
-      return respondWith(404, { error: 'Item not found' });
-    }
-
-    return respondWith(200, { message: 'Item deleted successfully' });
-  } catch (error) {
-    console.error('Database error:', error);
-    return respondWith(500, { error: 'Database error', message: error instanceof Error ? error.message : 'Unknown error' });
-  }
+    statement = statement.bind(...params);
+    const { results } = await statement.all<Observation>();
+    return results.map(record => ({
+        ...record,
+        seenAt: new Date(record.seenAt + 'Z'), // Treat seenAt as UTC by appending "Z"
+    }));
 }

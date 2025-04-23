@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { parse } from 'csv-parse/sync';
+import { format, parse as parseDate } from 'date-fns';
 
 // Helper function to generate SQL statements
 function generateSQL(query: string, params: any[]) {
@@ -53,7 +54,10 @@ const observationSQLStatements = [];
       Time: time,
     } = record;
 
-    const seenAt = `${date}T${time}`;
+    const timeParsed = time && time.trim() 
+      ? format(parseDate(time, 'hh:mm a', new Date()), 'HH:mm:ss') 
+      : '00:00:00';
+    const seenAt = `${date}T${timeParsed}`;
     const submissionId = parseInt(submissionIdRaw.replace(/^S/, ''));
     const locationId = parseInt(locationIdRaw.replace(/^L/, ''));
     const taxonomyEntry = taxonomyMap.get(commonName.toLowerCase());

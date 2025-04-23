@@ -14,7 +14,7 @@ export const List = (data: PageListData) => <>
           <tr key={o.id}>
             <td>{data.observations.length - index}</td>
             <td>{o.name}</td>
-            <td>{o.createdAt.toISOString().split("T")[0]}</td>
+            <td>{o.seenAt.toISOString().split("T")[0]}</td>
           </tr>
         ))}
       </tbody>

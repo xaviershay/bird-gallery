@@ -3,12 +3,14 @@
     "@cloudflare/workers-types": "^4.20250421.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "date-fns": "^4.1.0",
     "fs": "^0.0.1-security",
     "mustache": "^4.2.0",
     "react-dom": "^19.1.0",
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.3",
     "@types/mustache": "^4.2.5",
     "@types/node": "^22.14.1",
     "csv-parse": "^5.6.0",
