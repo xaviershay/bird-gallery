@@ -1,5 +1,7 @@
-CREATE TABLE IF NOT EXISTS observation (
-  id INTEGER PRIMARY KEY,
+DROP TABLE observation;
+CREATE TABLE observation (
+  id TEXT PRIMARY KEY,
+  checklist_id INTEGER,
   species_id TEXT NOT NULL,
   location_id INTEGER NOT NULL,
   count INTEGER NULL,

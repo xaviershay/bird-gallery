@@ -64,6 +64,7 @@ const observationSQLStatements = [];
     }
 
     const { speciesId, scientificName, taxonomicOrder, familyId, commonNameCodes } : any = taxonomyEntry;
+    const observationId = submissionId + '-' + speciesId;
 
     // Add unique location
     if (!uniqueLocations.has(locationId)) {
@@ -78,6 +79,7 @@ const observationSQLStatements = [];
     // Prepare observation SQL
     observationSQLStatements.push(
       [
+        observationId,
         submissionId,
         speciesId,
         locationId,
@@ -128,11 +130,11 @@ const observationSQLStatements = [];
   // Prepare bulk insert SQL for observations
   if (observationSQLStatements.length > 0) {
     const observationValues = observationSQLStatements
-      .map(() => '(?, ?, ?, ?, ?)')
+      .map(() => '(?, ?, ?, ?, ?, ?)')
       .join(",\n");
     const observationParams = observationSQLStatements.flat();
     console.log(generateSQL(
-      `INSERT INTO observation (id, species_id, location_id, count, seen_at) VALUES
+      `INSERT INTO observation (id, checklist_id, species_id, location_id, count, seen_at) VALUES
        ${observationValues}
        ON CONFLICT(id) DO UPDATE SET
        species_id = excluded.species_id,
