@@ -17,13 +17,6 @@ export const enum ListType {
   Photos
 }
 
-export interface Filter {
-  type: ListType,
-  region: string | null,
-  period: string | null,
-  toQueryString(): string; // Added method declaration
-}
-
 // D1 result types
 export interface D1Result<T> {
   results: T[];

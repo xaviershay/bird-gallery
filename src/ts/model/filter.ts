@@ -1,5 +1,12 @@
 import { ListType } from "../types";
 
+export interface Filter {
+  type: ListType,
+  region: string | null,
+  period: string | null,
+  toQueryString(): string; // Added method declaration
+}
+
 export class Filter {
   constructor(
     public type: ListType,
