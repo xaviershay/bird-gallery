@@ -8,8 +8,6 @@ interface PageList {
 
 export const List = (data: PageList) => {
   const scriptContent = `
-    console.log("hi");
-    console.log("/firsts.json?${data.filter.toQueryString()}.json");
     initMap("/firsts.json?${data.filter.toQueryString()}");
   `;
 
