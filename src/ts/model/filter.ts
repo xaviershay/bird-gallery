@@ -7,6 +7,14 @@ export class Filter {
     public period: string | null
   ) {}
 
+  static fromQueryString(params : URLSearchParams) {
+    return new Filter(
+      params.get('type') === 'list' ? ListType.List : ListType.Photos,
+      params.get('region') === 'world' ? null : params.get('region'),
+      params.get('period') === 'life' ? null : params.get('period')
+    );
+  }
+
   toQueryString(): string {
     const parts: Record<string, string> = {};
 

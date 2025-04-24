@@ -1,23 +1,36 @@
 import React from "react";
-import { ListType, PageLayout } from "../types";
-import { Filter } from '../model/filter';
+import { ListType } from "../types";
+import { Filter } from "../model/filter";
 
 // Utility function for shallow equality checking
-const objectEqual = (obj1: Record<string, any>, obj2: Record<string, any>): boolean => {
+const objectEqual = (
+  obj1: Record<string, any>,
+  obj2: Record<string, any>
+): boolean => {
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
   if (keys1.length !== keys2.length) return false;
-  return keys1.every(key => obj2.hasOwnProperty(key) && obj1[key] === obj2[key]);
+  return keys1.every(
+    (key) => obj2.hasOwnProperty(key) && obj1[key] === obj2[key]
+  );
 };
 
 type PartialFilter = {
-  type?: ListType,
-  region?: string | null,
-  period?: string | null
+  type?: ListType;
+  region?: string | null;
+  period?: string | null;
+};
+
+interface PageLayout {
+  content: React.ReactNode;
+  filter: Filter;
 }
 
 export const Layout = (page: PageLayout) => {
-  const navLink = (text: string, filterChange: PartialFilter): React.ReactNode => {
+  const navLink = (
+    text: string,
+    filterChange: PartialFilter
+  ): React.ReactNode => {
     const newFilter = new Filter(
       filterChange.type ?? page.filter.type,
       filterChange.region ?? page.filter.region,
@@ -66,7 +79,7 @@ export const Layout = (page: PageLayout) => {
             <strong>Region</strong>
             <ul>
               <li>{navLink("World", { region: null })}</li>
-              <li>{navLink("Victora", { region: "au-vic"})}</li>
+              <li>{navLink("Victora", { region: "au-vic" })}</li>
             </ul>
           </section>
 

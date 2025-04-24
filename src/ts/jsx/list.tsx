@@ -1,6 +1,12 @@
-import { PageListData } from "../types";
+import { Filter } from "../model/filter";
+import { Observation } from "../types";
 
-export const List = (data: PageListData) => {
+interface PageList {
+  filter: Filter; // TODO: should probably be "data source" or something better
+  observations: Array<Observation>;
+}
+
+export const List = (data: PageList) => {
   const scriptContent = `
     console.log("hi");
     console.log("/firsts.json?${data.filter.toQueryString()}.json");
@@ -9,8 +15,8 @@ export const List = (data: PageListData) => {
 
   return (
     <>
-      <div id='map'></div>
-      <table className='bird-list'>
+      <div id="map"></div>
+      <table className="bird-list">
         <thead>
           <tr>
             <th>#</th>

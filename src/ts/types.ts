@@ -24,16 +24,6 @@ export interface Filter {
   toQueryString(): string; // Added method declaration
 }
 
-export interface PageLayout {
-  content: React.ReactNode,
-  filter: Filter
-}
-
-export interface PageListData {
-  filter: Filter, // TODO: should probably be "data source" or something better
-  observations: Array<Observation>,
-}
-
 // D1 result types
 export interface D1Result<T> {
   results: T[];
