@@ -12,7 +12,10 @@ export const HomeView = (props: HomeViewProps) => {
         bird, and{" "}
         <a href="/firsts?type=photo">photographed {props.photoCount}.</a>
       </p>
-      <h3>Rules</h3>
+      <section>
+  <h2>
+    <i className="fa-solid fa-leaf"></i>{"  "}Rules
+  </h2>
       <ul>
         <li>
           Distinctive features must be personally sighted. Others may help with
@@ -23,7 +26,11 @@ export const HomeView = (props: HomeViewProps) => {
           <a href="https://ebird.org">eBird</a> taxonomy is canon.
         </li>
       </ul>
-      <h3>Photos</h3>
+      </section>
+      <section>
+  <h2>
+    <i className="fa-solid fa-camera-retro"></i> Photos
+  </h2>
       <p>
         Since 9<sup>th</sup> March 2025 I have shot with a{" "}
         <a href="https://www.nikonusa.com/p/coolpix-p950/26532/overview">
@@ -32,6 +39,7 @@ export const HomeView = (props: HomeViewProps) => {
         I use <a href="https://www.digikam.org/">Digikam</a> for management and{" "}
         <a href="https://www.darktable.org/">Darktable</a> for processing.
       </p>
+
       <table className="photo-criteria">
         <tr>
           <th>Rating</th>
@@ -58,7 +66,9 @@ export const HomeView = (props: HomeViewProps) => {
           <td>Competition worthy.</td>
         </tr>
       </table>
-      <h3>Links</h3>
+      </section>
+      <section>
+      <h2><i className="fa-solid fa-link"></i> Links</h2>
       <ul>
         <li>
           <a href="https://ebird.org/profile/NjY3NjU0MQ/world">eBird Profile</a>
@@ -69,6 +79,7 @@ export const HomeView = (props: HomeViewProps) => {
           </a>
         </li>
       </ul>
+      </section>
     </>
   );
 };
