@@ -82,8 +82,9 @@ async function fetchLocationObservations(
   const periodCondition = filter.period ? `AND strftime('%Y', seen_at) = ?` : "";
   
   let query = '';
+  const params: (number | string)[] = [];
   
-  if (true) {
+  if (filter.blah == "firsts") {
     // Only birds first seen at this location
     query = `
       SELECT
@@ -105,6 +106,10 @@ async function fetchLocationObservations(
         AND location_id = ?
       ORDER BY seen_at DESC;
     `;
+    if (filter.period) {
+      params.push(filter.period);
+    }
+    params.push(locationId)
   } else {
     // All birds seen at this location with first and last observation
     query = `
@@ -119,7 +124,7 @@ async function fetchLocationObservations(
         (SELECT MAX(seen_at) FROM observation_wide o2 
          WHERE o2.species_id = o1.species_id 
          AND o2.location_id = o1.location_id
-         ${periodCondition ? 'AND ' + periodCondition.substring(4) : ''}
+         ${periodCondition}
         ) as lastSeenAt
       FROM observation_wide o1
       WHERE o1.location_id = ?
@@ -127,15 +132,17 @@ async function fetchLocationObservations(
       GROUP BY o1.species_id
       ORDER BY o1.seen_at DESC;
     `;
+  
+    if (filter.period) {
+      params.push(filter.period);
+    }
+    params.push(locationId)
+    if (filter.period) {
+      params.push(filter.period);
+    }
   }
   
-  const params: (number | string)[] = [];
-  if (filter.period) {
-    params.push(filter.period);
-  }
-
-  params.push(locationId)
-  
+  console.log(params);
   const statement = env.DB.prepare(query);
   const result = await statement.bind(...params).all<any>();
   

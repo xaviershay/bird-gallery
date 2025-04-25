@@ -36,7 +36,7 @@ export const LocationView = (data: LocationViewProps) => {
       "period" in filterChange
         ? filterChange.period ?? null
         : data.filter.period,
-      "blah" in filterChange ? filterChange.blah + "" : data.filter.blah
+      "blah" in filterChange ? filterChange.blah ?? null : data.filter.blah
     );
     if (objectEqual(newFilter, filter)) {
       return <span>{text}</span>;
@@ -48,7 +48,10 @@ export const LocationView = (data: LocationViewProps) => {
   };
 
   const observationCount = observations.length;
-  const locationName = location.name.replace(/\(\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\)/g, "").replace(/--/g, ": ").trim();
+  const locationName = location.name
+    .replace(/\(\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\)/g, "")
+    .replace(/--/g, ": ")
+    .trim();
 
   return (
     <>
@@ -65,8 +68,8 @@ export const LocationView = (data: LocationViewProps) => {
         <section>
           <strong>Birds</strong>
           <ul>
-            <li>{navLink("All", { blah: "all" })}</li>
-            <li>{navLink("Firsts", { blah: "first" })}</li>
+            <li>{navLink("All", { blah: null })}</li>
+            <li>{navLink("Firsts", { blah: "firsts" })}</li>
           </ul>
         </section>
 

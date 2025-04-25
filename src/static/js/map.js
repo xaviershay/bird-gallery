@@ -143,7 +143,7 @@ function initMap(sourceJson) {
     });
 
     map.on("click", "unclustered-point", (e) => {
-      window.location = "/location/" + e.features[0].properties.locationId;
+      window.location = "/location/" + e.features[0].properties.locationId + "?blah=firsts";
     });
 
     map.on("mouseleave", "unclustered-point", () => {

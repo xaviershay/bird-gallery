@@ -4,7 +4,7 @@ export interface Filter {
   type: ObservationType,
   region: string | null,
   period: string | null,
-  blah: string, //"first" | "all"
+  blah: string | null,
   toQueryString(): string; // Added method declaration
 }
 
@@ -13,7 +13,7 @@ export class Filter {
     public type: ObservationType,
     public region: string | null,
     public period: string | null,
-    public blah: string
+    public blah: string | null
   ) {}
 
   static fromQueryString(params : URLSearchParams) {
@@ -21,7 +21,7 @@ export class Filter {
       params.get('type') === 'photo' ? ObservationType.Photo : ObservationType.Sighting,
       params.has('region') ? params.get('region') : null,
       params.has('period') ? params.get('period') : null,
-      "first"
+      params.has('blah') ? params.get('blah') : null
     );
   }
 
@@ -43,6 +43,8 @@ export class Filter {
       parts.region = this.region;
     if (this.period)
       parts.period = this.period;
+    if (this.blah)
+      parts.blah = this.blah;
 
     return new URLSearchParams(parts).toString();
   }
