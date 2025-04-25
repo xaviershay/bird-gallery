@@ -1,7 +1,7 @@
 import { Env } from "../index";
 import { Observation, Species } from "../types";
-import { SpeciesView } from "../jsx/species.tsx";
-import { Layout } from "../jsx/layout.tsx";
+import { SpeciesView } from "../view/species.tsx";
+import { Layout } from "../view/layout.tsx";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
 import formatLocationName from "../helpers/format_location_name.ts";

@@ -1,8 +1,8 @@
 import { Env } from "../index";
 import { Observation, Location } from "../types";
 import { Filter } from "../model/filter";
-import { LocationView } from "../jsx/location.tsx";
-import { Layout } from "../jsx/layout.tsx";
+import { LocationView } from "../view/location.tsx";
+import { Layout } from "../view/layout.tsx";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
 
