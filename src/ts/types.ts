@@ -12,9 +12,16 @@ export interface Observation {
   lng: number
 }
 
-export const enum ListType {
-  List,
-  Photos
+export interface Location {
+  id: number,
+  name: string,
+  lat: number,
+  lng: number
+}
+
+export const enum ObservationType {
+  Sighting,
+  Photo
 }
 
 // D1 result types

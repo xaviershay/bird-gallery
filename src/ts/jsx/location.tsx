@@ -1,47 +1,44 @@
 import { Filter } from "../model/filter";
-import { Observation } from "../types";
-import { ObservationType } from "../types";
+import { Observation, Location, ObservationType } from "../types";
 
-interface PageList {
-  filter: Filter; // TODO: should probably be "data source" or something better
+interface LocationViewProps {
+  filter: Filter;
   observations: Array<Observation>;
+  location: Location;
 }
-
 type PartialFilter = {
   type?: ObservationType;
-  region?: string | null;
   period?: string | null;
+  blah?: string | null;
 };
 
-export const List = (data: PageList) => {
-  const scriptContent = `
-    initMap("/firsts.json?${data.filter.toQueryString()}");
-  `;
-
-  // Utility function for shallow equality checking
-  const objectEqual = (
-    obj1: Record<string, any>,
-    obj2: Record<string, any>
-  ): boolean => {
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
-    if (keys1.length !== keys2.length) return false;
-    return keys1.every(
-      (key) => obj2.hasOwnProperty(key) && obj1[key] === obj2[key]
-    );
-  };
+const objectEqual = (
+  obj1: Record<string, any>,
+  obj2: Record<string, any>
+): boolean => {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+  if (keys1.length !== keys2.length) return false;
+  return keys1.every(
+    (key) => obj2.hasOwnProperty(key) && obj1[key] === obj2[key]
+  );
+};
+export const LocationView = (data: LocationViewProps) => {
+  const { filter, observations, location } = data;
 
   const navLink = (
     text: string,
     filterChange: PartialFilter
   ): React.ReactNode => {
     const newFilter = new Filter(
-      filterChange.type ?? data.filter.type,
-      'region' in filterChange ? filterChange.region ?? null : data.filter.region,
-      'period' in filterChange ? filterChange.period ?? null : data.filter.period,
-      data.filter.blah
+      filterChange.type ?? filter.type,
+      filter.region,
+      "period" in filterChange
+        ? filterChange.period ?? null
+        : data.filter.period,
+      "blah" in filterChange ? filterChange.blah + "" : data.filter.blah
     );
-    if (objectEqual(newFilter, data.filter)) {
+    if (objectEqual(newFilter, filter)) {
       return <span>{text}</span>;
     } else {
       const queryString = newFilter.toQueryString();
@@ -50,8 +47,12 @@ export const List = (data: PageList) => {
     }
   };
 
+  const observationCount = observations.length;
+  const locationName = location.name.replace(/\(\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\)/g, "").replace(/--/g, ": ").trim();
+
   return (
     <>
+      <h3>{locationName}</h3>
       <nav>
         <section>
           <strong>List</strong>
@@ -62,10 +63,10 @@ export const List = (data: PageList) => {
         </section>
 
         <section>
-          <strong>Region</strong>
+          <strong>Birds</strong>
           <ul>
-            <li>{navLink("World", { region: null })}</li>
-            <li>{navLink("Victora", { region: "au-vic" })}</li>
+            <li>{navLink("All", { blah: "all" })}</li>
+            <li>{navLink("Firsts", { blah: "first" })}</li>
           </ul>
         </section>
 
@@ -77,7 +78,7 @@ export const List = (data: PageList) => {
           </ul>
         </section>
       </nav>
-      <div id="map"></div>
+
       <table className="bird-list">
         <thead>
           <tr>
@@ -87,17 +88,15 @@ export const List = (data: PageList) => {
           </tr>
         </thead>
         <tbody>
-          {data.observations.map((o, index) => (
+          {observations.map((o, index) => (
             <tr key={o.id}>
-              <td>{data.observations.length - index}</td>
+              <td>{observationCount - index}</td>
               <td>{o.name}</td>
               <td>{o.seenAt.toISOString().split("T")[0]}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <script src="/js/map.js"></script>
-      <script dangerouslySetInnerHTML={{ __html: scriptContent }}></script>
     </>
   );
 };

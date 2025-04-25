@@ -10,6 +10,10 @@ nav section {
   border-bottom: none;
 }
 
+h3 {
+  margin-top: 0; /* H3 on location page */
+}
+
 /* Map styling */
 .mapboxgl-popup-tip {
   display: none;

@@ -1,4 +1,5 @@
 import { handleFirsts } from "./controller/firsts";
+import { handleLocation } from "./controller/location";
 import { respondWith, corsHeaders } from "./controller/base";
 
 export interface Env {
@@ -26,6 +27,11 @@ export default {
       // Route handling
       if (path[0] === "firsts" || path[0] === "firsts.json") {
         return handleFirsts(request, env); // Simplified call
+      }
+      
+      // New route for location-based views
+      if (path[0] === "location") {
+        return handleLocation(request, env);
       }
 
       // If we get here, the route was not found
