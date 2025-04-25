@@ -1,6 +1,7 @@
 import { Filter } from "../model/filter";
 import { Observation } from "../types";
 import { ObservationType } from "../types";
+import speciesLink from "./helpers/species_link";
 
 interface PageList {
   filter: Filter; // TODO: should probably be "data source" or something better
@@ -90,7 +91,7 @@ export const List = (data: PageList) => {
           {data.observations.map((o, index) => (
             <tr key={o.id}>
               <td>{data.observations.length - index}</td>
-              <td>{o.name}</td>
+              <td>{speciesLink(o)}</td>
               <td>{o.seenAt.toISOString().split("T")[0]}</td>
             </tr>
           ))}

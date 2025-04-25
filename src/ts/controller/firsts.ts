@@ -49,7 +49,7 @@ export async function handleFirsts(
     return respondWith(200, jsonData, corsHeaders);
   } else {
     const list = List({ observations: firsts, filter: filter });
-    const html = Layout({ content: list, filter: filter });
+    const html = Layout({ content: list });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
         "Content-Type": "text/html",

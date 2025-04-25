@@ -1,5 +1,6 @@
 import { Filter } from "../model/filter";
 import { Observation, Location, ObservationType } from "../types";
+import speciesLink from "./helpers/species_link";
 
 interface LocationViewProps {
   filter: Filter;
@@ -94,7 +95,7 @@ export const LocationView = (data: LocationViewProps) => {
           {observations.map((o, index) => (
             <tr key={o.id}>
               <td>{observationCount - index}</td>
-              <td>{o.name}</td>
+              <td>{speciesLink(o)}</td>
               <td>{o.seenAt.toISOString().split("T")[0]}</td>
             </tr>
           ))}

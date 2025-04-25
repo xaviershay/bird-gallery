@@ -7,9 +7,15 @@ export interface Observation {
   speciesId: string,
   name: string,
   locationId: string,
+  location: Location,
   seenAt: Date,
   lat: number,
   lng: number
+}
+
+export interface Species {
+  id: string,
+  name: string
 }
 
 export interface Location {

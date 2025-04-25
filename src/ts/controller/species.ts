@@ -1,0 +1,106 @@
+import { Env } from "../index";
+import { Observation, Species } from "../types";
+import { SpeciesView } from "../jsx/species.tsx";
+import { Layout } from "../jsx/layout.tsx";
+import { renderToString } from "react-dom/server";
+import { respondWith, corsHeaders } from "./base";
+
+export async function handleSpecies(
+  request: Request,
+  env: Env
+): Promise<Response> {
+  const url = new URL(request.url);
+  const speciesId = url.pathname.split("/").pop();
+
+  if (!speciesId) {
+    return respondWith(400, { error: "Missing species ID" }, corsHeaders);
+  }
+
+  const species = await fetchSpecies(env, speciesId);
+
+  if (!species) {
+    return respondWith(404, { error: "Species not found" }, corsHeaders);
+  }
+
+  const observations = await fetchSpeciesObservations(env, speciesId);
+
+  const content = SpeciesView({ species, observations });
+  const html = Layout({ content });
+  return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
+    headers: {
+      "Content-Type": "text/html",
+    },
+  });
+}
+
+async function fetchSpecies(
+  env: Env,
+  speciesId: string
+): Promise<Species | null> {
+  try {
+    const query = `
+      SELECT 
+        id,
+        common_name as name
+      FROM species
+      WHERE id = ?
+      LIMIT 1;
+    `;
+
+    const statement = env.DB.prepare(query);
+    const result = await statement.bind(speciesId).first<any>();
+
+    if (!result) {
+      return null;
+    }
+
+    return {
+      id: result.id,
+      name: result.name,
+    };
+  } catch (error) {
+    console.error("Error fetching species:", error);
+    return null;
+  }
+}
+
+async function fetchSpeciesObservations(
+  env: Env,
+  speciesId: string
+): Promise<Observation[]> {
+  let query = "";
+  const params: (number | string)[] = [];
+
+  query = `
+      SELECT
+        id,
+        species_id as speciesId,
+        common_name as name,
+        location_id as locationId,
+        location_name as locationName,
+        lat,
+        lng,
+        seen_at as seenAt
+      FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
+        FROM observation_wide
+        WHERE 1=1
+      ) AS ranked
+      WHERE 1=1
+        AND species_id = ?
+      ORDER BY seen_at DESC;
+    `;
+  params.push(speciesId);
+
+  const statement = env.DB.prepare(query);
+  const result = await statement.bind(...params).all<any>();
+
+  return result.results.map((row: any) => ({
+    ...row,
+    location: {
+      id: row.locationId,
+      name: row.locationName
+    },
+    seenAt: new Date(row.seenAt),
+  }));
+}
