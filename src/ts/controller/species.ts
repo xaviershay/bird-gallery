@@ -10,7 +10,10 @@ export async function handleSpecies(
   env: Env
 ): Promise<Response> {
   const url = new URL(request.url);
-  const speciesId = url.pathname.split("/").pop();
+  const pathSegment = url.pathname.split("/").pop() || "";
+  const speciesId = pathSegment.includes(".")
+    ? pathSegment.substring(0, pathSegment.lastIndexOf("."))
+    : pathSegment;
 
   if (!speciesId) {
     return respondWith(400, { error: "Missing species ID" }, corsHeaders);
@@ -24,13 +27,48 @@ export async function handleSpecies(
 
   const observations = await fetchSpeciesObservations(env, speciesId);
 
-  const content = SpeciesView({ species, observations });
-  const html = Layout({ content });
-  return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
-    headers: {
-      "Content-Type": "text/html",
-    },
-  });
+  if (url.pathname.endsWith(".json")) {
+    // Group records by locationId
+    const grouped = observations.reduce((acc, record) => {
+      if (!acc[record.locationId]) {
+        acc[record.locationId] = [];
+      }
+      acc[record.locationId].push(record);
+      return acc;
+    }, {} as Record<string, Observation[]>);
+
+    var jsonData = {
+      type: "FeatureCollection",
+      features: Object.entries(grouped).map(([location, os]) => {
+        const obs = os[0];
+        return {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [obs.lng, obs.lat],
+          },
+          properties: {
+            locationId: obs.locationId,
+            name: location
+              .replace(/\(\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\)/g, "")
+              .replace(/--/g, ": ")
+              .trim(),
+            count: os.length,
+          },
+        };
+      }),
+    };
+
+    return respondWith(200, jsonData, corsHeaders);
+  } else {
+    const content = SpeciesView({ species, observations });
+    const html = Layout({ content });
+    return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
+      headers: {
+        "Content-Type": "text/html",
+      },
+    });
+  }
 }
 
 async function fetchSpecies(
@@ -99,7 +137,7 @@ async function fetchSpeciesObservations(
     ...row,
     location: {
       id: row.locationId,
-      name: row.locationName
+      name: row.locationName,
     },
     seenAt: new Date(row.seenAt),
   }));
