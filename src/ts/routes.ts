@@ -2,6 +2,7 @@ import { handleFirsts } from "./controller/firsts";
 import { handleLocation } from "./controller/location";
 import { handleSpecies } from "./controller/species";
 import { respondWith, corsHeaders } from "./controller/base";
+import { handleHome } from "./controller/home";
 
 export interface Env {
   DB: D1Database;
@@ -25,8 +26,12 @@ export default {
     }
 
     try {
+      if (path[0] == null) {
+        return handleHome(request, env);
+      }
+
       if (path[0] === "firsts" || path[0] === "firsts.json") {
-        return handleFirsts(request, env); // Simplified call
+        return handleFirsts(request, env);
       }
       
       if (path[0] === "location") {
@@ -52,3 +57,4 @@ export default {
     }
   },
 };
+

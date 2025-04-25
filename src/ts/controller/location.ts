@@ -1,4 +1,4 @@
-import { Env } from "../index";
+import { Env } from "../routes";
 import { Observation, Location } from "../types";
 import { Filter } from "../model/filter";
 import { LocationView } from "../view/location.tsx";

@@ -25,7 +25,7 @@ export const Layout = (page: PageLayout) => {
         <link rel="stylesheet" href="/css/custom.css" />
       </head>
       <body>
-        <h1>Xavier&apos;s Bird Lists</h1>
+        <h1><a href="/">Xavier&apos;s Bird Lists</a></h1>
         {page.content}
       </body>
     </html>

@@ -1,6 +1,12 @@
 /* Nav styling */
+h1 a {
+  color: var(--text) !important;
+  text-decoration: none;
+}
+
 nav {
   display: flex;
+  margin-top: 1em;
 }
 
 nav section {
@@ -10,8 +16,13 @@ nav section {
   border-bottom: none;
 }
 
+h1 {
+  margin-bottom: 0
+}
+
 h3 {
   margin-top: 0; /* H3 on location page */
+  margin-bottom: 0;
 }
 
 /* Map styling */
@@ -28,6 +39,7 @@ h3 {
   text-align: center;
   font: 12px/20px sans-serif;
 }
+
 /* Table styling */
 h2 {
   margin-bottom: 0;
@@ -39,6 +51,13 @@ h2 {
 
 .bird-list td:nth-child(3),
 .bird-list th:nth-child(3) {
+  text-align: center;
+}
+
+.photo-criteria { margin-top: 0 }
+
+.photo-criteria td:nth-child(1),
+.photo-criteria th:nth-child(1) {
   text-align: center;
 }
 

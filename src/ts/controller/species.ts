@@ -1,4 +1,4 @@
-import { Env } from "../index";
+import { Env } from "../routes";
 import { Observation, Species } from "../types";
 import { SpeciesView } from "../view/species.tsx";
 import { Layout } from "../view/layout.tsx";
