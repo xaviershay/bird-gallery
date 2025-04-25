@@ -10,7 +10,8 @@ export const SpeciesView = (data: SpeciesViewProps) => {
   const { observations, species } = data;
   const observationCount = observations.length;
   const scriptContent = `
-    initMap("${speciesUrl(species.id, { format: "json" })}");
+    urlF = (id) => ("/location/" + id);
+    initMap("${speciesUrl(species.id, { format: "json" })}", urlF);
   `;
 
   return (

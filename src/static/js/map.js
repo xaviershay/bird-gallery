@@ -13,7 +13,7 @@ const map = new mapboxgl.Map({
   //zoom: 9, // starting zoom
 });
 
-function initMap(sourceJson) {
+function initMap(sourceJson, urlF) {
   // Add markers to the map
   map.on("load", async () => {
     map.addSource("birds", {
@@ -143,7 +143,7 @@ function initMap(sourceJson) {
     });
 
     map.on("click", "unclustered-point", (e) => {
-      window.location = "/location/" + e.features[0].properties.locationId + "?blah=firsts";
+      window.location = urlF(e.features[0].properties.locationId);
     });
 
     map.on("mouseleave", "unclustered-point", () => {

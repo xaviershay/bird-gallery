@@ -16,7 +16,8 @@ type PartialFilter = {
 
 export const List = (data: PageList) => {
   const scriptContent = `
-    initMap("/firsts.json?${data.filter.toQueryString()}");
+    urlF = (id) => ("/location/" + id + "?blah=firsts");
+    initMap("/firsts.json?${data.filter.toQueryString()}", urlF);
   `;
 
   // Utility function for shallow equality checking
