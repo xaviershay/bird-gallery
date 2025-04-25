@@ -4,6 +4,7 @@ import { SpeciesView } from "../jsx/species.tsx";
 import { Layout } from "../jsx/layout.tsx";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
+import formatLocationName from "../helpers/format_location_name.ts";
 
 export async function handleSpecies(
   request: Request,
@@ -39,7 +40,7 @@ export async function handleSpecies(
 
     var jsonData = {
       type: "FeatureCollection",
-      features: Object.entries(grouped).map(([location, os]) => {
+      features: Object.entries(grouped).map(([locationId, os]) => {
         const obs = os[0];
         return {
           type: "Feature",
@@ -48,11 +49,8 @@ export async function handleSpecies(
             coordinates: [obs.lng, obs.lat],
           },
           properties: {
-            locationId: obs.locationId,
-            name: location
-              .replace(/\(\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\)/g, "")
-              .replace(/--/g, ": ")
-              .trim(),
+            locationId: locationId,
+            name: formatLocationName(obs.location.name),
             count: os.length,
           },
         };

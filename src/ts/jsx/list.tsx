@@ -1,7 +1,7 @@
 import { Filter } from "../model/filter";
 import { Observation } from "../types";
 import { ObservationType } from "../types";
-import speciesLink from "./helpers/species_link";
+import speciesLink from "../helpers/species_link";
 
 interface PageList {
   filter: Filter; // TODO: should probably be "data source" or something better

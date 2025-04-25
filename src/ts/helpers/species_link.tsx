@@ -1,4 +1,4 @@
-import { Observation } from "../../types";
+import { Observation } from "../types";
 
 export function speciesUrl(id: string, options: {format?: string} = {}) {
    let path = `/species/${id}`

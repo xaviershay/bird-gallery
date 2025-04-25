@@ -1,6 +1,6 @@
 import { Filter } from "../model/filter";
 import { Observation, Location, ObservationType } from "../types";
-import speciesLink from "./helpers/species_link";
+import speciesLink from "../helpers/species_link";
 
 interface LocationViewProps {
   filter: Filter;

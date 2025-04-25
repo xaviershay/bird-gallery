@@ -5,6 +5,7 @@ import { List } from "../jsx/list.tsx";
 import { Layout } from "../jsx/layout.tsx";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
+import formatLocationName from "../helpers/format_location_name.ts";
 
 export async function handleFirsts(
   request: Request,
@@ -26,7 +27,7 @@ export async function handleFirsts(
 
     var jsonData = {
       type: "FeatureCollection",
-      features: Object.entries(grouped).map(([location, os]) => {
+      features: Object.entries(grouped).map(([locationId, os]) => {
         const obs = os[0];
         return {
           type: "Feature",
@@ -35,11 +36,8 @@ export async function handleFirsts(
             coordinates: [obs.lng, obs.lat],
           },
           properties: {
-            locationId: obs.locationId,
-            name: location
-              .replace(/\(\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\)/g, "")
-              .replace(/--/g, ": ")
-              .trim(),
+            locationId: locationId,
+            name: formatLocationName(obs.location.name),
             count: os.length,
           },
         };
@@ -69,6 +67,7 @@ async function fetchFirsts(env: Env, filter: Filter): Promise<Observation[]> {
         species_id as speciesId,
         common_name as name,
         location_id as locationId,
+        location_name as locationName,
         lat,
         lng,
         seen_at as seenAt
@@ -91,9 +90,13 @@ async function fetchFirsts(env: Env, filter: Filter): Promise<Observation[]> {
     params.push(filter.region);
   }
   statement = statement.bind(...params);
-  const { results } = await statement.all<Observation>();
+  const { results } = await statement.all<any>();
   return results.map((record) => ({
     ...record,
+    location: {
+      id: record.locationId,
+      name: record.locationName,
+    },
     seenAt: new Date(record.seenAt + "Z"), // Treat seenAt as UTC by appending "Z"
   }));
 }
