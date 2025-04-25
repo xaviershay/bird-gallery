@@ -28,6 +28,7 @@ const taxonomyMap = new Map(
       taxonomicOrder: parseInt(record['TAXON_ORDER']),
       commonNameCodes: record['COM_NAME_CODES'],
       familyId: record['FAMILY_CODE'],
+      category: record['CATEGORY']
     },
   ])
 );
@@ -60,10 +61,22 @@ const observationSQLStatements = [];
     const seenAt = `${date}T${timeParsed}`;
     const submissionId = parseInt(submissionIdRaw.replace(/^S/, ''));
     const locationId = parseInt(locationIdRaw.replace(/^L/, ''));
-    const taxonomyEntry = taxonomyMap.get(commonName.toLowerCase());
+    const taxonomyEntry : any = taxonomyMap.get(commonName.toLowerCase());
 
     if (!taxonomyEntry) {
       console.error(`Taxonomy entry not found for common name: ${commonName}`);
+      continue;
+    }
+
+    if (!(taxonomyEntry.category == "species" || taxonomyEntry.category == "domestic")) {
+      continue;
+    }
+
+    if (submissionId == 220837850 && taxonomyEntry.category == "domestic") {
+      // This checklist included two exotic escapees, which don't count in eBird
+      // totals, but this data isn't present in the export.
+      // Since this situation won't happen often, hard code it here until an
+      // alternative solution is available.
       continue;
     }
 
@@ -132,6 +145,7 @@ const observationSQLStatements = [];
   }
 
   // Prepare bulk insert SQL for observations
+  console.log("DELETE FROM observation;")
   if (observationSQLStatements.length > 0) {
     const observationValues = observationSQLStatements
       .map(() => '(?, ?, ?, ?, ?, ?)')

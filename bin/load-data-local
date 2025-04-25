@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -ex
+
+bin/generate-load-sql
+npx wrangler d1 execute birds --local --file=out/load.sql
