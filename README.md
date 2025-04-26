@@ -1,3 +1,15 @@
+### TODO
+
+* Page titles
+* Actual data for nav links on firts
+* Redo nav on location page
+* Incorporate photos
+* Custom URL
+* New mapbox API key
+* Restrict font-awesome hosting to domains
+* Recent firsts (or something else of interest) on home page.
+* Document architecture and dev setup in README.
+
 ### eBird API wants
 
 * Exotic flags in exported observation data (example: https://ebird.org/checklist/S220837850). Use case: my own list calculations can match that of eBird.
