@@ -9,6 +9,7 @@
 body {
   background-image: url("/svg/composited.svg");
   background-position-x: center;
+  font-size:90%;
 }
 
 h2 i {
@@ -113,6 +114,10 @@ nav {
   margin-top: 1em;
 }
 
+nav td:has(a.active) {
+  background-color: #f8eed3;
+}
+
 nav section {
   margin-top: 0;
   margin-bottom: 0;
@@ -121,7 +126,7 @@ nav section {
 }
 
 nav table {
-  font-size: 80%;
+  font-size: 90%;
 }
 nav table td,
 nav table th {

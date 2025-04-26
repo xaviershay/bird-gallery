@@ -48,13 +48,9 @@ export const List = (data: PageList) => {
         : data.filter.period,
       data.filter.blah
     );
-    if (objectEqual(newFilter, data.filter)) {
-      return <span>{text}</span>;
-    } else {
-      const queryString = newFilter.toQueryString();
-      const url = `?${queryString}`;
-      return <a href={url}>{text}</a>;
-    }
+    const queryString = newFilter.toQueryString();
+    const url = `?${queryString}`;
+    return <a className={objectEqual(newFilter, data.filter) ? "active" : ""} href={url}>{text}</a>;
   };
 
   return (
