@@ -40,8 +40,12 @@ export const List = (data: PageList) => {
   ): React.ReactNode => {
     const newFilter = new Filter(
       filterChange.type ?? data.filter.type,
-      'region' in filterChange ? filterChange.region ?? null : data.filter.region,
-      'period' in filterChange ? filterChange.period ?? null : data.filter.period,
+      "region" in filterChange
+        ? filterChange.region ?? null
+        : data.filter.region,
+      "period" in filterChange
+        ? filterChange.period ?? null
+        : data.filter.period,
       data.filter.blah
     );
     if (objectEqual(newFilter, data.filter)) {
@@ -53,64 +57,110 @@ export const List = (data: PageList) => {
     }
   };
 
-
   return (
     <>
-    <header>
-        <h1><a href="/">Xavier&apos;s Bird Lists</a></h1>
-      <p>
-        Since 26<sup>th</sup> January 2025 I have{" "}
-        <a href="/firsts">seen 191 different species</a> of wild
-        bird, and{" "}
-        <a href="/firsts?type=photo">photographed 90.</a>
-      </p>
-      </header>
       <section>
-        <h2><i className="fa-solid fa-trophy"></i> Firsts</h2>
-      <nav>
-        <section>
-          <strong>List</strong>
-          <ul>
-            <li>{navLink("Seen", { type: ObservationType.Sighting })}</li>
-            <li>{navLink("Photoed", { type: ObservationType.Photo })}</li>
-          </ul>
-        </section>
-
-        <section>
-          <strong>Region</strong>
-          <ul>
-            <li>{navLink("World", { region: null })}</li>
-            <li>{navLink("Victora", { region: "au-vic" })}</li>
-          </ul>
-        </section>
-
-        <section>
-          <strong>Time Period</strong>
-          <ul>
-            <li>{navLink("Life", { period: null })}</li>
-            <li>{navLink("2025", { period: "2025" })}</li>
-          </ul>
-        </section>
-      </nav>
-      <div id="map"></div>
-      <table className="bird-list">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>First Seen</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.observations.map((o, index) => (
-            <tr key={o.id}>
-              <td>{data.observations.length - index}</td>
-              <td>{speciesLink(o)}</td>
-              <td>{formatDate(o.seenAt)}</td>
+        <h2>
+          <i className="fa-solid fa-trophy"></i> Firsts
+        </h2>
+        <nav>
+          <table>
+            <tr>
+              <th></th>
+              <th colSpan={2}>Victoria, AU</th>
+              <th colSpan={2}>World</th>
             </tr>
-          ))}
-        </tbody>
-      </table></section>
+            <tr>
+              <th></th>
+              <th>Photo</th>
+              <th>Seen</th>
+              <th>Photo</th>
+              <th>Seen</th>
+            </tr>
+            <tr>
+              <th className='period'>Life</th>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Photo,
+                  region: "au-vic",
+                  period: null,
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Sighting,
+                  region: "au-vic",
+                  period: null,
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Photo,
+                  region: null,
+                  period: null,
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Sighting,
+                  region: null,
+                  period: null,
+                })}
+              </td>
+            </tr>
+            <tr>
+              <th className="period">2025</th>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Photo,
+                  region: "au-vic",
+                  period: "2025",
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Sighting,
+                  region: "au-vic",
+                  period: "2025",
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Photo,
+                  region: null,
+                  period: "2025",
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Sighting,
+                  region: null,
+                  period: "2025",
+                })}
+              </td>
+            </tr>
+          </table>
+        </nav>
+        <div id="map"></div>
+        <table className="bird-list">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>First Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.observations.map((o, index) => (
+              <tr key={o.id}>
+                <td>{data.observations.length - index}</td>
+                <td>{speciesLink(o)}</td>
+                <td>{formatDate(o.seenAt)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
       <script src="/js/map.js"></script>
       <script dangerouslySetInnerHTML={{ __html: scriptContent }}></script>
     </>
