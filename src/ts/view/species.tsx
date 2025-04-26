@@ -1,6 +1,7 @@
 import { Species, Observation } from "../types";
 import { speciesUrl } from "../helpers/species_link";
 import formatLocationName from "../helpers/format_location_name";
+import { formatDate } from "../helpers/format_date";
 
 interface SpeciesViewProps {
   observations: Array<Observation>;
@@ -40,7 +41,7 @@ export const SpeciesView = (data: SpeciesViewProps) => {
                     {formatLocationName(o.location.name)}
                   </a>
                 </td>
-                <td>{o.seenAt.toISOString().split("T")[0]}</td>
+                <td>{formatDate(o.seenAt)}</td>
               </tr>
             ))}
           </tbody>

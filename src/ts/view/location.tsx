@@ -1,6 +1,7 @@
 import { Filter } from "../model/filter";
 import { Observation, Location, ObservationType } from "../types";
 import speciesLink from "../helpers/species_link";
+import { formatDate } from "../helpers/format_date";
 
 interface LocationViewProps {
   filter: Filter;
@@ -99,7 +100,7 @@ export const LocationView = (data: LocationViewProps) => {
               <tr key={o.id}>
                 <td>{observationCount - index}</td>
                 <td>{speciesLink(o)}</td>
-                <td>{o.seenAt.toISOString().split("T")[0]}</td>
+                <td>{formatDate(o.seenAt)}</td>
               </tr>
             ))}
           </tbody>

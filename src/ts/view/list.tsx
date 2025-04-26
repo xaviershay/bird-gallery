@@ -2,6 +2,7 @@ import { Filter } from "../model/filter";
 import { Observation } from "../types";
 import { ObservationType } from "../types";
 import speciesLink from "../helpers/species_link";
+import { formatDate } from "../helpers/format_date";
 
 interface PageList {
   filter: Filter; // TODO: should probably be "data source" or something better
@@ -51,6 +52,7 @@ export const List = (data: PageList) => {
       return <a href={url}>{text}</a>;
     }
   };
+
 
   return (
     <>
@@ -104,7 +106,7 @@ export const List = (data: PageList) => {
             <tr key={o.id}>
               <td>{data.observations.length - index}</td>
               <td>{speciesLink(o)}</td>
-              <td>{o.seenAt.toISOString().split("T")[0]}</td>
+              <td>{formatDate(o.seenAt)}</td>
             </tr>
           ))}
         </tbody>
