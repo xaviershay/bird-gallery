@@ -6,25 +6,15 @@
   --accent: #3b7d57;
 }
 
-* {
-  z-index: 10;
-}
-
 body {
-  /*
-  background-image: url('/svg/bird1.svg'), url('/svg/bird1.svg');
-  background-repeat: no-repeat;
-  background-position: left top, right top;
-  background-size: 100px;
-  background-attachment: fixed;
-  */
+  background-image: url('/svg/composited.svg');
 }
 
 h2 i {
   margin-right: 0.25em;
 }
 
-section {
+body > header, section {
   background-color: #fefae9;
   padding: 1.5rem;
   border-radius: 12px;
@@ -34,6 +24,12 @@ section {
   border: none;
 }
 
+body > header {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  grid-column: 2;
+}
+
 section h2 {
   display: flex;
   align-items: center;
@@ -41,6 +37,10 @@ section h2 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
   color: #385c3c;
+}
+
+nav section {
+  box-shadow: none;
 }
 
 ul {
@@ -92,6 +92,9 @@ h1, h2, h3 {
   font-family: var(--header-font)
 }
 
+section+section, section, section:first-child {
+  padding-top: 0.5rem; 
+}
 /* Nav styling */
 h1 a {
   color: var(--text) !important;
@@ -158,6 +161,7 @@ h2 {
 #map {
   height: 300px;
   width: 100%;
+  border-radius: 12px;
 }
 .marker {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2236%22%20height%3D%2236%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23D32F2F%22%20d%3D%22M12%202C8.13%202%205%205.13%205%209c0%205.25%207%2013%207%2013s7-7.75%207-13c0-3.87-3.13-7-7-7zm0%209.5c-1.38%200-2.5-1.12-2.5-2.5s1.12-2.5%202.5-2.5%202.5%201.12%202.5%202.5-1.12%202.5-2.5%202.5z%22%2F%3E%3C%2Fsvg%3E");
@@ -168,15 +172,4 @@ h2 {
 }
 .mapboxgl-popup {
   max-width: 200px;
-}
-
-#background-container {
-  position: absolute;
-  width: 99vw; /* Initial width matches viewport */
-  height: 99vh; /* Initial height matches viewport */
-  top: 0;
-  left: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none; /* Prevent interaction with the container */
 }

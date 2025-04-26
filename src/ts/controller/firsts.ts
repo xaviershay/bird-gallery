@@ -2,10 +2,11 @@ import { Env } from "../routes";
 import { Observation } from "../types";
 import { Filter } from "../model/filter";
 import { List } from "../view/list.tsx";
-import { Layout } from "../view/layout.tsx";
+import { LayoutView } from "../view/layout.tsx";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
 import formatLocationName from "../helpers/format_location_name.ts";
+import { fetchHeaderStats } from "../model/header_stats.ts";
 
 export async function handleFirsts(
   request: Request,
@@ -46,8 +47,9 @@ export async function handleFirsts(
 
     return respondWith(200, jsonData, corsHeaders);
   } else {
+    const header = await fetchHeaderStats(env);
     const list = List({ observations: firsts, filter: filter });
-    const html = Layout({ content: list });
+    const html = LayoutView({ content: list, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
         "Content-Type": "text/html",

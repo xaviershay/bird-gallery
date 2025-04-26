@@ -17,28 +17,35 @@ export const SpeciesView = (data: SpeciesViewProps) => {
 
   return (
     <>
-      <h3>{species.name}</h3>
-      <div id="map"></div>
-      <table className="bird-list">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Location</th>
-            <th>Seen</th>
-          </tr>
-        </thead>
-        <tbody>
-          {observations.map((o, index) => (
-            <tr key={o.id}>
-              <td>{observationCount - index}</td>
-              <td>
-                <a href={`/location/${o.location.id}`}>{formatLocationName(o.location.name)}</a>
-              </td>
-              <td>{o.seenAt.toISOString().split("T")[0]}</td>
+      <section>
+        <h2>
+          <i className="fa-solid fa-feather"></i>
+          {species.name}
+        </h2>
+        <div id="map"></div>
+        <table className="bird-list">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Location</th>
+              <th>Seen</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {observations.map((o, index) => (
+              <tr key={o.id}>
+                <td>{observationCount - index}</td>
+                <td>
+                  <a href={`/location/${o.location.id}`}>
+                    {formatLocationName(o.location.name)}
+                  </a>
+                </td>
+                <td>{o.seenAt.toISOString().split("T")[0]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
       <script src="/js/map.js"></script>
       <script dangerouslySetInnerHTML={{ __html: scriptContent }}></script>
     </>

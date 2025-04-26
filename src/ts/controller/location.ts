@@ -2,9 +2,10 @@ import { Env } from "../routes";
 import { Observation, Location } from "../types";
 import { Filter } from "../model/filter";
 import { LocationView } from "../view/location.tsx";
-import { Layout } from "../view/layout.tsx";
+import { LayoutView } from "../view/layout.tsx";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
+import { fetchHeaderStats } from "../model/header_stats.ts";
 
 export async function handleLocation(
   request: Request,
@@ -25,12 +26,13 @@ export async function handleLocation(
   }
   
   const observations = await fetchLocationObservations(env, locationId, filter);
+  const header = await fetchHeaderStats(env);
 
   if (url.pathname.endsWith(".json")) {
     return respondWith(200, { location, observations }, corsHeaders);
   } else {
     const content = LocationView({ location, observations, filter });
-    const html = Layout({ content });
+    const html = LayoutView({ content, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
         "Content-Type": "text/html",

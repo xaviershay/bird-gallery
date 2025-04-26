@@ -1,7 +1,8 @@
 import { renderToString } from "react-dom/server";
 import { Env } from "../routes";
-import { Layout } from "../view/layout";
+import { LayoutView } from "../view/layout";
 import { HomeView } from "../view/home";
+import { fetchHeaderStats } from "../model/header_stats";
 
 export async function handleHome(
   request: Request,
@@ -11,7 +12,8 @@ export async function handleHome(
         seenCount: 141,
         photoCount: 90
      });
-    const html = Layout({ content: home });
+    const header = await fetchHeaderStats(env);
+    const html = LayoutView({ content: home, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
         "Content-Type": "text/html",

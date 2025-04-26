@@ -1,10 +1,11 @@
 import { Env } from "../routes";
 import { Observation, Species } from "../types";
 import { SpeciesView } from "../view/species.tsx";
-import { Layout } from "../view/layout.tsx";
+import { LayoutView } from "../view/layout.tsx";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
 import formatLocationName from "../helpers/format_location_name.ts";
+import { fetchHeaderStats } from "../model/header_stats.ts";
 
 export async function handleSpecies(
   request: Request,
@@ -59,8 +60,9 @@ export async function handleSpecies(
 
     return respondWith(200, jsonData, corsHeaders);
   } else {
+    const header = await fetchHeaderStats(env);
     const content = SpeciesView({ species, observations });
-    const html = Layout({ content });
+    const html = LayoutView({ content, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
         "Content-Type": "text/html",

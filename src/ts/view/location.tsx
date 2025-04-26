@@ -56,51 +56,55 @@ export const LocationView = (data: LocationViewProps) => {
 
   return (
     <>
-      <h3>{locationName}</h3>
-      <nav>
-        <section>
-          <strong>List</strong>
-          <ul>
-            <li>{navLink("Seen", { type: ObservationType.Sighting })}</li>
-            <li>{navLink("Photoed", { type: ObservationType.Photo })}</li>
-          </ul>
-        </section>
+      <section>
+        <h2>
+          <i className="fa-solid fa-location-dot"></i>
+          {locationName}</h2>
+        <nav>
+          <section>
+            <strong>List</strong>
+            <ul>
+              <li>{navLink("Seen", { type: ObservationType.Sighting })}</li>
+              <li>{navLink("Photoed", { type: ObservationType.Photo })}</li>
+            </ul>
+          </section>
 
-        <section>
-          <strong>Birds</strong>
-          <ul>
-            <li>{navLink("All", { blah: null })}</li>
-            <li>{navLink("Firsts", { blah: "firsts" })}</li>
-          </ul>
-        </section>
+          <section>
+            <strong>Birds</strong>
+            <ul>
+              <li>{navLink("All", { blah: null })}</li>
+              <li>{navLink("Firsts", { blah: "firsts" })}</li>
+            </ul>
+          </section>
 
-        <section>
-          <strong>Time Period</strong>
-          <ul>
-            <li>{navLink("Life", { period: null })}</li>
-            <li>{navLink("2025", { period: "2025" })}</li>
-          </ul>
-        </section>
-      </nav>
+          <section>
+            <strong>Time Period</strong>
+            <ul>
+              <li>{navLink("Life", { period: null })}</li>
+              <li>{navLink("2025", { period: "2025" })}</li>
+            </ul>
+          </section>
+        </nav>
 
-      <table className="bird-list">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>First Seen</th>
-          </tr>
-        </thead>
-        <tbody>
-          {observations.map((o, index) => (
-            <tr key={o.id}>
-              <td>{observationCount - index}</td>
-              <td>{speciesLink(o)}</td>
-              <td>{o.seenAt.toISOString().split("T")[0]}</td>
+        <table className="bird-list">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>First Seen</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {observations.map((o, index) => (
+              <tr key={o.id}>
+                <td>{observationCount - index}</td>
+                <td>{speciesLink(o)}</td>
+                <td>{o.seenAt.toISOString().split("T")[0]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
     </>
   );
 };

@@ -54,6 +54,17 @@ export const List = (data: PageList) => {
 
   return (
     <>
+    <header>
+        <h1><a href="/">Xavier&apos;s Bird Lists</a></h1>
+      <p>
+        Since 26<sup>th</sup> January 2025 I have{" "}
+        <a href="/firsts">seen 191 different species</a> of wild
+        bird, and{" "}
+        <a href="/firsts?type=photo">photographed 90.</a>
+      </p>
+      </header>
+      <section>
+        <h2><i className="fa-solid fa-trophy"></i> Firsts</h2>
       <nav>
         <section>
           <strong>List</strong>
@@ -97,7 +108,7 @@ export const List = (data: PageList) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></section>
       <script src="/js/map.js"></script>
       <script dangerouslySetInnerHTML={{ __html: scriptContent }}></script>
     </>
