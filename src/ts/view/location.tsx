@@ -40,13 +40,9 @@ export const LocationView = (data: LocationViewProps) => {
         : data.filter.period,
       "blah" in filterChange ? filterChange.blah ?? null : data.filter.blah
     );
-    if (objectEqual(newFilter, filter)) {
-      return <span>{text}</span>;
-    } else {
-      const queryString = newFilter.toQueryString();
-      const url = `?${queryString}`;
-      return <a href={url}>{text}</a>;
-    }
+    const queryString = newFilter.toQueryString();
+    const url = `?${queryString}`;
+    return <a className={objectEqual(newFilter, data.filter) ? "active" : ""} href={url}>{text}</a>;
   };
 
   const observationCount = observations.length;
@@ -62,29 +58,82 @@ export const LocationView = (data: LocationViewProps) => {
           <i className="fa-solid fa-location-dot"></i>
           {locationName}</h2>
         <nav>
-          <section>
-            <strong>List</strong>
-            <ul>
-              <li>{navLink("Seen", { type: ObservationType.Sighting })}</li>
-              <li>{navLink("Photoed", { type: ObservationType.Photo })}</li>
-            </ul>
-          </section>
-
-          <section>
-            <strong>Birds</strong>
-            <ul>
-              <li>{navLink("All", { blah: null })}</li>
-              <li>{navLink("Firsts", { blah: "firsts" })}</li>
-            </ul>
-          </section>
-
-          <section>
-            <strong>Time Period</strong>
-            <ul>
-              <li>{navLink("Life", { period: null })}</li>
-              <li>{navLink("2025", { period: "2025" })}</li>
-            </ul>
-          </section>
+          <table>
+            <tr>
+              <th></th>
+              <th colSpan={2}>Firsts</th>
+              <th colSpan={2}>All</th>
+            </tr>
+            <tr>
+              <th></th>
+              <th>Photo</th>
+              <th>Seen</th>
+              <th>Photo</th>
+              <th>Seen</th>
+            </tr>
+            <tr>
+              <th className='period'>Life</th>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Photo,
+                  blah: "firsts",
+                  period: null,
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Sighting,
+                  blah: "firsts",
+                  period: null,
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Photo,
+                  blah: null,
+                  period: null,
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Sighting,
+                  blah: null,
+                  period: null,
+                })}
+              </td>
+            </tr>
+            <tr>
+              <th className="period">2025</th>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Photo,
+                  blah: "firsts",
+                  period: "2025",
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Sighting,
+                  blah: "firsts",
+                  period: "2025",
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Photo,
+                  blah: null,
+                  period: "2025",
+                })}
+              </td>
+              <td>
+                {navLink("0", {
+                  type: ObservationType.Sighting,
+                  blah: null,
+                  period: "2025",
+                })}
+              </td>
+            </tr>
+          </table>
         </nav>
 
         <table className="bird-list">
