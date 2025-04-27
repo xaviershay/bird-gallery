@@ -1,7 +1,4 @@
-interface HomeViewProps {
-  seenCount: number;
-  photoCount: number;
-}
+interface HomeViewProps { }
 
 export const HomeView = (props: HomeViewProps) => {
   return (

@@ -61,8 +61,9 @@ export async function handleSpecies(
     return respondWith(200, jsonData, corsHeaders);
   } else {
     const header = await fetchHeaderStats(env);
+    const title = species.name + " - Xavier's Bird Lists";
     const content = SpeciesView({ species, observations });
-    const html = LayoutView({ content, header });
+    const html = LayoutView({ title, content, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
         "Content-Type": "text/html",

@@ -48,8 +48,9 @@ export async function handleFirsts(
     return respondWith(200, jsonData, corsHeaders);
   } else {
     const header = await fetchHeaderStats(env);
-    const list = List({ observations: firsts, filter: filter });
-    const html = LayoutView({ content: list, header });
+    const title = "Firsts - Xavier's Bird Lists";
+    const content = List({ observations: firsts, filter: filter });
+    const html = LayoutView({ title, content, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
         "Content-Type": "text/html",

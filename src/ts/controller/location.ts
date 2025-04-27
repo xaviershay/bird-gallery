@@ -32,7 +32,8 @@ export async function handleLocation(
     return respondWith(200, { location, observations }, corsHeaders);
   } else {
     const content = LocationView({ location, observations, filter });
-    const html = LayoutView({ content, header });
+    const title = location.name + " - Xavier's Bird Lists";
+    const html = LayoutView({ title, content, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
         "Content-Type": "text/html",

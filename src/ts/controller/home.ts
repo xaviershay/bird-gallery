@@ -8,12 +8,10 @@ export async function handleHome(
   request: Request,
   env: Env
 ): Promise<Response> {
-    const home = HomeView({
-        seenCount: 141,
-        photoCount: 90
-     });
+    const home = HomeView({ });
     const header = await fetchHeaderStats(env);
-    const html = LayoutView({ content: home, header });
+    const title = "Xavier's Bird Lists";
+    const html = LayoutView({ title, content: home, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
         "Content-Type": "text/html",

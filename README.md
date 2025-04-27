@@ -1,7 +1,5 @@
 ### TODO
 
-* Page titles
-* Actual data for nav links on firts
 * Redo nav on location page
 * Incorporate photos
 * Custom URL

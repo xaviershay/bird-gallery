@@ -2,6 +2,7 @@ import React from "react";
 import { HeaderStats } from "../model/header_stats";
 
 interface LayoutViewProps {
+  title: string,
   content: React.ReactNode,
   header: HeaderStats
 }
@@ -27,6 +28,7 @@ export const LayoutView = (props: LayoutViewProps) => {
         <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="/css/custom.css" />
+        <title>{props.title}</title>
       </head>
       <body>
     <header>
