@@ -6,6 +6,7 @@ import { formatDate } from "../helpers/format_date";
 
 interface PageList {
   filter: Filter; // TODO: should probably be "data source" or something better
+  filterCounts: Record<string, number>;
   observations: Array<Observation>;
 }
 
@@ -16,6 +17,7 @@ type PartialFilter = {
 };
 
 export const List = (data: PageList) => {
+  const { filterCounts } = data;
   const scriptContent = `
     urlF = (id) => ("/location/" + id + "?blah=firsts");
     initMap("/firsts.json?${data.filter.toQueryString()}", urlF);
@@ -35,7 +37,6 @@ export const List = (data: PageList) => {
   };
 
   const navLink = (
-    text: string,
     filterChange: PartialFilter
   ): React.ReactNode => {
     const newFilter = new Filter(
@@ -48,6 +49,7 @@ export const List = (data: PageList) => {
         : data.filter.period,
       data.filter.blah
     );
+    const text = filterCounts[newFilter.toQueryString()] ?? 0;
     const queryString = newFilter.toQueryString();
     const url = `?${queryString}`;
     return <a className={objectEqual(newFilter, data.filter) ? "active" : ""} href={url}>{text}</a>;
@@ -76,28 +78,28 @@ export const List = (data: PageList) => {
             <tr>
               <th className='period'>Life</th>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Photo,
                   region: "au-vic",
                   period: null,
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Sighting,
                   region: "au-vic",
                   period: null,
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Photo,
                   region: null,
                   period: null,
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Sighting,
                   region: null,
                   period: null,
@@ -107,28 +109,28 @@ export const List = (data: PageList) => {
             <tr>
               <th className="period">2025</th>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Photo,
                   region: "au-vic",
                   period: "2025",
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Sighting,
                   region: "au-vic",
                   period: "2025",
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Photo,
                   region: null,
                   period: "2025",
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Sighting,
                   region: null,
                   period: "2025",

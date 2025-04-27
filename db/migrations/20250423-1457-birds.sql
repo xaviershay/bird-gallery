@@ -49,6 +49,7 @@ CREATE VIEW observation_wide AS
     location.lng,
     location.state,
     location.county,
+    strftime("%Y", seen_at) as year,
     photo.id IS NOT NULL as has_photo
   FROM
     observation

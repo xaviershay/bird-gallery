@@ -1,5 +1,5 @@
 import { Env } from "../routes";
-import { Observation } from "../types";
+import { Observation, ObservationType } from "../types";
 import { Filter } from "../model/filter";
 import { List } from "../view/list.tsx";
 import { LayoutView } from "../view/layout.tsx";
@@ -49,7 +49,8 @@ export async function handleFirsts(
   } else {
     const header = await fetchHeaderStats(env);
     const title = "Firsts - Xavier's Bird Lists";
-    const content = List({ observations: firsts, filter: filter });
+    const filterCounts = await fetchFilterCounts(env);
+    const content = List({ observations: firsts, filter, filterCounts });
     const html = LayoutView({ title, content, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {
@@ -102,4 +103,50 @@ async function fetchFirsts(env: Env, filter: Filter): Promise<Observation[]> {
     },
     seenAt: new Date(record.seenAt + "Z"), // Treat seenAt as UTC by appending "Z"
   }));
+}
+
+async function fetchFilterCounts(
+  env: Env
+): Promise<Record<string, number>> {
+    let query = `
+      SELECT
+        year,
+        LOWER(state) as state,
+        COUNT(*) as allSightings,
+        COUNT(CASE WHEN has_photo THEN 1 END) as allPhotos,
+        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstSightings,
+        COUNT(CASE WHEN has_photo AND row_num = 1 THEN 1 END) as allFirstPhotos,
+        COUNT(CASE WHEN region_row_num = 1 THEN 1 END) as allRegionFirstSightings,
+        COUNT(CASE WHEN has_photo AND region_row_num = 1 THEN 1 END) as allRegionFirstPhotos
+      FROM (
+        SELECT *,
+          ROW_NUMBER() OVER (PARTITION BY species_id, year ORDER BY seen_at ASC) AS row_num,
+          ROW_NUMBER() OVER (PARTITION BY species_id, year, state ORDER BY seen_at ASC) AS region_row_num
+        FROM observation_wide
+      )
+      GROUP BY year, state
+    `;
+
+    let statement = env.DB.prepare(query);
+    let results = await statement.bind().all<any>();
+
+    let counts : Record<string, number> = {};
+    counts[new Filter(ObservationType.Sighting, null, null, null).toQueryString()] = 0;
+    counts[new Filter(ObservationType.Photo, null, null, null).toQueryString()] = 0;
+    results.results.forEach((result) => {
+      counts[new Filter(ObservationType.Sighting, result.state, result.year, null).toQueryString()] = result.allRegionFirstSightings;
+      counts[new Filter(ObservationType.Photo, result.state, result.year, null).toQueryString()] = result.allRegionFirstPhotos;
+      counts[new Filter(ObservationType.Sighting, null, null, null).toQueryString()] += result.allFirstSightings;
+      counts[new Filter(ObservationType.Photo, null, null, null).toQueryString()] += result.allFirstPhotos;
+      counts[new Filter(ObservationType.Sighting, null, result.year, null).toQueryString()] ||= 0;
+      counts[new Filter(ObservationType.Sighting, null, result.year, null).toQueryString()] += result.allFirstSightings;
+      counts[new Filter(ObservationType.Photo, null, result.year, null).toQueryString()] ||= 0;
+      counts[new Filter(ObservationType.Photo, null, result.year, null).toQueryString()] += result.allFirstPhotos;
+      counts[new Filter(ObservationType.Sighting, result.state, null, null).toQueryString()] ||= 0;
+      counts[new Filter(ObservationType.Sighting, result.state, null, null).toQueryString()] += result.allRegionFirstSightings;
+      counts[new Filter(ObservationType.Photo, result.state, null, null).toQueryString()] ||= 0;
+      counts[new Filter(ObservationType.Photo, result.state, null, null).toQueryString()] += result.allRegionFirstPhotos;
+    })
+
+    return counts;
 }
