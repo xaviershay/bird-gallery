@@ -1,6 +1,6 @@
 ### TODO
 
-* Redo nav on location page
+* Figure out why page takes 100ms (prob database?)
 * Incorporate photos
 * Custom URL
 * New mapbox API key
