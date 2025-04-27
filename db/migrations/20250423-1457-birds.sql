@@ -32,19 +32,28 @@ CREATE TABLE IF NOT EXISTS location (
     county TEXT NOT NULL
 ) STRICT;
 
-DROP VIEW observation_wide;
-CREATE VIEW IF NOT EXISTS observation_wide AS
-  SELECT observation.*,
+DROP TABLE IF EXISTS photo;
+CREATE TABLE photo (
+  id TEXT PRIMARY KEY,
+  observation_id INTEGER NOT NULL,
+  rating INTEGER NOT NULL
+);
+
+DROP VIEW IF EXISTS observation_wide;
+CREATE VIEW observation_wide AS
+  SELECT DISTINCT observation.*,
     species.common_name,
     -- family.common_name as family_name,
     location.name as location_name,
     location.lat,
     location.lng,
     location.state,
-    location.county
+    location.county,
+    photo.id IS NOT NULL as has_photo
   FROM
     observation
       INNER JOIN location ON location_id = location.id
       INNER JOIN species ON species_id = species.id
+      LEFT JOIN photo ON observation_id = photo.id
       -- INNER JOIN family ON family_id = family.id
     ;

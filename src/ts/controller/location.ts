@@ -1,5 +1,5 @@
 import { Env } from "../routes";
-import { Observation, Location } from "../types";
+import { Observation, Location, ObservationType } from "../types";
 import { Filter } from "../model/filter";
 import { LocationView } from "../view/location.tsx";
 import { LayoutView } from "../view/layout.tsx";
@@ -24,6 +24,8 @@ export async function handleLocation(
   if (!location) {
     return respondWith(404, { error: "Location not found" }, corsHeaders);
   }
+
+  const filterCounts = await fetchFilterCounts(location.id, env);
   
   const observations = await fetchLocationObservations(env, locationId, filter);
   const header = await fetchHeaderStats(env);
@@ -31,7 +33,7 @@ export async function handleLocation(
   if (url.pathname.endsWith(".json")) {
     return respondWith(200, { location, observations }, corsHeaders);
   } else {
-    const content = LocationView({ location, observations, filter });
+    const content = LocationView({ location, observations, filter, filterCounts });
     const title = location.name + " - Xavier's Bird Lists";
     const html = LayoutView({ title, content, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
@@ -145,7 +147,6 @@ async function fetchLocationObservations(
     }
   }
   
-  console.log(params);
   const statement = env.DB.prepare(query);
   const result = await statement.bind(...params).all<any>();
   
@@ -154,4 +155,56 @@ async function fetchLocationObservations(
     seenAt: new Date(row.seenAt),
     lastSeenAt: new Date(row.lastSeenAt)
   }));
+}
+
+async function fetchFilterCounts(
+  locationId: number,
+  env: Env
+): Promise<Record<string, number>> {
+    let query = `
+      SELECT
+        COUNT(*) as allSightings,
+        COUNT(CASE WHEN has_photo THEN 1 END) as allPhotos,
+        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstSightings,
+        COUNT(CASE WHEN has_photo AND row_num = 1 THEN 1 END) as allFirstPhotos
+      FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
+        FROM observation_wide
+      )
+      WHERE location_id = ?
+    `;
+
+    let statement = env.DB.prepare(query);
+    let result = await statement.bind(locationId).first<any>();
+
+    let counts : Record<string, number> = {};
+    counts[new Filter(ObservationType.Sighting, null, null, null).toQueryString()] = result.allSightings;
+    counts[new Filter(ObservationType.Photo, null, null, null).toQueryString()] = result.allPhotos;
+    counts[new Filter(ObservationType.Sighting, null, null, "firsts").toQueryString()] = result.allFirstSightings;
+    counts[new Filter(ObservationType.Photo, null, null, "firsts").toQueryString()] = result.allFirstPhotos;
+
+    query = `
+      SELECT
+        STRFTIME("%Y", seen_at) as year,
+        COUNT(*) as allSightings,
+        COUNT(CASE WHEN has_photo THEN 1 END) as allPhotos,
+        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstSightings,
+        COUNT(CASE WHEN has_photo AND row_num = 1 THEN 1 END) as allFirstPhotos
+      FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id, STRFTIME("%Y", seen_at) ORDER BY seen_at ASC) AS row_num
+        FROM observation_wide
+      )
+      WHERE location_id = ?
+      GROUP BY 1
+    `;
+    statement = env.DB.prepare(query);
+    const results = await statement.bind(locationId).all<any>();
+    results.results.forEach((result) => {
+      counts[new Filter(ObservationType.Sighting, null, result.year, null).toQueryString()] = result.allSightings;
+      counts[new Filter(ObservationType.Photo, null, result.year, null).toQueryString()] = result.allPhotos;
+      counts[new Filter(ObservationType.Sighting, null, result.year, "firsts").toQueryString()] = result.allFirstSightings;
+      counts[new Filter(ObservationType.Photo, null, result.year, "firsts").toQueryString()] = result.allFirstPhotos;
+    })
+
+    return counts;
 }

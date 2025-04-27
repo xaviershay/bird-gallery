@@ -5,6 +5,7 @@ import { formatDate } from "../helpers/format_date";
 
 interface LocationViewProps {
   filter: Filter;
+  filterCounts: Record<string, number>;
   observations: Array<Observation>;
   location: Location;
 }
@@ -26,10 +27,10 @@ const objectEqual = (
   );
 };
 export const LocationView = (data: LocationViewProps) => {
-  const { filter, observations, location } = data;
+  const { filter, filterCounts, observations, location } = data;
 
+  console.log(filterCounts);
   const navLink = (
-    text: string,
     filterChange: PartialFilter
   ): React.ReactNode => {
     const newFilter = new Filter(
@@ -40,6 +41,8 @@ export const LocationView = (data: LocationViewProps) => {
         : data.filter.period,
       "blah" in filterChange ? filterChange.blah ?? null : data.filter.blah
     );
+    console.log(newFilter.toQueryString());
+    const text = filterCounts[newFilter.toQueryString()] ?? 0;
     const queryString = newFilter.toQueryString();
     const url = `?${queryString}`;
     return <a className={objectEqual(newFilter, data.filter) ? "active" : ""} href={url}>{text}</a>;
@@ -74,28 +77,28 @@ export const LocationView = (data: LocationViewProps) => {
             <tr>
               <th className='period'>Life</th>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Photo,
                   blah: "firsts",
                   period: null,
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Sighting,
                   blah: "firsts",
                   period: null,
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Photo,
                   blah: null,
                   period: null,
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Sighting,
                   blah: null,
                   period: null,
@@ -105,28 +108,28 @@ export const LocationView = (data: LocationViewProps) => {
             <tr>
               <th className="period">2025</th>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Photo,
                   blah: "firsts",
                   period: "2025",
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Sighting,
                   blah: "firsts",
                   period: "2025",
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Photo,
                   blah: null,
                   period: "2025",
                 })}
               </td>
               <td>
-                {navLink("0", {
+                {navLink({
                   type: ObservationType.Sighting,
                   blah: null,
                   period: "2025",
