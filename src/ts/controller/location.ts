@@ -165,6 +165,7 @@ async function fetchFilterCounts(
   locationId: number,
   env: Env
 ): Promise<Record<string, number>> {
+    let counts : Record<string, number> = {};
     let query = `
       SELECT
         COUNT(*) as allSightings,
@@ -181,10 +182,26 @@ async function fetchFilterCounts(
     let statement = env.DB.prepare(query);
     let result = await statement.bind(locationId).first<any>();
 
-    let counts : Record<string, number> = {};
     counts[new Filter(ObservationType.Sighting, null, null, null).toQueryString()] = result.allSightings;
-    counts[new Filter(ObservationType.Photo, null, null, null).toQueryString()] = result.allPhotos;
     counts[new Filter(ObservationType.Sighting, null, null, "firsts").toQueryString()] = result.allFirstSightings;
+
+    query = `
+      SELECT
+        COUNT(*) as allPhotos,
+        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstPhotos
+      FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
+        FROM observation_wide
+        WHERE has_photo
+      )
+      WHERE
+        location_id = ?
+    `;
+
+    statement = env.DB.prepare(query);
+    result = await statement.bind(locationId).first<any>();
+
+    counts[new Filter(ObservationType.Photo, null, null, null).toQueryString()] = result.allPhotos;
     counts[new Filter(ObservationType.Photo, null, null, "firsts").toQueryString()] = result.allFirstPhotos;
 
     query = `
@@ -202,11 +219,29 @@ async function fetchFilterCounts(
       GROUP BY 1
     `;
     statement = env.DB.prepare(query);
-    const results = await statement.bind(locationId).all<any>();
+    let results = await statement.bind(locationId).all<any>();
     results.results.forEach((result) => {
       counts[new Filter(ObservationType.Sighting, null, result.year, null).toQueryString()] = result.allSightings;
-      counts[new Filter(ObservationType.Photo, null, result.year, null).toQueryString()] = result.allPhotos;
       counts[new Filter(ObservationType.Sighting, null, result.year, "firsts").toQueryString()] = result.allFirstSightings;
+    })
+
+    query = `
+      SELECT
+        STRFTIME("%Y", seen_at) as year,
+        COUNT(*) as allPhotos,
+        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstPhotos
+      FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id, STRFTIME("%Y", seen_at) ORDER BY seen_at ASC) AS row_num
+        FROM observation_wide
+        WHERE has_photo
+      )
+      WHERE location_id = ?
+      GROUP BY 1
+    `;
+    statement = env.DB.prepare(query);
+    results = await statement.bind(locationId).all<any>();
+    results.results.forEach((result) => {
+      counts[new Filter(ObservationType.Photo, null, result.year, null).toQueryString()] = result.allPhotos;
       counts[new Filter(ObservationType.Photo, null, result.year, "firsts").toQueryString()] = result.allFirstPhotos;
     })
 
