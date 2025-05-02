@@ -7,6 +7,7 @@ import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
 import formatLocationName from "../helpers/format_location_name.ts";
 import { fetchHeaderStats } from "../model/header_stats.ts";
+import { fetchDistinctPhotos, fetchPhotos } from "../model/photo.ts";
 
 export async function handleFirsts(
   request: Request,
@@ -50,7 +51,8 @@ export async function handleFirsts(
     const header = await fetchHeaderStats(env);
     const title = "Firsts - Xavier's Bird Lists";
     const filterCounts = await fetchFilterCounts(env);
-    const content = List({ observations: firsts, filter, filterCounts });
+    const photos = await fetchDistinctPhotos(env, filter.type == ObservationType.Photo ? firsts.slice(0, 30).map((obs) => obs.id) : []);
+    const content = List({ observations: firsts, filter, filterCounts, photos });
     const html = LayoutView({ title, content, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
       headers: {

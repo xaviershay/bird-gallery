@@ -1,13 +1,15 @@
 import { Filter } from "../model/filter";
-import { Observation } from "../types";
+import { Observation, Photo } from "../types";
 import { ObservationType } from "../types";
 import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
+import { ThumbnailStrip } from "./thumbnail_strip";
 
 interface PageList {
   filter: Filter; // TODO: should probably be "data source" or something better
   filterCounts: Record<string, number>;
-  observations: Array<Observation>;
+  observations: Observation[];
+  photos: Photo[];
 }
 
 type PartialFilter = {
@@ -17,7 +19,7 @@ type PartialFilter = {
 };
 
 export const List = (data: PageList) => {
-  const { filterCounts } = data;
+  const { filterCounts, photos } = data;
   const scriptContent = `
     urlF = (id) => ("/location/" + id + "?blah=firsts");
     initMap("/firsts.json?${data.filter.toQueryString()}", urlF);
@@ -139,6 +141,7 @@ export const List = (data: PageList) => {
             </tr>
           </table>
         </nav>
+        <ThumbnailStrip photos={photos} />
         <div id="map"></div>
         <table className="bird-list">
           <thead>

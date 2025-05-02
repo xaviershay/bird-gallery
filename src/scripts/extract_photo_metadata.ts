@@ -43,7 +43,7 @@ fs.readdir(photosDir, async (err, files) => {
         width: metadata.ExifImageWidth,
         tags: tagsArray,
         rating: metadata.Rating,
-        timeTaken: metadata.DateTimeOriginal,
+        takenAt: metadata.DateTimeOriginal,
         exposureTime: metadata.ExposureTime,
         fNumber: metadata.FNumber,
         iso: metadata.ISO,

@@ -6,6 +6,7 @@ import { LayoutView } from "../view/layout.tsx";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
 import { fetchHeaderStats } from "../model/header_stats.ts";
+import { fetchPhotos } from "../model/photo.ts";
 
 export async function handleLocation(
   request: Request,
@@ -77,30 +78,6 @@ async function fetchLocation(
     console.error("Error fetching location:", error);
     return null;
   }
-}
-
-async function fetchPhotos(
-  env: Env,
-  observationIds: string[]
-) : Promise<Photo[]> {
-    if (observationIds.length === 0) {
-        return [];
-    }
-
-    const placeholders = observationIds.map(() => '?').join(', ');
-    let query = `
-      SELECT DISTINCT
-        file_name as fileName,
-        width,
-        height
-      FROM photo
-      INNER JOIN observation ON observation_id = observation.id
-      WHERE 
-        observation_id IN (${placeholders})
-    `;
-    let statement = env.DB.prepare(query);
-    let results = await statement.bind(...observationIds).all<any>();
-    return results.results;
 }
 
 async function fetchLocationObservations(

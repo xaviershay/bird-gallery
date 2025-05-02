@@ -174,8 +174,8 @@ const observationSQLStatements = [];
     const filePath = path.join(metadataDir, file);
     const metadata = JSON.parse(readFileSync(filePath, 'utf-8'));
 
-    const { fileName, timeTaken, name, height, width, rating, exposureTime, fNumber, iso, zoom } = metadata;
-    const photoTime = new Date(timeTaken);
+    const { fileName, takenAt, name, height, width, rating, exposureTime, fNumber, iso, zoom } = metadata;
+    const photoTime = new Date(takenAt);
 
     // Find matching observation
     const matchingObservation = observationSQLStatements.find(([id, checklistId, speciesId, locationId, count, seenAt]) => {
@@ -192,6 +192,7 @@ const observationSQLStatements = [];
       photoSQLStatements.push([
         fileName,
         observationId,
+        takenAt,
         parseInt(rating),
         parseInt(height),
         parseInt(width),
@@ -208,14 +209,15 @@ const observationSQLStatements = [];
   // Prepare bulk insert SQL for photos
   if (photoSQLStatements.length > 0) {
     const photoValues = photoSQLStatements
-      .map(() => '(?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      .map(() => '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
       .join(',\n');
     const photoParams = photoSQLStatements.flat();
     console.log(generateSQL(
-      `INSERT INTO photo (file_name, observation_id, rating, height, width, exposure, fnumber, iso, zoom) VALUES
+      `INSERT INTO photo (file_name, observation_id, taken_at, rating, height, width, exposure, fnumber, iso, zoom) VALUES
        ${photoValues}
        ON CONFLICT(file_name) DO UPDATE SET
        observation_id = excluded.observation_id,
+       taken_at = excluded.taken_at,
        rating = excluded.rating,
        height = excluded.height,
        width = excluded.width,

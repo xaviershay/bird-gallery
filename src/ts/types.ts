@@ -10,7 +10,8 @@ export interface Observation {
   location: Location,
   seenAt: Date,
   lat: number,
-  lng: number
+  lng: number,
+  hasPhoto: boolean
 }
 
 export interface Photo {
