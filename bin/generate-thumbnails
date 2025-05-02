@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Directories
+PHOTOS_DIR="data/photos"
+THUMBNAILS_DIR="data/thumbnails"
+
+# Ensure the thumbnails directory exists
+mkdir -p "$THUMBNAILS_DIR"
+
+# Iterate over each JPG file in the photos directory
+for photo in "$PHOTOS_DIR"/*.jpg; do
+  # Extract the base filename
+  filename=$(basename "$photo")
+
+  # Check if the corresponding thumbnail already exists
+  if [ ! -f "$THUMBNAILS_DIR/$filename" ]; then
+    echo "Creating thumbnail for $filename"
+    # Create a resized version with max height of 150px, preserving metadata
+    convert "$photo" -resize x150 -auto-orient "$THUMBNAILS_DIR/$filename"
+  else
+    echo "Thumbnail already exists for $filename"
+  fi
+done

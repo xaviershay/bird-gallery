@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -ex
+
+DRY_RUN=""
+if [[ "$1" == "--dry-run" ]]; then
+  DRY_RUN="--dry-run"
+fi
+
+rclone sync -v $DRY_RUN data/photos/ r2:bird-gallery/photos
+rclone sync -v $DRY_RUN data/thumbnails/ r2:bird-gallery/thumbnails

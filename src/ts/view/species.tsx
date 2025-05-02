@@ -2,7 +2,7 @@ import { Species, Observation } from "../types";
 import { speciesUrl } from "../helpers/species_link";
 import formatLocationName from "../helpers/format_location_name";
 import { formatDate } from "../helpers/format_date";
-import photoUrl from "../helpers/photo_url";
+import { ThumbnailStrip } from "./thumbnail_strip";
 
 interface SpeciesViewProps {
   observations: Array<Observation>;
@@ -24,9 +24,7 @@ export const SpeciesView = (data: SpeciesViewProps) => {
           <i className="fa-solid fa-feather"></i>
           {species.name}
         </h2>
-        <div className='thumbnails'>
-          {species.photos.map((photo) => <img className='thumbnail' src={photoUrl(photo.fileName)} />)}
-        </div>
+        <ThumbnailStrip photos={species.photos} />
         <div id="map"></div>
         <table className="bird-list">
           <thead>

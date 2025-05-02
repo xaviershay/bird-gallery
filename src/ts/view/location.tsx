@@ -2,7 +2,7 @@ import { Filter } from "../model/filter";
 import { Observation, Location, ObservationType, Photo } from "../types";
 import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
-import photoUrl from "../helpers/photo_url";
+import { ThumbnailStrip } from "./thumbnail_strip";
 
 interface LocationViewProps {
   filter: Filter;
@@ -140,10 +140,7 @@ export const LocationView = (data: LocationViewProps) => {
             </tr>
           </table>
         </nav>
-
-        <div className='thumbnails'>
-          {photos.map((photo) => <img className='thumbnail' src={photoUrl(photo.fileName)} />)}
-        </div>
+        <ThumbnailStrip photos={photos} />
         <table className="bird-list">
           <thead>
             <tr>
