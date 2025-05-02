@@ -1,6 +1,13 @@
-interface HomeViewProps { }
+import { Photo } from "../types";
+import { ThumbnailStrip } from "./thumbnail_strip";
+
+interface HomeViewProps {
+  photos: Photo[]
+}
 
 export const HomeView = (props: HomeViewProps) => {
+  const { photos } = props;
+
   return (
     <>
       <section>
@@ -23,6 +30,7 @@ export const HomeView = (props: HomeViewProps) => {
         <h2>
           <i className="fa-solid fa-camera-retro"></i> Photos
         </h2>
+        <ThumbnailStrip photos={photos} />
         <p>
           Since 9<sup>th</sup> March 2025 I have shot with a{" "}
           <a href="https://www.nikonusa.com/p/coolpix-p950/26532/overview">

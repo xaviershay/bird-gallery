@@ -72,3 +72,19 @@ export async function fetchDistinctPhotos(
     let results = await statement.bind(...observationIds).all<any>();
     return results.results;
 }
+
+export async function fetchRecentGoodPhotos(env: Env): Promise<Photo[]> {
+    const query = `
+      SELECT 
+        file_name as fileName,
+        width,
+        height
+      FROM photo
+      WHERE rating >= 4
+      ORDER BY taken_at DESC
+      LIMIT 20
+    `;
+    let statement = env.DB.prepare(query);
+    let results = await statement.all<any>();
+    return results.results;
+}
