@@ -1,5 +1,5 @@
 import { Env } from "../routes";
-import { Observation, Location, ObservationType } from "../types";
+import { Observation, Location, ObservationType, Photo } from "../types";
 import { Filter } from "../model/filter";
 import { LocationView } from "../view/location.tsx";
 import { LayoutView } from "../view/layout.tsx";
@@ -26,14 +26,14 @@ export async function handleLocation(
   }
 
   const filterCounts = await fetchFilterCounts(location.id, env);
-  
   const observations = await fetchLocationObservations(env, locationId, filter);
+  const photos = await fetchPhotos(env, observations.map((obs) => obs.id))
   const header = await fetchHeaderStats(env);
 
   if (url.pathname.endsWith(".json")) {
     return respondWith(200, { location, observations }, corsHeaders);
   } else {
-    const content = LocationView({ location, observations, filter, filterCounts });
+    const content = LocationView({ location, observations, photos, filter, filterCounts });
     const title = location.name + " - Xavier's Bird Lists";
     const html = LayoutView({ title, content, header });
     return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
@@ -77,6 +77,30 @@ async function fetchLocation(
     console.error("Error fetching location:", error);
     return null;
   }
+}
+
+async function fetchPhotos(
+  env: Env,
+  observationIds: string[]
+) : Promise<Photo[]> {
+    if (observationIds.length === 0) {
+        return [];
+    }
+
+    const placeholders = observationIds.map(() => '?').join(', ');
+    let query = `
+      SELECT DISTINCT
+        file_name as fileName,
+        width,
+        height
+      FROM photo
+      INNER JOIN observation ON observation_id = observation.id
+      WHERE 
+        observation_id IN (${placeholders})
+    `;
+    let statement = env.DB.prepare(query);
+    let results = await statement.bind(...observationIds).all<any>();
+    return results.results;
 }
 
 async function fetchLocationObservations(

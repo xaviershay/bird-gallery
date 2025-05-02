@@ -1,12 +1,14 @@
 import { Filter } from "../model/filter";
-import { Observation, Location, ObservationType } from "../types";
+import { Observation, Location, ObservationType, Photo } from "../types";
 import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
+import photoUrl from "../helpers/photo_url";
 
 interface LocationViewProps {
   filter: Filter;
   filterCounts: Record<string, number>;
   observations: Array<Observation>;
+  photos: Array<Photo>;
   location: Location;
 }
 type PartialFilter = {
@@ -27,7 +29,7 @@ const objectEqual = (
   );
 };
 export const LocationView = (data: LocationViewProps) => {
-  const { filter, filterCounts, observations, location } = data;
+  const { filter, filterCounts, observations, photos, location } = data;
 
   console.log(filterCounts);
   const navLink = (
@@ -139,6 +141,9 @@ export const LocationView = (data: LocationViewProps) => {
           </table>
         </nav>
 
+        <div className='thumbnails'>
+          {photos.map((photo) => <img className='thumbnail' src={photoUrl(photo.fileName)} />)}
+        </div>
         <table className="bird-list">
           <thead>
             <tr>
