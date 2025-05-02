@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -ex
+
+npx tsc --esModuleInterop src/ts/extract_photo_metadata.tsx 
+node src/ts/extract_photo_metadata.js

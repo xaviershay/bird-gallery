@@ -3,3 +3,5 @@ node_modules
 dist
 out
 src/load.js
+data/photos/*
+src/ts/**/*.js
