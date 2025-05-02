@@ -16,6 +16,7 @@ export interface Observation {
 
 export interface Photo {
   fileName: string,
+  commonName: string,
   height: number,
   width: number
 }

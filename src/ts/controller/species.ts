@@ -97,9 +97,10 @@ async function fetchSpecies(
       SELECT DISTINCT
         file_name as fileName,
         width,
-        height
+        height,
+        common_name as commonName
       FROM photo
-      INNER JOIN observation ON observation_id = observation.id
+      INNER JOIN observation_wide ON observation_id = observation_wide.id
       WHERE 
         species_id = ?
     `

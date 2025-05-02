@@ -20,9 +20,10 @@ export async function fetchPhotos(
       SELECT DISTINCT
         file_name as fileName,
         width,
-        height
+        height,
+        common_name as commonName
       FROM photo
-      INNER JOIN observation ON observation_id = observation.id
+      INNER JOIN observation_wide ON observation_id = observation_wide.id
       WHERE 
         observation_id IN (${placeholders})
       ORDER BY
@@ -52,7 +53,8 @@ export async function fetchDistinctPhotos(
       SELECT 
         file_name as fileName,
         width,
-        height
+        height,
+        common_name as commonName
       FROM (
         SELECT 
           file_name,
@@ -60,9 +62,10 @@ export async function fetchDistinctPhotos(
           height,
           species_id,
           taken_at,
+          common_name,
           ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY taken_at DESC) as row_num
         FROM photo
-        INNER JOIN observation ON observation_id = observation.id
+        INNER JOIN observation_wide ON observation_id = observation_wide.id
         WHERE observation_id IN (${placeholders})
       ) ranked_photos
       WHERE row_num = 1
@@ -75,11 +78,13 @@ export async function fetchDistinctPhotos(
 
 export async function fetchRecentGoodPhotos(env: Env): Promise<Photo[]> {
     const query = `
-      SELECT 
+      SELECT
         file_name as fileName,
         width,
-        height
+        height,
+        common_name as commonName
       FROM photo
+      INNER JOIN observation_wide ON observation_id = observation_wide.id
       WHERE rating >= 4
       ORDER BY taken_at DESC
       LIMIT 20
