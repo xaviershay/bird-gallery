@@ -2,4 +2,4 @@
 
 set -ex
 
-npx tsc --downlevelIteration src/load.ts && node src/load.js > out/load.sql
+npx tsc --downlevelIteration src/scripts/load.ts && node src/scripts/load.js > out/load.sql

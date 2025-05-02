@@ -2,5 +2,5 @@
 
 set -ex
 
-npx tsc --esModuleInterop src/ts/extract_photo_metadata.tsx 
-node src/ts/extract_photo_metadata.js
+npx tsc --esModuleInterop src/scripts/extract_photo_metadata.ts
+node src/scripts/extract_photo_metadata.js

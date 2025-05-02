@@ -4,4 +4,4 @@ dist
 out
 src/load.js
 data/photos/*
-src/ts/**/*.js
+src/scripts/**/*.js
