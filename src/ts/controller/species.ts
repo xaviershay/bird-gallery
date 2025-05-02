@@ -1,5 +1,5 @@
 import { Env } from "../routes";
-import { Observation, Species } from "../types";
+import { Observation, Photo, Species } from "../types";
 import { SpeciesView } from "../view/species.tsx";
 import { LayoutView } from "../view/layout.tsx";
 import { renderToString } from "react-dom/server";
@@ -77,7 +77,7 @@ async function fetchSpecies(
   speciesId: string
 ): Promise<Species | null> {
   try {
-    const query = `
+    var query = `
       SELECT 
         id,
         common_name as name
@@ -86,16 +86,30 @@ async function fetchSpecies(
       LIMIT 1;
     `;
 
-    const statement = env.DB.prepare(query);
-    const result = await statement.bind(speciesId).first<any>();
+    var statement = env.DB.prepare(query);
+    var result = await statement.bind(speciesId).first<any>();
 
     if (!result) {
       return null;
     }
 
+    query = `
+      SELECT DISTINCT
+        file_name as fileName,
+        width,
+        height
+      FROM photo
+      INNER JOIN observation ON observation_id = observation.id
+      WHERE 
+        species_id = ?
+    `
+    statement = env.DB.prepare(query);
+    const photos = await statement.bind(speciesId).all<Photo>();
+
     return {
       id: result.id,
       name: result.name,
+      photos: photos.results
     };
   } catch (error) {
     console.error("Error fetching species:", error);

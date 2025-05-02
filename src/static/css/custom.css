@@ -103,6 +103,18 @@ section,
 section:first-child {
   padding-top: 0.5rem;
 }
+
+.thumbnail {
+  max-height: 150px;
+  border-radius: 0;
+}
+
+.thumbnails {
+  white-space: nowrap;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+
 /* Nav styling */
 h1 a {
   color: var(--text) !important;

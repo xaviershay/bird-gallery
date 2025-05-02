@@ -1,12 +1,12 @@
 ### TODO
 
 * Figure out why page takes 100ms (prob database?)
-* Incorporate photos
 * Custom URL
 * New mapbox API key
 * Restrict font-awesome hosting to domains
 * Recent firsts (or something else of interest) on home page.
 * Document architecture and dev setup in README.
+* Resize images for thumbnail versions.
 
 ### eBird API wants
 

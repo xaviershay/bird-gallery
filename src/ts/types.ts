@@ -13,9 +13,16 @@ export interface Observation {
   lng: number
 }
 
+export interface Photo {
+  fileName: string,
+  height: number,
+  width: number
+}
+
 export interface Species {
   id: string,
-  name: string
+  name: string,
+  photos: Photo[]
 }
 
 export interface Location {
