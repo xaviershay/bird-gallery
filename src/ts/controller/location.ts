@@ -106,6 +106,7 @@ async function fetchLocationObservations(
         FROM observation_wide
         WHERE 1=1
           ${periodCondition}
+          ${filter.type === ObservationType.Photo ? "AND has_photo" : ""}
       ) AS ranked
       WHERE row_num = 1
         AND location_id = ?
@@ -116,7 +117,7 @@ async function fetchLocationObservations(
     }
     params.push(locationId)
   } else {
-    // All birds seen at this location with first and last observation
+    // All birds seen at this location
     query = `
       SELECT
         o1.id,
@@ -130,14 +131,17 @@ async function fetchLocationObservations(
          WHERE o2.species_id = o1.species_id 
          AND o2.location_id = o1.location_id
          ${periodCondition}
+         ${filter.type === ObservationType.Photo ? "AND o2.has_photo" : ""}
         ) as lastSeenAt
       FROM observation_wide o1
       WHERE o1.location_id = ?
         ${periodCondition}
+        ${filter.type === ObservationType.Photo ? "AND o1.has_photo" : ""}
       GROUP BY o1.species_id
       ORDER BY o1.seen_at DESC;
     `;
   
+    console.log(query)
     if (filter.period) {
       params.push(filter.period);
     }
