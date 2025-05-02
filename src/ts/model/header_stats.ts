@@ -11,7 +11,7 @@ export async function fetchHeaderStats(
   let query = `
   SELECT
     COUNT(distinct species_id) as seenCount,
-    0 as photoCount
+    COUNT(distinct CASE WHEN has_photo THEN species_id ELSE NULL END) as photoCount
   FROM observation_wide
   `;
 

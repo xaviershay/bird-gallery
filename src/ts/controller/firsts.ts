@@ -65,6 +65,9 @@ async function fetchFirsts(env: Env, filter: Filter): Promise<Observation[]> {
   const regionCondition = filter.region
     ? `AND LOWER(state) LIKE LOWER(?) || '%'`
     : "";
+  const photoCondition = filter.type == ObservationType.Photo
+    ? "AND has_photo"
+    : "";
   const query = `
       SELECT
         id,
@@ -81,6 +84,7 @@ async function fetchFirsts(env: Env, filter: Filter): Promise<Observation[]> {
         WHERE 1=1
           ${yearCondition}
           ${regionCondition}
+          ${photoCondition}
       ) AS ranked
       WHERE row_num = 1
       ORDER BY seen_at DESC;
@@ -113,11 +117,8 @@ async function fetchFilterCounts(
         year,
         LOWER(state) as state,
         COUNT(*) as allSightings,
-        COUNT(CASE WHEN has_photo THEN 1 END) as allPhotos,
         COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstSightings,
-        COUNT(CASE WHEN has_photo AND row_num = 1 THEN 1 END) as allFirstPhotos,
-        COUNT(CASE WHEN region_row_num = 1 THEN 1 END) as allRegionFirstSightings,
-        COUNT(CASE WHEN has_photo AND region_row_num = 1 THEN 1 END) as allRegionFirstPhotos
+        COUNT(CASE WHEN region_row_num = 1 THEN 1 END) as allRegionFirstSightings
       FROM (
         SELECT *,
           ROW_NUMBER() OVER (PARTITION BY species_id, year ORDER BY seen_at ASC) AS row_num,
@@ -132,18 +133,41 @@ async function fetchFilterCounts(
 
     let counts : Record<string, number> = {};
     counts[new Filter(ObservationType.Sighting, null, null, null).toQueryString()] = 0;
-    counts[new Filter(ObservationType.Photo, null, null, null).toQueryString()] = 0;
     results.results.forEach((result) => {
       counts[new Filter(ObservationType.Sighting, result.state, result.year, null).toQueryString()] = result.allRegionFirstSightings;
-      counts[new Filter(ObservationType.Photo, result.state, result.year, null).toQueryString()] = result.allRegionFirstPhotos;
       counts[new Filter(ObservationType.Sighting, null, null, null).toQueryString()] += result.allFirstSightings;
-      counts[new Filter(ObservationType.Photo, null, null, null).toQueryString()] += result.allFirstPhotos;
       counts[new Filter(ObservationType.Sighting, null, result.year, null).toQueryString()] ||= 0;
       counts[new Filter(ObservationType.Sighting, null, result.year, null).toQueryString()] += result.allFirstSightings;
-      counts[new Filter(ObservationType.Photo, null, result.year, null).toQueryString()] ||= 0;
-      counts[new Filter(ObservationType.Photo, null, result.year, null).toQueryString()] += result.allFirstPhotos;
       counts[new Filter(ObservationType.Sighting, result.state, null, null).toQueryString()] ||= 0;
       counts[new Filter(ObservationType.Sighting, result.state, null, null).toQueryString()] += result.allRegionFirstSightings;
+    })
+
+    query = `
+      SELECT
+        year,
+        LOWER(state) as state,
+        COUNT(*) as allPhotos,
+        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstPhotos,
+        COUNT(CASE WHEN region_row_num = 1 THEN 1 END) as allRegionFirstPhotos
+      FROM (
+        SELECT *,
+          ROW_NUMBER() OVER (PARTITION BY species_id, year ORDER BY seen_at ASC) AS row_num,
+          ROW_NUMBER() OVER (PARTITION BY species_id, year, state ORDER BY seen_at ASC) AS region_row_num
+        FROM observation_wide
+        WHERE has_photo
+      )
+      GROUP BY year, state
+    `;
+
+    statement = env.DB.prepare(query);
+    results = await statement.bind().all<any>();
+
+    counts[new Filter(ObservationType.Photo, null, null, null).toQueryString()] = 0;
+    results.results.forEach((result) => {
+      counts[new Filter(ObservationType.Photo, result.state, result.year, null).toQueryString()] = result.allRegionFirstPhotos;
+      counts[new Filter(ObservationType.Photo, null, null, null).toQueryString()] += result.allFirstPhotos;
+      counts[new Filter(ObservationType.Photo, null, result.year, null).toQueryString()] ||= 0;
+      counts[new Filter(ObservationType.Photo, null, result.year, null).toQueryString()] += result.allFirstPhotos;
       counts[new Filter(ObservationType.Photo, result.state, null, null).toQueryString()] ||= 0;
       counts[new Filter(ObservationType.Photo, result.state, null, null).toQueryString()] += result.allRegionFirstPhotos;
     })
