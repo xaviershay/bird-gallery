@@ -1,4 +1,5 @@
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
+import path from 'path';
 import { parse } from 'csv-parse/sync';
 import { format, parse as parseDate } from 'date-fns';
 
@@ -160,6 +161,69 @@ const observationSQLStatements = [];
        count = excluded.count,
        seen_at = excluded.seen_at;`,
       observationParams
+    ));
+  }
+
+  // Directory containing metadata JSON files
+  const metadataDir = '/home/xavier/code/bird-gallery-cloudflare/data/metadata';
+  const metadataFiles = readdirSync(metadataDir);
+  const photoSQLStatements = [];
+
+  // Process metadata files
+  for (const file of metadataFiles) {
+    const filePath = path.join(metadataDir, file);
+    const metadata = JSON.parse(readFileSync(filePath, 'utf-8'));
+
+    const { fileName, timeTaken, name, height, width, rating, exposureTime, fNumber, iso, zoom } = metadata;
+    const photoTime = new Date(timeTaken);
+
+    // Find matching observation
+    const matchingObservation = observationSQLStatements.find(([id, checklistId, speciesId, locationId, count, seenAt]) => {
+      const observationTime = new Date(seenAt);
+      const timeDifference = Math.abs(photoTime.getTime() - observationTime.getTime());
+      return (
+        (taxonomyMap.get(name.toLowerCase()) as { speciesId: string } | undefined)?.speciesId === speciesId &&
+        timeDifference <= 6 * 60 * 60 * 1000 // 6 hour tolerance
+      );
+    });
+
+    if (matchingObservation) {
+      const [observationId] = matchingObservation;
+      photoSQLStatements.push([
+        fileName,
+        observationId,
+        parseInt(rating),
+        parseInt(height),
+        parseInt(width),
+        parseFloat(exposureTime),
+        fNumber,
+        iso,
+        zoom
+      ]);
+    } else {
+      console.error(`No matching observation found for photo: ${fileName}`);
+    }
+  }
+
+  // Prepare bulk insert SQL for photos
+  if (photoSQLStatements.length > 0) {
+    const photoValues = photoSQLStatements
+      .map(() => '(?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      .join(',\n');
+    const photoParams = photoSQLStatements.flat();
+    console.log(generateSQL(
+      `INSERT INTO photo (file_name, observation_id, rating, height, width, exposure, fnumber, iso, zoom) VALUES
+       ${photoValues}
+       ON CONFLICT(file_name) DO UPDATE SET
+       observation_id = excluded.observation_id,
+       rating = excluded.rating,
+       height = excluded.height,
+       width = excluded.width,
+       exposure = excluded.exposure,
+       fnumber = excluded.fnumber,
+       iso = excluded.iso,
+       zoom = excluded.zoom;`,
+      photoParams
     ));
   }
 })();

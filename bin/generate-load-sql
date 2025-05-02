@@ -2,4 +2,4 @@
 
 set -ex
 
-npx tsc --downlevelIteration src/scripts/load.ts && node src/scripts/load.js > out/load.sql
+npx tsc --esModuleInterop --downlevelIteration src/scripts/load.ts && node src/scripts/load.js > out/load.sql

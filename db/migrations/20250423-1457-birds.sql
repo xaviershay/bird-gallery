@@ -34,9 +34,15 @@ CREATE TABLE IF NOT EXISTS location (
 
 DROP TABLE IF EXISTS photo;
 CREATE TABLE photo (
-  id TEXT PRIMARY KEY,
+  file_name TEXT PRIMARY KEY,
   observation_id INTEGER NOT NULL,
-  rating INTEGER NOT NULL
+  rating INTEGER NOT NULL,
+  height INTEGER NOT NULL,
+  width INTEGER NOT NULL,
+  iso TEXT NOT NULL,
+  fnumber TEXT NOT NULL,
+  exposure REAL NOT NULL,
+  zoom TEXT NOT NULL
 );
 
 DROP VIEW IF EXISTS observation_wide;
@@ -50,11 +56,11 @@ CREATE VIEW observation_wide AS
     location.state,
     location.county,
     strftime("%Y", seen_at) as year,
-    photo.id IS NOT NULL as has_photo
+    photo.file_name IS NOT NULL as has_photo
   FROM
     observation
       INNER JOIN location ON location_id = location.id
       INNER JOIN species ON species_id = species.id
-      LEFT JOIN photo ON observation_id = photo.id
+      LEFT JOIN photo ON observation.id = photo.observation_id
       -- INNER JOIN family ON family_id = family.id
     ;
