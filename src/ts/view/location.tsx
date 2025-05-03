@@ -3,7 +3,7 @@ import { Observation, Location, ObsType, Photo } from "../types";
 import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
 import { ThumbnailStrip } from "./thumbnail_strip";
-import { objectShallowEqual } from "../helpers/object_shallow_equal";
+import { navLinkBuilder } from "../helpers/nav_link_builder";
 
 interface LocationViewProps {
   filter: Filter;
@@ -15,28 +15,7 @@ interface LocationViewProps {
 
 export const LocationView = (data: LocationViewProps) => {
   const { filter, filterCounts, observations, photos, location } = data;
-
-  const navLink = (filterChange: Partial<Filter>): React.ReactNode => {
-    const newFilter = new Filter(
-      filterChange.type ?? filter.type,
-      filter.region,
-      "period" in filterChange
-        ? filterChange.period ?? null
-        : data.filter.period,
-      "blah" in filterChange ? filterChange.blah ?? null : data.filter.blah
-    );
-    const text = filterCounts[newFilter.toQueryString()] ?? 0;
-    const queryString = newFilter.toQueryString();
-    const url = `?${queryString}`;
-    return (
-      <a
-        className={objectShallowEqual(newFilter, data.filter) ? "active" : ""}
-        href={url}
-      >
-        {text}
-      </a>
-    );
-  };
+  const navLink = navLinkBuilder(data.filter, filterCounts);
 
   const observationCount = observations.length;
   const locationName = location.name

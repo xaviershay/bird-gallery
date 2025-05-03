@@ -4,7 +4,7 @@ import { ObsType } from "../types";
 import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
 import { ThumbnailStrip } from "./thumbnail_strip";
-import { objectShallowEqual } from "../helpers/object_shallow_equal";
+import { navLinkBuilder } from "../helpers/nav_link_builder";
 
 interface FirstsViewProps {
   filter: Filter; // TODO: should probably be "data source" or something better
@@ -15,34 +15,11 @@ interface FirstsViewProps {
 
 export const FirstsView = (data: FirstsViewProps) => {
   const { filter, filterCounts, photos } = data;
+  const navLink = navLinkBuilder(data.filter, filterCounts);
   const scriptContent = `
     urlF = (id) => ("/location/" + id + "?blah=firsts");
     initMap("/firsts.json?${data.filter.toQueryString()}", urlF);
   `;
-
-  const navLink = (filterChange: Partial<Filter>): React.ReactNode => {
-    const newFilter = new Filter(
-      filterChange.type ?? data.filter.type,
-      "region" in filterChange
-        ? filterChange.region ?? null
-        : data.filter.region,
-      "period" in filterChange
-        ? filterChange.period ?? null
-        : data.filter.period,
-      data.filter.blah
-    );
-    const text = filterCounts[newFilter.toQueryString()] ?? 0;
-    const queryString = newFilter.toQueryString();
-    const url = `?${queryString}`;
-    return (
-      <a
-        className={objectShallowEqual(newFilter, data.filter) ? "active" : ""}
-        href={url}
-      >
-        {text}
-      </a>
-    );
-  };
 
   return (
     <>
