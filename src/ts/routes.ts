@@ -27,9 +27,10 @@ export default {
     }
 
     try {
-      switch (path[0]) {
-        case null:
+        if (!path[0])
           return handleHome(request, env);
+
+      switch (path[0]) {
         case "firsts":
         case "firsts.json":
           return handleFirsts(request, env);
