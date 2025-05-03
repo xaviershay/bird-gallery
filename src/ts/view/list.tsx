@@ -4,6 +4,7 @@ import { ObservationType } from "../types";
 import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
 import { ThumbnailStrip } from "./thumbnail_strip";
+import { objectShallowEqual } from "../helpers/object_shallow_equal";
 
 interface PageList {
   filter: Filter; // TODO: should probably be "data source" or something better
@@ -12,12 +13,6 @@ interface PageList {
   photos: Photo[];
 }
 
-type PartialFilter = {
-  type?: ObservationType;
-  region?: string | null;
-  period?: string | null;
-};
-
 export const List = (data: PageList) => {
   const { filter, filterCounts, photos } = data;
   const scriptContent = `
@@ -25,21 +20,8 @@ export const List = (data: PageList) => {
     initMap("/firsts.json?${data.filter.toQueryString()}", urlF);
   `;
 
-  // Utility function for shallow equality checking
-  const objectEqual = (
-    obj1: Record<string, any>,
-    obj2: Record<string, any>
-  ): boolean => {
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
-    if (keys1.length !== keys2.length) return false;
-    return keys1.every(
-      (key) => obj2.hasOwnProperty(key) && obj1[key] === obj2[key]
-    );
-  };
-
   const navLink = (
-    filterChange: PartialFilter
+    filterChange: Partial<Filter>
   ): React.ReactNode => {
     const newFilter = new Filter(
       filterChange.type ?? data.filter.type,
@@ -54,7 +36,7 @@ export const List = (data: PageList) => {
     const text = filterCounts[newFilter.toQueryString()] ?? 0;
     const queryString = newFilter.toQueryString();
     const url = `?${queryString}`;
-    return <a className={objectEqual(newFilter, data.filter) ? "active" : ""} href={url}>{text}</a>;
+    return <a className={objectShallowEqual(newFilter, data.filter) ? "active" : ""} href={url}>{text}</a>;
   };
 
   return (

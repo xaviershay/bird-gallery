@@ -3,6 +3,7 @@ import { Observation, Location, ObservationType, Photo } from "../types";
 import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
 import { ThumbnailStrip } from "./thumbnail_strip";
+import { objectShallowEqual } from "../helpers/object_shallow_equal";
 
 interface LocationViewProps {
   filter: Filter;
@@ -11,29 +12,12 @@ interface LocationViewProps {
   photos: Array<Photo>;
   location: Location;
 }
-type PartialFilter = {
-  type?: ObservationType;
-  period?: string | null;
-  blah?: string | null;
-};
 
-const objectEqual = (
-  obj1: Record<string, any>,
-  obj2: Record<string, any>
-): boolean => {
-  const keys1 = Object.keys(obj1);
-  const keys2 = Object.keys(obj2);
-  if (keys1.length !== keys2.length) return false;
-  return keys1.every(
-    (key) => obj2.hasOwnProperty(key) && obj1[key] === obj2[key]
-  );
-};
 export const LocationView = (data: LocationViewProps) => {
   const { filter, filterCounts, observations, photos, location } = data;
 
-  console.log(filterCounts);
   const navLink = (
-    filterChange: PartialFilter
+    filterChange: Partial<Filter>
   ): React.ReactNode => {
     const newFilter = new Filter(
       filterChange.type ?? filter.type,
@@ -43,11 +27,10 @@ export const LocationView = (data: LocationViewProps) => {
         : data.filter.period,
       "blah" in filterChange ? filterChange.blah ?? null : data.filter.blah
     );
-    console.log(newFilter.toQueryString());
     const text = filterCounts[newFilter.toQueryString()] ?? 0;
     const queryString = newFilter.toQueryString();
     const url = `?${queryString}`;
-    return <a className={objectEqual(newFilter, data.filter) ? "active" : ""} href={url}>{text}</a>;
+    return <a className={objectShallowEqual(newFilter, data.filter) ? "active" : ""} href={url}>{text}</a>;
   };
 
   const observationCount = observations.length;

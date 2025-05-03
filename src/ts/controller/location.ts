@@ -127,13 +127,7 @@ async function fetchLocationObservations(
         o1.location_id as locationId,
         o1.lat,
         o1.lng,
-        o1.seen_at as seenAt,
-        (SELECT MAX(seen_at) FROM observation_wide o2 
-         WHERE o2.species_id = o1.species_id 
-         AND o2.location_id = o1.location_id
-         ${periodCondition}
-         ${filter.type === ObservationType.Photo ? "AND o2.has_photo" : ""}
-        ) as lastSeenAt
+        o1.seen_at as seenAt
       FROM observation_wide o1
       WHERE o1.location_id = ?
         ${periodCondition}
@@ -142,7 +136,6 @@ async function fetchLocationObservations(
       ORDER BY o1.seen_at DESC;
     `;
   
-    console.log(query)
     if (filter.period) {
       params.push(filter.period);
     }

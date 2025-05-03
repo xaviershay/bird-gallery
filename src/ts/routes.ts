@@ -27,28 +27,22 @@ export default {
     }
 
     try {
-      if (path[0] == null) {
-        return handleHome(request, env);
+      switch (path[0]) {
+        case null:
+          return handleHome(request, env);
+        case "firsts":
+        case "firsts.json":
+          return handleFirsts(request, env);
+        case "location":
+          return handleLocation(request, env);
+        case "species":
+          return handleSpecies(request, env);
+        case "photo":
+          return handlePhoto(request, env);
+        default:
+          // If we get here, the route was not found
+          return respondWith(404, { error: "Not found" }, corsHeaders);
       }
-
-      if (path[0] === "firsts" || path[0] === "firsts.json") {
-        return handleFirsts(request, env);
-      }
-      
-      if (path[0] === "location") {
-        return handleLocation(request, env);
-      }
-
-      if (path[0] === "species") {
-        return handleSpecies(request, env);
-      }
-
-      if (path[0] === "photo") {
-        return handlePhoto(request, env);
-      }
-
-      // If we get here, the route was not found
-      return respondWith(404, { error: "Not found" }, corsHeaders);
     } catch (error) {
       console.error("Error processing request:", error);
       return respondWith(
