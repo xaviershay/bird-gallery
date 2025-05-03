@@ -41,7 +41,6 @@ export default {
         case "photo":
           return handlePhoto(request, env);
         default:
-          // If we get here, the route was not found
           return respondWith(404, { error: "Not found" }, corsHeaders);
       }
     } catch (error) {
