@@ -1,7 +1,5 @@
 // Type definitions for the application
 
-import React from "react";
-
 export interface Observation {
   id: string,
   speciesId: string,
@@ -17,8 +15,14 @@ export interface Observation {
 export interface Photo {
   fileName: string,
   commonName: string,
+  takenAt: Date,
   height: number,
-  width: number
+  width: number,
+  rating: number,
+  iso: string,
+  fNumber: string,
+  exposure: number,
+  zoom: string
 }
 
 export interface Species {

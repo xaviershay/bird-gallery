@@ -1,6 +1,56 @@
 import { Env } from "../routes";
-import { Photo } from "../types";
+import { Observation, Photo, Species } from "../types";
 
+
+export async function fetchPhoto(
+  env: Env,
+  photoId: string
+): Promise<{photo: Photo, observation: Observation} | null> {
+  const query = `
+    SELECT
+      *
+    FROM
+      photo INNER JOIN observation_wide ON observation_id = observation_wide.id 
+    WHERE
+      file_name = ?
+  `
+
+  let statement = env.DB.prepare(query);
+  let result = await statement.bind(photoId + '.jpg').first<any>();
+  if (!result) {
+    return null
+  }
+  return {
+    photo: {
+      fileName: result.file_name,
+      width: result.width,
+      height: result.height,
+      commonName: result.common_name,
+      takenAt: new Date(result.taken_at),
+      rating: result.rating,
+      iso: result.iso,
+      fNumber: result.fnumber,
+      exposure: result.exposure,
+      zoom: result.zoom
+    },
+    observation: {
+      id: result.observation_id,
+      speciesId: result.species_id,
+      name: result.common_name,
+      locationId: result.location_id,
+      location: {
+        id: result.location_id,
+        name: result.location_name,
+        lat: result.lat,
+        lng: result.lng
+      },
+      seenAt: result.seen_at,
+      lat: result.lat,
+      lng: result.lng,
+      hasPhoto: true
+    }
+  }
+}
 export async function fetchPhotos(
   env: Env,
   observationIds: string[]

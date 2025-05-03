@@ -9,7 +9,9 @@ export const ThumbnailStrip = ({ photos }: ThumbnailStripProps) => {
   return (
     <div className="thumbnails">
       {photos.map((photo) => (
-        <img key={photo.fileName} alt={photo.commonName} title={photo.commonName} className="thumbnail" src={photoUrl(photo.fileName)} />
+        <a href={`/photo/${photo.fileName.replace(/\.jpg$/, '')}`}>
+          <img key={photo.fileName} alt={photo.commonName} title={photo.commonName} className="thumbnail" src={photoUrl(photo.fileName)} />
+        </a>
       ))}
     </div>
   );

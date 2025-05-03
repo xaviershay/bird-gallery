@@ -3,6 +3,7 @@ import { handleLocation } from "./controller/location";
 import { handleSpecies } from "./controller/species";
 import { respondWith, corsHeaders } from "./controller/base";
 import { handleHome } from "./controller/home";
+import { handlePhoto } from "./controller/photo";
 
 export interface Env {
   DB: D1Database;
@@ -40,6 +41,10 @@ export default {
 
       if (path[0] === "species") {
         return handleSpecies(request, env);
+      }
+
+      if (path[0] === "photo") {
+        return handlePhoto(request, env);
       }
 
       // If we get here, the route was not found
