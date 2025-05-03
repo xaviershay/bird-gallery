@@ -73,6 +73,9 @@ export const HomeView = (props: HomeViewProps) => {
         </h2>
         <ul>
           <li>
+            <a href="https://blog.xaviershay.com">My blog</a>
+          </li>
+          <li>
             <a href="https://ebird.org/profile/NjY3NjU0MQ/world">
               eBird Profile
             </a>
