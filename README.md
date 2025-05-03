@@ -17,13 +17,10 @@ Site is available at https://birds.xaviershay.com
 ### TODO
 
 * Figure out why page takes 100ms (prob database?)
-* Custom URL
 * New mapbox API key
 * Restrict font-awesome hosting to domains
-* Recent firsts (or something else of interest) on home page.
 * Document architecture and dev setup in README.
-* Resize images for thumbnail versions.
-* Terraform for birds.xaviershay.com, SSL cert
+* Terraform for birds{,-gallery}.xaviershay.com, SSL cert
 
 ### eBird API wants
 
