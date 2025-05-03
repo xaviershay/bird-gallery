@@ -1,3 +1,19 @@
+## Deploy
+
+Site is available at https://birds.xaviershay.com
+
+    bin/deploy           # Push latest code
+
+    # Database
+    export CLOUDFLARE_API_TOKEN=secret
+    npx wrangler d1 execute birds --remote --file=db/migrations/somefile.sql
+    bin/load-data-remote
+
+    # Sync data/photos
+    bin/generate-thumbnails
+    bin/extract-photo-metadata
+    bin/sync-photos
+
 ### TODO
 
 * Figure out why page takes 100ms (prob database?)
@@ -7,6 +23,7 @@
 * Recent firsts (or something else of interest) on home page.
 * Document architecture and dev setup in README.
 * Resize images for thumbnail versions.
+* Terraform for birds.xaviershay.com, SSL cert
 
 ### eBird API wants
 
