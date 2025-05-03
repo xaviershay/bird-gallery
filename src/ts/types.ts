@@ -1,46 +1,44 @@
-// Type definitions for the application
-
 export interface Observation {
-  id: string,
-  speciesId: string,
-  name: string,
-  locationId: string,
-  location: Location,
-  seenAt: Date,
-  lat: number,
-  lng: number,
-  hasPhoto: boolean
+  id: string;
+  speciesId: string;
+  name: string;
+  locationId: string;
+  location: Location;
+  seenAt: Date;
+  lat: number;
+  lng: number;
+  hasPhoto: boolean;
 }
 
 export interface Photo {
-  fileName: string,
-  commonName: string,
-  takenAt: Date,
-  height: number,
-  width: number,
-  rating: number,
-  iso: string,
-  fNumber: string,
-  exposure: number,
-  zoom: string
+  fileName: string;
+  commonName: string;
+  takenAt: Date;
+  height: number;
+  width: number;
+  rating: number;
+  iso: string;
+  fNumber: string;
+  exposure: number;
+  zoom: string;
 }
 
 export interface Species {
-  id: string,
-  name: string,
-  photos: Photo[]
+  id: string;
+  name: string;
+  photos: Photo[];
 }
 
 export interface Location {
-  id: number,
-  name: string,
-  lat: number,
-  lng: number
+  id: number;
+  name: string;
+  lat: number;
+  lng: number;
 }
 
-export const enum ObservationType {
+export const enum ObsType {
   Sighting,
-  Photo
+  Photo,
 }
 
 // D1 result types
@@ -59,7 +57,9 @@ declare global {
   interface D1Database {
     prepare(query: string): D1PreparedStatement;
     dump(): Promise<ArrayBuffer>;
-    batch<T = unknown>(statements: D1PreparedStatement[]): Promise<D1Result<T>[]>;
+    batch<T = unknown>(
+      statements: D1PreparedStatement[]
+    ): Promise<D1Result<T>[]>;
     exec<T = unknown>(query: string): Promise<D1Result<T>>;
   }
 

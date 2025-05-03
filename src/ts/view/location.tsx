@@ -1,5 +1,5 @@
 import { Filter } from "../model/filter";
-import { Observation, Location, ObservationType, Photo } from "../types";
+import { Observation, Location, ObsType, Photo } from "../types";
 import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
 import { ThumbnailStrip } from "./thumbnail_strip";
@@ -16,9 +16,7 @@ interface LocationViewProps {
 export const LocationView = (data: LocationViewProps) => {
   const { filter, filterCounts, observations, photos, location } = data;
 
-  const navLink = (
-    filterChange: Partial<Filter>
-  ): React.ReactNode => {
+  const navLink = (filterChange: Partial<Filter>): React.ReactNode => {
     const newFilter = new Filter(
       filterChange.type ?? filter.type,
       filter.region,
@@ -30,7 +28,14 @@ export const LocationView = (data: LocationViewProps) => {
     const text = filterCounts[newFilter.toQueryString()] ?? 0;
     const queryString = newFilter.toQueryString();
     const url = `?${queryString}`;
-    return <a className={objectShallowEqual(newFilter, data.filter) ? "active" : ""} href={url}>{text}</a>;
+    return (
+      <a
+        className={objectShallowEqual(newFilter, data.filter) ? "active" : ""}
+        href={url}
+      >
+        {text}
+      </a>
+    );
   };
 
   const observationCount = observations.length;
@@ -44,7 +49,8 @@ export const LocationView = (data: LocationViewProps) => {
       <section>
         <h2>
           <i className="fa-solid fa-location-dot"></i>
-          {locationName}</h2>
+          {locationName}
+        </h2>
         <nav>
           <table>
             <tr>
@@ -60,31 +66,31 @@ export const LocationView = (data: LocationViewProps) => {
               <th>Seen</th>
             </tr>
             <tr>
-              <th className='period'>Life</th>
+              <th className="period">Life</th>
               <td>
                 {navLink({
-                  type: ObservationType.Photo,
+                  type: ObsType.Photo,
                   blah: "firsts",
                   period: null,
                 })}
               </td>
               <td>
                 {navLink({
-                  type: ObservationType.Sighting,
+                  type: ObsType.Sighting,
                   blah: "firsts",
                   period: null,
                 })}
               </td>
               <td>
                 {navLink({
-                  type: ObservationType.Photo,
+                  type: ObsType.Photo,
                   blah: null,
                   period: null,
                 })}
               </td>
               <td>
                 {navLink({
-                  type: ObservationType.Sighting,
+                  type: ObsType.Sighting,
                   blah: null,
                   period: null,
                 })}
@@ -94,28 +100,28 @@ export const LocationView = (data: LocationViewProps) => {
               <th className="period">2025</th>
               <td>
                 {navLink({
-                  type: ObservationType.Photo,
+                  type: ObsType.Photo,
                   blah: "firsts",
                   period: "2025",
                 })}
               </td>
               <td>
                 {navLink({
-                  type: ObservationType.Sighting,
+                  type: ObsType.Sighting,
                   blah: "firsts",
                   period: "2025",
                 })}
               </td>
               <td>
                 {navLink({
-                  type: ObservationType.Photo,
+                  type: ObsType.Photo,
                   blah: null,
                   period: "2025",
                 })}
               </td>
               <td>
                 {navLink({
-                  type: ObservationType.Sighting,
+                  type: ObsType.Sighting,
                   blah: null,
                   period: "2025",
                 })}
@@ -129,7 +135,7 @@ export const LocationView = (data: LocationViewProps) => {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>First {filter.type === ObservationType.Photo ? "Photo" : "Seen"}</th>
+              <th>First {filter.type === ObsType.Photo ? "Photo" : "Seen"}</th>
             </tr>
           </thead>
           <tbody>

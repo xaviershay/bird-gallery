@@ -1,5 +1,5 @@
 import { Env } from "../routes";
-import { Observation, ObservationType } from "../types";
+import { Observation, ObsType } from "../types";
 import { Filter } from "../model/filter";
 import { FirstsView } from "../view/firsts.tsx";
 import { LayoutView } from "../view/layout.tsx";
@@ -53,7 +53,7 @@ export async function handleFirsts(
     const filterCounts = await fetchFilterCounts(env);
     const photos = await fetchDistinctPhotos(
       env,
-      filter.type == ObservationType.Photo
+      filter.type == ObsType.Photo
         ? firsts.slice(0, 30).map((obs) => obs.id)
         : []
     );
@@ -77,8 +77,7 @@ async function fetchFirsts(env: Env, filter: Filter): Promise<Observation[]> {
   const regionCondition = filter.region
     ? `AND LOWER(state) LIKE LOWER(?) || '%'`
     : "";
-  const photoCondition =
-    filter.type == ObservationType.Photo ? "AND has_photo" : "";
+  const photoCondition = filter.type == ObsType.Photo ? "AND has_photo" : "";
   const query = `
       SELECT
         id,
@@ -141,52 +140,29 @@ async function fetchFilterCounts(env: Env): Promise<Record<string, number>> {
   let results = await statement.bind().all<any>();
 
   let counts: Record<string, number> = {};
-  counts[
-    new Filter(ObservationType.Sighting, null, null, null).toQueryString()
-  ] = 0;
+  counts[new Filter(ObsType.Sighting, null, null, null).toQueryString()] = 0;
   results.results.forEach((result) => {
     counts[
       new Filter(
-        ObservationType.Sighting,
+        ObsType.Sighting,
         result.state,
         result.year,
         null
       ).toQueryString()
     ] = result.allRegionFirstSightings;
+    counts[new Filter(ObsType.Sighting, null, null, null).toQueryString()] +=
+      result.allFirstSightings;
     counts[
-      new Filter(ObservationType.Sighting, null, null, null).toQueryString()
-    ] += result.allFirstSightings;
-    counts[
-      new Filter(
-        ObservationType.Sighting,
-        null,
-        result.year,
-        null
-      ).toQueryString()
+      new Filter(ObsType.Sighting, null, result.year, null).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(
-        ObservationType.Sighting,
-        null,
-        result.year,
-        null
-      ).toQueryString()
+      new Filter(ObsType.Sighting, null, result.year, null).toQueryString()
     ] += result.allFirstSightings;
     counts[
-      new Filter(
-        ObservationType.Sighting,
-        result.state,
-        null,
-        null
-      ).toQueryString()
+      new Filter(ObsType.Sighting, result.state, null, null).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(
-        ObservationType.Sighting,
-        result.state,
-        null,
-        null
-      ).toQueryString()
+      new Filter(ObsType.Sighting, result.state, null, null).toQueryString()
     ] += result.allRegionFirstSightings;
   });
 
@@ -210,42 +186,24 @@ async function fetchFilterCounts(env: Env): Promise<Record<string, number>> {
   statement = env.DB.prepare(query);
   results = await statement.bind().all<any>();
 
-  counts[
-    new Filter(ObservationType.Photo, null, null, null).toQueryString()
-  ] = 0;
+  counts[new Filter(ObsType.Photo, null, null, null).toQueryString()] = 0;
   results.results.forEach((result) => {
     counts[
-      new Filter(
-        ObservationType.Photo,
-        result.state,
-        result.year,
-        null
-      ).toQueryString()
+      new Filter(ObsType.Photo, result.state, result.year, null).toQueryString()
     ] = result.allRegionFirstPhotos;
+    counts[new Filter(ObsType.Photo, null, null, null).toQueryString()] +=
+      result.allFirstPhotos;
     counts[
-      new Filter(ObservationType.Photo, null, null, null).toQueryString()
-    ] += result.allFirstPhotos;
-    counts[
-      new Filter(ObservationType.Photo, null, result.year, null).toQueryString()
+      new Filter(ObsType.Photo, null, result.year, null).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(ObservationType.Photo, null, result.year, null).toQueryString()
+      new Filter(ObsType.Photo, null, result.year, null).toQueryString()
     ] += result.allFirstPhotos;
     counts[
-      new Filter(
-        ObservationType.Photo,
-        result.state,
-        null,
-        null
-      ).toQueryString()
+      new Filter(ObsType.Photo, result.state, null, null).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(
-        ObservationType.Photo,
-        result.state,
-        null,
-        null
-      ).toQueryString()
+      new Filter(ObsType.Photo, result.state, null, null).toQueryString()
     ] += result.allRegionFirstPhotos;
   });
 
