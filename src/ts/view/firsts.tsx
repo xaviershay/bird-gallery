@@ -6,14 +6,14 @@ import { formatDate } from "../helpers/format_date";
 import { ThumbnailStrip } from "./thumbnail_strip";
 import { objectShallowEqual } from "../helpers/object_shallow_equal";
 
-interface PageList {
+interface FirstsViewProps {
   filter: Filter; // TODO: should probably be "data source" or something better
   filterCounts: Record<string, number>;
   observations: Observation[];
   photos: Photo[];
 }
 
-export const List = (data: PageList) => {
+export const FirstsView = (data: FirstsViewProps) => {
   const { filter, filterCounts, photos } = data;
   const scriptContent = `
     urlF = (id) => ("/location/" + id + "?blah=firsts");
