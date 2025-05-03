@@ -1,4 +1,4 @@
-DROP TABLE observation;
+DROP TABLE IF EXISTS observation;
 CREATE TABLE observation (
   id TEXT PRIMARY KEY,
   checklist_id INTEGER,
@@ -9,12 +9,14 @@ CREATE TABLE observation (
 ) STRICT;
 
 -- TODO: Load this
-CREATE TABLE IF NOT EXISTS family (
+DROP TABLE IF EXISTS family;
+CREATE TABLE family (
     id TEXT PRIMARY KEY,
     common_name TEXT NOT NULL
 ) STRICT;
 
-CREATE TABLE IF NOT EXISTS species (
+DROP TABLE IF EXISTS species;
+CREATE TABLE species (
     id TEXT PRIMARY KEY,
     common_name TEXT NOT NULL,
     scientific_name TEXT NOT NULL,
@@ -23,7 +25,8 @@ CREATE TABLE IF NOT EXISTS species (
     family_id TEXT NOT NULL
 ) STRICT;
 
-CREATE TABLE IF NOT EXISTS location (
+DROP TABLE IF EXISTS location;
+CREATE TABLE location (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
     lat REAL NOT NULL,
