@@ -19,7 +19,7 @@ type PartialFilter = {
 };
 
 export const List = (data: PageList) => {
-  const { filterCounts, photos } = data;
+  const { filter, filterCounts, photos } = data;
   const scriptContent = `
     urlF = (id) => ("/location/" + id + "?blah=firsts");
     initMap("/firsts.json?${data.filter.toQueryString()}", urlF);
@@ -148,7 +148,7 @@ export const List = (data: PageList) => {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>First Seen</th>
+              <th>First {filter.type === ObservationType.Photo ? "Photo" : "Seen"}</th>
             </tr>
           </thead>
           <tbody>

@@ -146,7 +146,7 @@ export const LocationView = (data: LocationViewProps) => {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>First Seen</th>
+              <th>First {filter.type === ObservationType.Photo ? "Photo" : "Seen"}</th>
             </tr>
           </thead>
           <tbody>
