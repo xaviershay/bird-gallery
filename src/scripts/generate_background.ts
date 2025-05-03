@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-const OUTPUT_SIZE = 2000; // Canvas size: 1000x1000
-const SVG_DIR = path.resolve(__dirname, '../src/static/svg/components');
-const OUTPUT_FILE = path.resolve(__dirname, '../src/static/svg/composited.svg');
+const OUTPUT_SIZE = 2000;
+const SVG_DIR = path.resolve(__dirname, '../../src/static/svg/components');
+const OUTPUT_FILE = path.resolve(__dirname, '../../src/static/svg/composited.svg');
 
 /**
  * Generate a random integer between min (inclusive) and max (exclusive).

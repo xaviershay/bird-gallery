@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -ex
+
+npx tsx src/scripts/generate_background.ts
