@@ -17,7 +17,6 @@ Site is available at https://birds.xaviershay.com
 ### TODO
 
 * Figure out why page takes 100ms (prob database?)
-* Restrict font-awesome hosting to domains
 * Document architecture and dev setup in README.
 * Terraform for birds{,-gallery}.xaviershay.com, SSL cert
 
