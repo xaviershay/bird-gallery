@@ -21,6 +21,7 @@ export interface Photo {
   fNumber: string;
   exposure: number;
   zoom: string;
+  tags: string;
 }
 
 export interface Species {

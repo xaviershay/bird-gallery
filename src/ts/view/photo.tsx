@@ -8,6 +8,17 @@ interface PhotoViewProps {
   observation: Observation;
   photo: Photo;
 }
+
+const photoTitleLink = (observation: Observation, photo: Photo) => {
+  let suffix = ''
+  if (photo.tags && photo.tags.length > 0) {
+    suffix = ' (' + photo.tags + ')'
+  }
+  return <>
+    <a href={`/species/${observation.speciesId}`}>{photo.commonName}</a>{suffix}
+  </>
+}
+
 export const PhotoView = (data: PhotoViewProps) => {
   const { photo, observation } = data;
 
@@ -23,7 +34,7 @@ export const PhotoView = (data: PhotoViewProps) => {
       <table>
         <tr>
             <th>Bird</th>
-            <td><a href={`/species/${observation.speciesId}`}>{photo.commonName}</a></td>
+            <td>{photoTitleLink(observation, photo)}</td>
         </tr>
         <tr>
             <th>Rating</th>

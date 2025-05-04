@@ -31,7 +31,8 @@ export async function fetchPhoto(
       iso: result.iso,
       fNumber: result.fnumber,
       exposure: result.exposure,
-      zoom: result.zoom
+      zoom: result.zoom,
+      tags: result.tags
     },
     observation: {
       id: result.observation_id,

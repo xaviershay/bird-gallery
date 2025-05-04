@@ -177,8 +177,20 @@ const observationSQLStatements : any[] = [];
     const filePath = path.join(metadataDir, file);
     const metadata = JSON.parse(readFileSync(filePath, 'utf-8'));
 
-    const { fileName, takenAt, name, height, width, rating, exposureTime, fNumber, iso, zoom } = metadata;
+    const { fileName, takenAt, name, height, width, rating, exposureTime, fNumber, iso, zoom, tags } = metadata;
     const photoTime = new Date(takenAt);
+
+    let formattedTags = '';
+    if (tags && Array.isArray(tags)) {
+      formattedTags = tags
+        .filter(tag => tag.startsWith('birdtype/'))
+        .map(tag => {
+          // Extract the portion after 'birdtype/' and sentence case it
+          const tagText = tag.substring(9); // 'birdtype/'.length = 9
+          return tagText.charAt(0).toUpperCase() + tagText.slice(1).toLowerCase();
+        })
+        .join(', ');
+    }
 
     // Find matching observation
     const speciesId = (taxonomyMap.get(name.toLowerCase()) as { speciesId: string } | undefined)?.speciesId;
@@ -232,7 +244,8 @@ const observationSQLStatements : any[] = [];
           parseFloat(exposureTime),
           fNumber,
           iso,
-          zoom
+          zoom,
+          formattedTags
         ]);
       } else {
         console.error(`No observation within time tolerance for photo: ${fileName} (closest match was ${Math.round(closestMatch.timeDifference / (60 * 60 * 1000))} hours away)`);
@@ -243,11 +256,11 @@ const observationSQLStatements : any[] = [];
   // Prepare bulk insert SQL for photos
   if (photoSQLStatements.length > 0) {
     const photoValues = photoSQLStatements
-      .map(() => '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      .map(() => '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
       .join(',\n');
     const photoParams = photoSQLStatements.flat();
     console.log(generateSQL(
-      `INSERT INTO photo (file_name, observation_id, taken_at, rating, height, width, exposure, fnumber, iso, zoom) VALUES
+      `INSERT INTO photo (file_name, observation_id, taken_at, rating, height, width, exposure, fnumber, iso, zoom, tags) VALUES
        ${photoValues}
        ON CONFLICT(file_name) DO UPDATE SET
        observation_id = excluded.observation_id,
@@ -258,7 +271,8 @@ const observationSQLStatements : any[] = [];
        exposure = excluded.exposure,
        fnumber = excluded.fnumber,
        iso = excluded.iso,
-       zoom = excluded.zoom;`,
+       zoom = excluded.zoom,
+       tags = excluded.tags;`,
       photoParams
     ));
   }
