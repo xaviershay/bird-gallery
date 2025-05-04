@@ -54,7 +54,7 @@ export const PhotoView = (data: PhotoViewProps) => {
         </tr>
         <tr>
             <th>Aperture</th>
-            <td>F{photo.fNumber}</td>
+            <td>f/{photo.fNumber}</td>
         </tr>
         <tr>
             <th>Focal</th>
