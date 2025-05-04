@@ -6,6 +6,27 @@
   --accent: #3b7d57;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light;
+    --bg: #fcf4e2;
+    --text: #385c3c;
+    --accent: #3b7d57;
+    --accent-bg: #f5f7ff;
+    --text-light: #585858;
+    --accent-hover: #1266e2;
+    --accent-text: var(--bg);
+    --code: #d81b60;
+    --preformatted: #444;
+    --marked: #ffdd33;
+    --disabled: #efefef;
+  }
+
+  img, video {
+    opacity: 1.0;
+  }
+}
+
 body {
   background-image: url("/svg/composited.svg");
   background-position-x: center;
