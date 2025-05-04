@@ -37,7 +37,7 @@ const taxonomyMap = new Map(
 // Create sets to store unique location and species records
 const uniqueLocations: Map<number, [number, string, number, number, string, string]> = new Map();
 const uniqueSpecies: Map<string, [string, string, string, number, string, string]> = new Map();
-const observationSQLStatements = [];
+const observationSQLStatements : any[] = [];
 
 // Process and group records
 (async () => {
@@ -167,7 +167,7 @@ const observationSQLStatements = [];
   // Directory containing metadata JSON files
   const metadataDir = 'data/metadata';
   const metadataFiles = readdirSync(metadataDir);
-  const photoSQLStatements = [];
+  const photoSQLStatements : any[] = [];
 
   // Process metadata files
   for (const file of metadataFiles) {
