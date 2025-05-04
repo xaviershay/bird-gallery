@@ -6,13 +6,24 @@ interface ThumbnailStripProps {
 }
 
 export const ThumbnailStrip = ({ photos }: ThumbnailStripProps) => {
+  const height = 150;
   return (
     <div className="thumbnails">
       {photos.map((photo) => (
-        <a key={photo.fileName} href={`/photo/${photo.fileName.replace(/\.jpg$/, '')}`}>
-          <img alt={photo.commonName} title={photo.commonName} className="thumbnail" src={photoUrl(photo.fileName)} />
+        <a
+          key={photo.fileName}
+          href={`/photo/${photo.fileName.replace(/\.jpg$/, "")}`}
+        >
+          <img
+            height={height}
+            width={(photo.width / photo.height) * height}
+            alt={photo.commonName}
+            title={photo.commonName}
+            className="thumbnail"
+            src={photoUrl(photo.fileName)}
+          />
         </a>
       ))}
     </div>
   );
-}
+};
