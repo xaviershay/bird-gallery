@@ -1,11 +1,11 @@
 import { Env } from "../routes";
 import { Observation, Photo, Species } from "../types";
-import { SpeciesView } from "../view/species.tsx";
-import { LayoutView } from "../view/layout.tsx";
+import { SpeciesView } from "../view/species";
+import { LayoutView } from "../view/layout";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
-import formatLocationName from "../helpers/format_location_name.ts";
-import { fetchHeaderStats } from "../model/header_stats.ts";
+import formatLocationName from "../helpers/format_location_name";
+import { fetchHeaderStats } from "../model/header_stats";
 
 export async function handleSpecies(
   request: Request,

@@ -1,13 +1,13 @@
 import { Env } from "../routes";
 import { Observation, ObsType } from "../types";
 import { Filter } from "../model/filter";
-import { FirstsView } from "../view/firsts.tsx";
-import { LayoutView } from "../view/layout.tsx";
+import { FirstsView } from "../view/firsts";
+import { LayoutView } from "../view/layout";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
-import formatLocationName from "../helpers/format_location_name.ts";
-import { fetchHeaderStats } from "../model/header_stats.ts";
-import { fetchDistinctPhotos } from "../model/photo.ts";
+import formatLocationName from "../helpers/format_location_name";
+import { fetchHeaderStats } from "../model/header_stats";
+import { fetchDistinctPhotos } from "../model/photo";
 
 export async function handleFirsts(
   request: Request,

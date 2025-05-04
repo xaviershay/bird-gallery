@@ -1,12 +1,12 @@
 import { Env } from "../routes";
 import { Observation, Location, ObsType } from "../types";
 import { Filter } from "../model/filter";
-import { LocationView } from "../view/location.tsx";
-import { LayoutView } from "../view/layout.tsx";
+import { LocationView } from "../view/location";
+import { LayoutView } from "../view/layout";
 import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
-import { fetchHeaderStats } from "../model/header_stats.ts";
-import { fetchPhotos } from "../model/photo.ts";
+import { fetchHeaderStats } from "../model/header_stats";
+import { fetchPhotos } from "../model/photo";
 
 export async function handleLocation(
   request: Request,

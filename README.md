@@ -67,7 +67,7 @@ Site is available at https://birds.xaviershay.com
 
     # Database
     export CLOUDFLARE_API_TOKEN=secret
-    npx wrangler d1 execute birds --remote --file=db/migrations/somefile.sql
+    npx wrangler d1 execute birds --remote --file=src/sql/schema.sql
     bin/load-data-remote
 
     # Sync data/photos

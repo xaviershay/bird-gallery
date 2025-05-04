@@ -1,16 +1,11 @@
 name = "typescript-d1-worker"
 main = "src/ts/routes.ts"
-compatibility_date = "2025-04-21"
+compatibility_date = "2025-04-16"
 workers_dev = true
 
 [assets]
 directory = "src/static"
 binding = "ASSETS"
-
-[[rules]]
-type = "Text"
-globs = ["**/*.mustache"]
-fallthrough = true
 
 # D1 Database configuration
 [[d1_databases]]
