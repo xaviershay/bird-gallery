@@ -1,21 +1,59 @@
 import { env, SELF } from 'cloudflare:test';
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach } from 'vitest';
 import schemaSql from '../src/sql/schema.sql?raw'; // Import SQL as raw string
+
+async function execSql(sql: string) {
+	const statements = sql
+		.split(';')
+		.map(sql => sql.trim())
+		.filter(sql => sql.length > 0)
+		.map(sql => env.DB.prepare(sql));
+
+	// Execute the statements in a batch
+	await env.DB.batch(statements);
+}
 
 describe('', () => {
 	beforeAll(async () => {
-		const statements = schemaSql
-			.split(';')
-			.map(sql => sql.trim())
-			.filter(sql => sql.length > 0)
-			.map(sql => env.DB.prepare(sql));
-
-		// Execute the statements in a batch
-		await env.DB.batch(statements);
+		await execSql(schemaSql);
 	})
 
-	it('renders a home page', async () => {
-		const response = await SELF.fetch('https://localhost/');
-		expect(await response.text()).toContain("Bird Lists");
-	});
+	describe('/', () => {
+		it('renders', async () => {
+			const response = await SELF.fetch('https://localhost/');
+			expect(await response.text()).toContain("Bird Lists");
+		});
+	})
+
+	describe('/location/1', () => {
+		beforeEach(async () => {
+		    await execSql(`
+				INSERT INTO location (id, name, lat, lng, state, county) VALUES
+				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
+				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
+				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+					('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
+				INSERT INTO observation VALUES
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00');
+				INSERT INTO observation VALUES
+				    ('219171570-railor6', 219171569, 'railor6', 2552179, 2, '2024-03-18T17:11:00');
+			`,)
+		})
+
+		it('renders', async () => {
+			const response = await SELF.fetch('https://localhost/location/2552179');
+			const content = await response.text();
+			expect(content).toContain("Royal Park");
+			expect(content).toContain("Rainbow Lorikeet");
+			expect(content).toContain("Old Lorikeet");
+		});
+
+		it('renders for a specific year', async () => {
+			const response = await SELF.fetch('https://localhost/location/2552179?period=2025');
+			const content = await response.text();
+			expect(content).toContain("Rainbow Lorikeet");
+			expect(content).not.toContain("Old Lorikeet");
+		});
+	})
 });

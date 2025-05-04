@@ -146,10 +146,6 @@ async function fetchLocationObservations(
       GROUP BY o1.species_id
       ORDER BY o1.seen_at DESC;
     `;
-
-    if (filter.period) {
-      params.push(filter.period);
-    }
     params.push(locationId);
     if (filter.period) {
       params.push(filter.period);
