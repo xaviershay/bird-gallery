@@ -1,3 +1,6 @@
 #!/bin/bash
 
-exec npx wrangler deploy
+set -ex
+
+npx wrangler deploy
+bin/load-data-remote

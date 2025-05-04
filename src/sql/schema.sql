@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS metadata;
+CREATE TABLE metadata (
+  id TEXT PRIMARY KEY,
+  value TEXT NOT NULL
+);
+
 DROP TABLE IF EXISTS observation;
 CREATE TABLE observation (
   id TEXT PRIMARY KEY,
