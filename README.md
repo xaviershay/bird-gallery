@@ -59,14 +59,18 @@ compositing a number of free bird SVGs [(courtesy of
 Freepik)](https://www.freepik.com/free-vector/birds-silhouettes-collection_907524.htm)
 onto a larger canvas. See `bin/generate-background`.
 
+Responses are stored in Cloudflare's Cache API so they only need to be generated
+once. A cache-busting version key is updated every deployment or data change.
+
 ## Deploy
 
 Site is available at https://birds.xaviershay.com
 
-    bin/deploy           # Push latest code
+    export CLOUDFLARE_API_TOKEN=secret
+
+    bin/deploy           # Push latest code and data
 
     # Database
-    export CLOUDFLARE_API_TOKEN=secret
     npx wrangler d1 execute birds --remote --file=src/sql/schema.sql
     bin/load-data-remote
 
