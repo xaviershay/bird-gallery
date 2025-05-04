@@ -35,9 +35,9 @@ describe('', () => {
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO observation VALUES
-				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00');
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null);
 				INSERT INTO observation VALUES
-				    ('219171570-railor6', 219171569, 'railor6', 2552179, 2, '2024-03-18T17:11:00');
+				    ('219171570-railor6', 219171569, 'railor6', 2552179, 2, '2024-03-18T17:11:00', null);
 			`,)
 		})
 
