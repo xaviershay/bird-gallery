@@ -5,7 +5,8 @@ CREATE TABLE observation (
   species_id TEXT NOT NULL,
   location_id INTEGER NOT NULL,
   count INTEGER NULL,
-  seen_at TEXT NOT NULL
+  seen_at TEXT NOT NULL,
+  ml_catalog_numbers TEXT
 ) STRICT;
 
 -- TODO: Load this

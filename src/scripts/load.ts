@@ -54,6 +54,7 @@ const observationSQLStatements : any[] = [];
       Longitude: lng,
       Date: date,
       Time: time,
+      'ML Catalog Numbers': mlCatalogNumbers
     } = record;
 
     const timeParsed = time && time.trim() 
@@ -103,6 +104,7 @@ const observationSQLStatements : any[] = [];
         locationId,
         count === 'X' ? null : parseInt(count),
         seenAt,
+        mlCatalogNumbers || null
       ]
     );
   }
@@ -149,17 +151,18 @@ const observationSQLStatements : any[] = [];
   console.log("DELETE FROM observation;")
   if (observationSQLStatements.length > 0) {
     const observationValues = observationSQLStatements
-      .map(() => '(?, ?, ?, ?, ?, ?)')
+      .map(() => '(?, ?, ?, ?, ?, ?, ?)')
       .join(",\n");
     const observationParams = observationSQLStatements.flat();
     console.log(generateSQL(
-      `INSERT INTO observation (id, checklist_id, species_id, location_id, count, seen_at) VALUES
+      `INSERT INTO observation (id, checklist_id, species_id, location_id, count, seen_at, ml_catalog_numbers) VALUES
        ${observationValues}
        ON CONFLICT(id) DO UPDATE SET
        species_id = excluded.species_id,
        location_id = excluded.location_id,
        count = excluded.count,
-       seen_at = excluded.seen_at;`,
+       seen_at = excluded.seen_at,
+       ml_catalog_numbers = excluded.ml_catalog_numbers;`,
       observationParams
     ));
   }
@@ -178,31 +181,62 @@ const observationSQLStatements : any[] = [];
     const photoTime = new Date(takenAt);
 
     // Find matching observation
-    const matchingObservation = observationSQLStatements.find(([id, checklistId, speciesId, locationId, count, seenAt]) => {
-      const observationTime = new Date(seenAt);
-      const timeDifference = Math.abs(photoTime.getTime() - observationTime.getTime());
-      return (
-        (taxonomyMap.get(name.toLowerCase()) as { speciesId: string } | undefined)?.speciesId === speciesId &&
-        timeDifference <= 6 * 60 * 60 * 1000 // 6 hour tolerance
-      );
-    });
-
-    if (matchingObservation) {
-      const [observationId] = matchingObservation;
-      photoSQLStatements.push([
-        fileName,
-        observationId,
-        takenAt,
-        parseInt(rating),
-        parseInt(height),
-        parseInt(width),
-        parseFloat(exposureTime),
-        fNumber,
-        iso,
-        zoom
-      ]);
+    const speciesId = (taxonomyMap.get(name.toLowerCase()) as { speciesId: string } | undefined)?.speciesId;
+    
+    // Find all observations of the same species that have ML Catalog Numbers
+    const potentialMatches = observationSQLStatements.filter(([id, checklistId, obsSpeciesId, locationId, count, seenAt, mlCatalogNum]) => 
+      obsSpeciesId === speciesId && mlCatalogNum !== null && mlCatalogNum !== ""
+    );
+    
+    if (potentialMatches.length === 0) {
+      console.error(`No matching species with ML Catalog Numbers found for photo: ${fileName} (${name})`);
     } else {
-      console.error(`No matching observation found for photo: ${fileName}`);
+      // Calculate time differences and find the closest match
+      const matchesWithTimeDiff = potentialMatches.map(observation => {
+        const [observationId, checklistId, obsSpeciesId, locationId, count, seenAt, mlCatalogNum] = observation;
+        const observationTime = new Date(seenAt);
+        const timeDifference = Math.abs(photoTime.getTime() - observationTime.getTime());
+        return { observation, timeDifference };
+      });
+      
+      // Sort by time difference
+      matchesWithTimeDiff.sort((a, b) => a.timeDifference - b.timeDifference);
+      
+      // Get the closest match
+      const closestMatch = matchesWithTimeDiff[0];
+      
+      // Check if it's within tolerance
+      if (closestMatch.timeDifference <= 6 * 60 * 60 * 1000) { // 6 hour tolerance
+        // Check if multiple observations are very close in time
+        const closeMatches = matchesWithTimeDiff.filter(match => 
+          match.timeDifference <= closestMatch.timeDifference + (15 * 60 * 1000) // within 15 minutes of closest
+        );
+        
+        if (closeMatches.length > 1) {
+          console.error(`Multiple potential matches for photo ${fileName} (${name}):`);
+          closeMatches.forEach(match => {
+            const [obsId, checklistId, , locationId, , seenAt] = match.observation;
+            console.error(`  Observation ${obsId}, Location ${locationId}, Time ${seenAt}, Diff: ${Math.round(match.timeDifference / (60 * 1000))} minutes`);
+          });
+        }
+        
+        const matchingObservation = closestMatch.observation;
+        const [observationId] = matchingObservation;
+        photoSQLStatements.push([
+          fileName,
+          observationId,
+          takenAt,
+          parseInt(rating),
+          parseInt(height),
+          parseInt(width),
+          parseFloat(exposureTime),
+          fNumber,
+          iso,
+          zoom
+        ]);
+      } else {
+        console.error(`No observation within time tolerance for photo: ${fileName} (closest match was ${Math.round(closestMatch.timeDifference / (60 * 60 * 1000))} hours away)`);
+      }
     }
   }
 

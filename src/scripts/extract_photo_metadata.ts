@@ -54,4 +54,42 @@ fs.readdir(photosDir, async (err, files) => {
       fs.writeFileSync(metadataPath, JSON.stringify(photoMetadata, null, 2));
       console.log(`Metadata for ${file} written to ${metadataPath}`);
   }
+
+  // After processing all photos, check for orphaned metadata files
+  cleanupOrphanedMetadataFiles();
 });
+
+/**
+ * Checks for metadata files that correspond to photos that no longer exist
+ * and deletes them.
+ */
+function cleanupOrphanedMetadataFiles() {
+  console.log("Checking for orphaned metadata files...");
+  
+  try {
+    const metadataFiles = fs.readdirSync(metadataDir);
+    let deletedCount = 0;
+    
+    for (const metadataFile of metadataFiles) {
+      if (!metadataFile.endsWith('.json')) continue;
+      
+      const metadataPath = path.join(metadataDir, metadataFile);
+      const metadataContent = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+      
+      // Check if the photo file exists
+      const photoFilename = metadataContent.fileName;
+      const photoPath = path.join(photosDir, photoFilename);
+      
+      if (!fs.existsSync(photoPath)) {
+        // Photo doesn't exist anymore, delete the metadata file
+        fs.unlinkSync(metadataPath);
+        console.log(`Deleted orphaned metadata file: ${metadataFile}`);
+        deletedCount++;
+      }
+    }
+    
+    console.log(`Cleanup complete. Deleted ${deletedCount} orphaned metadata files.`);
+  } catch (err) {
+    console.error("Error during orphaned metadata cleanup:", err);
+  }
+}
