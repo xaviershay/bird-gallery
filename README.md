@@ -82,6 +82,7 @@ Site is available at https://birds.xaviershay.com
 - Terraform for birds{,-gallery}.xaviershay.com and SSL cert
 - Photo "needs" list
 - Monitoring of common locations?
+- Fixed width/height tags for photos
 
 ### eBird API wants
 
