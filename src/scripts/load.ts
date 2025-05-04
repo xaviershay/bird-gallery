@@ -12,8 +12,8 @@ function generateSQL(query: string, params: any[]) {
 }
 
 // Load CSV data
-const csvFilePath = '/home/xavier/code/bird-gallery-cloudflare/data/MyEBirdData.csv';
-const taxonomyFilePath = '/home/xavier/code/bird-gallery-cloudflare/data/ebird-taxonomy.csv';
+const csvFilePath = 'data/MyEBirdData.csv';
+const taxonomyFilePath = 'data/ebird-taxonomy.csv';
 const csvData = readFileSync(csvFilePath, 'utf-8');
 const taxonomyData = readFileSync(taxonomyFilePath, 'utf-8');
 const records = parse(csvData, { columns: true, skip_empty_lines: true, relax_column_count: true });
@@ -165,7 +165,7 @@ const observationSQLStatements = [];
   }
 
   // Directory containing metadata JSON files
-  const metadataDir = '/home/xavier/code/bird-gallery-cloudflare/data/metadata';
+  const metadataDir = 'data/metadata';
   const metadataFiles = readdirSync(metadataDir);
   const photoSQLStatements = [];
 
