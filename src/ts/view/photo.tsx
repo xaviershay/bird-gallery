@@ -50,7 +50,7 @@ export const PhotoView = (data: PhotoViewProps) => {
         </tr>
         <tr>
             <th>Camera</th>
-            <td>NIKON COOLPIX 950</td>
+            <td>Nikon COOLPIX 950</td>
         </tr>
         <tr>
             <th>Aperture</th>
