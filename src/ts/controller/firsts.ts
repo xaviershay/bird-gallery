@@ -3,7 +3,7 @@ import { Observation, ObsType } from "../types";
 import { Filter } from "../model/filter";
 import { FirstsView } from "../view/firsts";
 import { LayoutView } from "../view/layout";
-import { renderToString } from "react-dom/server";
+import { prerender } from 'react-dom/static';
 import { respondWith, corsHeaders } from "./base";
 import formatLocationName from "../helpers/format_location_name";
 import { fetchHeaderStats } from "../model/header_stats";
@@ -64,7 +64,8 @@ export async function handleFirsts(
       photos,
     });
     const html = LayoutView({ title, content, header });
-    return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
+    const htmlStream = await prerender(html)
+    return new Response(htmlStream.prelude, {
       headers: {
         "Content-Type": "text/html",
       },

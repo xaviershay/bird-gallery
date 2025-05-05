@@ -3,10 +3,10 @@ import { Observation, Location, ObsType } from "../types";
 import { Filter } from "../model/filter";
 import { LocationView } from "../view/location";
 import { LayoutView } from "../view/layout";
-import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
 import { fetchHeaderStats } from "../model/header_stats";
 import { fetchPhotos } from "../model/photo";
+import { prerender } from "react-dom/static";
 
 export async function handleLocation(
   request: Request,
@@ -46,7 +46,8 @@ export async function handleLocation(
     });
     const title = location.name + " - Xavier's Bird Lists";
     const html = LayoutView({ title, content, header });
-    return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
+    const htmlStream = await prerender(html);
+    return new Response(htmlStream.prelude, {
       headers: {
         "Content-Type": "text/html",
       },

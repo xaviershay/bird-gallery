@@ -2,10 +2,10 @@ import { Env } from "../routes";
 import { Observation, Photo, Species } from "../types";
 import { SpeciesView } from "../view/species";
 import { LayoutView } from "../view/layout";
-import { renderToString } from "react-dom/server";
 import { respondWith, corsHeaders } from "./base";
 import formatLocationName from "../helpers/format_location_name";
 import { fetchHeaderStats } from "../model/header_stats";
+import { prerender } from "react-dom/static";
 
 export async function handleSpecies(
   request: Request,
@@ -64,7 +64,8 @@ export async function handleSpecies(
     const title = species.name + " - Xavier's Bird Lists";
     const content = SpeciesView({ species, observations });
     const html = LayoutView({ title, content, header });
-    return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
+    const htmlStream = await prerender(html);
+    return new Response(htmlStream.prelude, {
       headers: {
         "Content-Type": "text/html",
       },

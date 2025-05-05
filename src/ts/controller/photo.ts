@@ -1,11 +1,10 @@
-import { renderToString } from "react-dom/server";
 import { fetchHeaderStats } from "../model/header_stats";
 import { fetchPhoto } from "../model/photo";
 import { Env } from "../routes";
 import { corsHeaders, respondWith } from "./base";
 import { LayoutView } from "../view/layout";
-import { Photo, Observation } from "../types";
 import { PhotoView } from "../view/photo";
+import { prerender } from "react-dom/static";
 
 export async function handlePhoto(
   request: Request,
@@ -26,12 +25,13 @@ export async function handlePhoto(
 
   const header = await fetchHeaderStats(env);
 
-const content = PhotoView(photo);
-const title = photo.observation.name + " Photo - Xavier's Bird Lists";
-const html = LayoutView({ title, content, header });
-return new Response(`<!DOCTYPE html>${renderToString(html)}`, {
+  const content = PhotoView(photo);
+  const title = photo.observation.name + " Photo - Xavier's Bird Lists";
+  const html = LayoutView({ title, content, header });
+  const htmlStream = await prerender(html);
+  return new Response(htmlStream.prelude, {
     headers: {
-    "Content-Type": "text/html",
+      "Content-Type": "text/html",
     },
-});
+  });
 }
