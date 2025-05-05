@@ -56,4 +56,72 @@ describe('', () => {
 			expect(content).not.toContain("Old Lorikeet");
 		});
 	})
+
+	describe('/firsts', () => {
+		beforeEach(async () => {
+		    await execSql(`
+				INSERT INTO location (id, name, lat, lng, state, county) VALUES
+				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
+				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
+				INSERT INTO observation VALUES
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null);
+				INSERT INTO photo VALUES
+					('dscn5570.jpg', '219171569-railor5', '2025-05-03T01:53:50.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '');
+			`,)
+		})
+		it('renders seen', async () => {
+			const response = await SELF.fetch('https://localhost/firsts');
+			const content = await response.text();
+			expect(content).toContain("Firsts");
+			expect(content).not.toContain("thumbnails");
+		});
+		it('renders photos', async () => {
+			const response = await SELF.fetch('https://localhost/firsts?type=photo');
+			const content = await response.text();
+			expect(content).toContain("Firsts");
+			expect(content).toContain("thumbnails");
+		});
+	});
+
+	describe('/species', () => {
+		beforeEach(async () => {
+		    await execSql(`
+				INSERT INTO location (id, name, lat, lng, state, county) VALUES
+				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
+				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
+				INSERT INTO observation VALUES
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null);
+			`,)
+		})
+		it('renders species data', async () => {
+			const response = await SELF.fetch('https://localhost/species/railor5');
+			const content = await response.text();
+			expect(content).toContain("Rainbow Lorikeet</h2>"); // Adjust based on actual expected content
+		});
+	});
+
+	describe('/photo', () => {
+		beforeEach(async () => {
+		    await execSql(`
+				INSERT INTO location (id, name, lat, lng, state, county) VALUES
+				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
+				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
+				INSERT INTO observation VALUES
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null);
+				INSERT INTO photo VALUES
+					('dscn5570.jpg', '219171569-railor5', '2025-05-03T01:53:50.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '');
+			`,)
+		})
+
+		it('renders photo data', async () => {
+			const response = await SELF.fetch('https://localhost/photo/dscn5570');
+			const content = await response.text();
+			expect(content).toContain("Rainbow Lorikeet");
+			expect(content).toContain("dscn5570");
+			expect(content).toContain("Royal Park"); // Includes where photo was taken
+		});
+	});
 });

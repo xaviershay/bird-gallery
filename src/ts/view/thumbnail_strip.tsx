@@ -7,6 +7,9 @@ interface ThumbnailStripProps {
 
 export const ThumbnailStrip = ({ photos }: ThumbnailStripProps) => {
   const height = 150;
+  if (photos.length == 0)
+    return <></>;
+
   return (
     <div className="thumbnails">
       {photos.map((photo) => (
