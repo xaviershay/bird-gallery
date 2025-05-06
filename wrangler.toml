@@ -21,7 +21,7 @@ database_name = "birds"
 database_id = "34b53a13-b1e4-4278-9d8c-8e00478eb057"
 
 [env.prod]
-vars = { CACHE = true }
+vars = { CACHE = false }
 [[env.prod.d1_databases]]
 binding = "DB"
 database_name = "birds"

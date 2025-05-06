@@ -35,7 +35,8 @@ export default {
     } else {
       try {
         response = await handleRequest(request, env);
-        response.headers.append("Cache-Control", "s-maxage=86400");
+        // TODO: Increase maxage once we have confidence it is working
+        response.headers.append("Cache-Control", "s-maxage=10");
         ctx.waitUntil(cache.put(cacheKey, response.clone()));
         return response;
       } catch (error) {
