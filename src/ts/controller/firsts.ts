@@ -18,7 +18,7 @@ export async function handleFirsts(
   const filter = Filter.fromQueryString(url.searchParams);
   const firsts = await fetchFirsts(env, filter);
 
-  if (url.pathname.endsWith(".json")) {
+  if (url.pathname.endsWith(".geojson")) {
     // Group records by locationId
     const grouped = firsts.reduce((acc, record) => {
       if (!acc[record.locationId]) {

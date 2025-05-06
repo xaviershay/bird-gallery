@@ -14,7 +14,7 @@ export const SpeciesView = (data: SpeciesViewProps) => {
   const observationCount = observations.length;
   const scriptContent = `
     urlF = (id) => ("/location/" + id);
-    initMap("${speciesUrl(species.id, { format: "json" })}", urlF);
+    initMap("${speciesUrl(species.id, { format: "geojson" })}", urlF);
   `;
 
   return (

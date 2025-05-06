@@ -2,8 +2,8 @@ import { Observation } from "../types";
 
 export function speciesUrl(id: string, options: {format?: string} = {}) {
    let path = `/species/${id}`
-   if (options.format == "json") {
-    path += ".json"
+   if (options.format) {
+    path += "." + options.format
    }
    return path
 }

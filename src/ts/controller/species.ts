@@ -29,7 +29,7 @@ export async function handleSpecies(
 
   const observations = await fetchSpeciesObservations(env, speciesId);
 
-  if (url.pathname.endsWith(".json")) {
+  if (url.pathname.endsWith(".geojson")) {
     // Group records by locationId
     const grouped = observations.reduce((acc, record) => {
       if (!acc[record.locationId]) {
