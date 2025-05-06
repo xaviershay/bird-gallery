@@ -78,6 +78,7 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
 
   switch (path[0]) {
     case "firsts":
+    case "firsts.json":
     case "firsts.geojson":
       return handleFirsts(request, env);
     case "location":

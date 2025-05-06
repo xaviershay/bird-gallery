@@ -47,6 +47,19 @@ export async function handleFirsts(
     };
 
     return respondWith(200, jsonData, corsHeaders);
+  } else if (url.pathname.endsWith(".json")) {
+    const jsonData = {
+      filter: filter.toJsonObject(),
+      data: firsts.map((obs) => ({
+        id: obs.id,
+        commonName: obs.name,
+        speciesId: obs.speciesId,
+        locationId: obs.locationId,
+        hasPhoto: obs.hasPhoto,
+        seenAt: obs.seenAt
+      }))
+    }
+    return respondWith(200, jsonData, corsHeaders);
   } else {
     const title = "Firsts - Xavier's Bird Lists";
     const header = await fetchHeaderStats(env);

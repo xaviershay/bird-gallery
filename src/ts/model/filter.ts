@@ -25,6 +25,15 @@ export class Filter {
     );
   }
 
+  toJsonObject(): any {
+    return {
+      type: this.type == ObsType.Sighting ? "sighting" : "photo",
+      region: this.region,
+      period: this.period,
+      blah: this.blah
+    }
+  }
+
   toQueryString(): string {
     const parts: Record<string, string> = {};
 

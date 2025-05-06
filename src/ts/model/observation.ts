@@ -1,4 +1,3 @@
-import { Env } from "../routes";
 import { Observation, ObsType } from "../types";
 import { Filter } from "../model/filter";
 
@@ -17,7 +16,8 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
         location_name as locationName,
         lat,
         lng,
-        seen_at as seenAt
+        seen_at as seenAt,
+        has_photo as hasPhoto
       FROM (
         SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
         FROM observation_wide
@@ -45,6 +45,7 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
       id: record.locationId,
       name: record.locationName,
     },
+    hasPhoto: record.hasPhoto == 1,
     seenAt: new Date(record.seenAt + "Z"), // Treat seenAt as UTC by appending "Z"
   }));
 }
