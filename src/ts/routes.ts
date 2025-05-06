@@ -5,10 +5,6 @@ import { respondWith, corsHeaders } from "./controller/base";
 import { handleHome } from "./controller/home";
 import { handlePhoto } from "./controller/photo";
 
-export interface Env {
-  DB: D1Database;
-}
-
 export default {
   async fetch(
     request: Request,
@@ -34,7 +30,7 @@ export default {
 
     let response = await cache.match(cacheKey);
 
-    if (response) {
+    if (response && env.CACHE) {
       return response;
     } else {
       try {

@@ -1,4 +1,3 @@
-import { Env } from "../routes";
 import { Observation, ObsType } from "../types";
 import { Filter } from "../model/filter";
 import { FirstsView } from "../view/firsts";
