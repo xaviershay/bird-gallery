@@ -5,6 +5,12 @@ import { respondWith, corsHeaders } from "./controller/base";
 import { handleHome } from "./controller/home";
 import { handlePhoto } from "./controller/photo";
 
+// Responses are cached using the current version, which is bumped on every deploy.
+// Cache headers are needed for storing in the cache (and in theory could be
+// immutable), but need to be stripped before returning to the client because
+// the client request doesn't include the version. In other words, from the
+// client's perspective these pages aren't cacheable indefinitley because the
+// client doesn't know the version, where as the server does.
 export default {
   async fetch(
     request: Request,
@@ -23,7 +29,6 @@ export default {
     const version = await fetchVersion(env);
 
     const cacheUrl = new URL(request.url);
-    // Add version as a query parameter for cache busting
     cacheUrl.searchParams.set("version", version);
     const cacheKey = new Request(cacheUrl.toString(), request);
     const cache = caches.default;
@@ -31,14 +36,14 @@ export default {
     let response = await cache.match(cacheKey);
 
     if (response && env.CACHE) {
-      return response;
+      return createResponseWithoutCache(response);
     } else {
       try {
         response = await handleRequest(request, env);
-        // TODO: Increase maxage once we have confidence it is working
-        response.headers.append("Cache-Control", "s-maxage=10");
+        response.headers.append("Cache-Control", "s-maxage=180");
         ctx.waitUntil(cache.put(cacheKey, response.clone()));
-        return response;
+        response.headers.append("Cf-Cache-Status", "MISS");
+        return createResponseWithoutCache(response);
       } catch (error) {
         console.error("Error processing request:", error);
         return respondWith(
@@ -52,6 +57,16 @@ export default {
       }
     }
   },
+};
+
+function createResponseWithoutCache (resp: Response) {
+  const headers = new Headers(resp.headers);
+  headers.delete('Cache-Control');
+  return new Response(resp.body, {
+    status: resp.status,
+    statusText: resp.statusText,
+    headers
+  });
 };
 
 async function fetchVersion(env: Env): Promise<string> {
