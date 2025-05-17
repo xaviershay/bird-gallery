@@ -3,6 +3,9 @@ main = "src/ts/routes.ts"
 compatibility_date = "2025-04-21"
 workers_dev = true
 
+[observability.logs]
+enabled = true
+
 [assets]
 directory = "src/static"
 binding = "ASSETS"
