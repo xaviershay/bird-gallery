@@ -159,4 +159,43 @@ describe('', () => {
 			expect(content).toContain("Royal Park"); // Includes where photo was taken
 		});
 	});
+
+	describe('caching', () => {
+		beforeEach(async () => {
+			// Set version in metadata table
+			await execSql(`
+				INSERT INTO metadata (id, value) VALUES ('version', '1.0.0');
+			`);
+		});
+
+		it('adds version header to responses', async () => {
+			const response = await SELF.fetch('https://localhost/');
+			expect(response.headers.get('X-Version')).toEqual('1.0.0');
+		});
+
+		it('returns same content for GET and HEAD requests', async () => {
+			// Make GET request
+			const getResponse = await SELF.fetch('https://localhost/');
+			const getStatus = getResponse.status;
+			const getHeaders = Object.fromEntries(getResponse.headers.entries());
+			
+			const headRequest = new Request('https://localhost/', { method: 'HEAD' });
+			const headResponse = await SELF.fetch(headRequest.url, headRequest);
+			const headStatus = headResponse.status;
+			const headHeaders = Object.fromEntries(headResponse.headers.entries());
+			
+			expect(headStatus).toEqual(getStatus);
+			expect(headHeaders['x-version']).toEqual(getHeaders['x-version']);
+		});
+
+		it('does not expose Cache-Control headers to clients', async () => {
+			const response = await SELF.fetch('https://localhost/');
+			expect(response.headers.get('Cache-Control')).toBeNull();
+		});
+
+		it('sets Cf-Cache-Status header', async () => {
+			const response = await SELF.fetch('https://localhost/');
+			expect(response.headers.get('Cf-Cache-Status')).toBe('MISS');
+		});
+	});
 });
