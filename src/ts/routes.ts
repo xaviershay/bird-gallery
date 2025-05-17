@@ -30,20 +30,36 @@ export default {
 
     const cacheUrl = new URL(request.url);
     cacheUrl.searchParams.set("version", version);
-    const cacheKey = new Request(cacheUrl.toString(), request);
+    // Create a GET request for caching, regardless of original method
+    const cacheKey = new Request(cacheUrl.toString(), {
+      ...request,
+      method: 'GET'
+    });
     const cache = caches.default;
 
     let response = await cache.match(cacheKey);
 
     if (response && env.CACHE) {
-      return createResponseWithoutCache(response);
+      // Create new response with original request method
+      return createResponseWithoutCache(
+        new Response(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+        }), 
+        version
+      );
     } else {
       try {
         response = await handleRequest(request, env);
-        response.headers.append("Cache-Control", "s-maxage=180");
-        ctx.waitUntil(cache.put(cacheKey, response.clone()));
+        // Only cache if it's a GET or HEAD request
+        if (method === 'GET' || method === 'HEAD') {
+          response.headers.append("Cache-Control", "s-maxage=180");
+          // Store the GET version in cache
+          ctx.waitUntil(cache.put(cacheKey, response.clone()));
+        }
         response.headers.append("Cf-Cache-Status", "MISS");
-        return createResponseWithoutCache(response);
+        return createResponseWithoutCache(response, version);
       } catch (error) {
         console.error("Error processing request:", error);
         return respondWith(
@@ -59,9 +75,11 @@ export default {
   },
 };
 
-function createResponseWithoutCache (resp: Response) {
+function createResponseWithoutCache (resp: Response, version: string) {
   const headers = new Headers(resp.headers);
   headers.delete('Cache-Control');
+  headers.delete('cache-control');
+  headers.append('X-Version', version)
   return new Response(resp.body, {
     status: resp.status,
     statusText: resp.statusText,
@@ -71,10 +89,8 @@ function createResponseWithoutCache (resp: Response) {
 
 async function fetchVersion(env: Env): Promise<string> {
   try {
-    // Query for the version in the metadata table
     const result : any = await env.DB.prepare("SELECT value FROM metadata WHERE id = 'version'").first();
     
-    // Check if result exists
     if (result && result.value) {
       return result.value as string;
     } else {
