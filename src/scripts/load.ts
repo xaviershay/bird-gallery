@@ -281,6 +281,6 @@ const observationSQLStatements : any[] = [];
 console.log(generateSQL(
   `INSERT INTO metadata (id, value)
    VALUES ("version", ?)
-   ON CONFLICT (id) DO UPDATE SET value = excluded.value`,
+   ON CONFLICT (id) DO UPDATE SET value = excluded.value;`,
    [new Date().toISOString()]
 ))
