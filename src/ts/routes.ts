@@ -26,6 +26,10 @@ export default {
       });
     }
 
+    if (method !== "GET" && method !== "HEAD") {
+      return respondWith(405, { error: "Method not allowed" }, corsHeaders);
+    }
+
     const version = await fetchVersion(env);
 
     const cacheUrl = new URL(request.url);
