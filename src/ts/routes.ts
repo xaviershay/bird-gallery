@@ -4,6 +4,7 @@ import { handleSpecies } from "./controller/species";
 import { respondWith, corsHeaders } from "./controller/base";
 import { handleHome } from "./controller/home";
 import { handlePhoto } from "./controller/photo";
+import { handleReport } from "./controller/report";
 
 // Responses are cached using the current version, which is bumped on every deploy.
 // Cache headers are needed for storing in the cache (and in theory could be
@@ -121,6 +122,8 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
       return handleLocation(request, env);
     case "species":
       return handleSpecies(request, env);
+    case "report":
+      return handleReport(request, env);
     case "photo":
       return handlePhoto(request, env);
     default:

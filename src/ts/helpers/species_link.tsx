@@ -1,4 +1,4 @@
-import { Observation } from "../types";
+import { Observation, Species } from "../types";
 
 export function speciesUrl(id: string, options: {format?: string} = {}) {
    let path = `/species/${id}`
@@ -8,6 +8,9 @@ export function speciesUrl(id: string, options: {format?: string} = {}) {
    return path
 }
 
-export default function speciesLink(observation: Observation): React.ReactNode {
-  return <a href={speciesUrl(observation.speciesId)}>{observation.name}</a>;
+export default function speciesLink(object: Observation | Species): React.ReactNode {
+  if ('speciesId' in object) {
+    return <a href={speciesUrl(object.speciesId)}>{object.name}</a>;
+  }
+  return <a href={speciesUrl(object.id)}>{object.name}</a>;
 }

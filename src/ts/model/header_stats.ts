@@ -1,5 +1,3 @@
-import { Env } from "../routes";
-
 export type HeaderStats = {
   seenCount: number,
   photoCount: number
