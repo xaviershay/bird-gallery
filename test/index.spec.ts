@@ -23,11 +23,46 @@ describe('', () => {
 			const response = await SELF.fetch('https://localhost/');
 			expect(await response.text()).toContain("Bird Lists");
 		});
+
+		it('handles HEAD requests', async () => {
+			const request = new Request('http://example.com', {
+				method: 'HEAD'
+			});
+
+			const response = await SELF.fetch(request.url, request);
+			expect(response.status).toBe(200);
+		});
+
+		it('handles OPTIONS requests', async () => {
+			const request = new Request('http://example.com', {
+				method: 'OPTIONS'
+			});
+
+			const response = await SELF.fetch(request.url, request);
+
+			expect(response.status).toBe(204);
+			expect(response.headers.get('Access-Control-Allow-Origin')).toEqual('*')
+			expect(response.headers.get('Access-Control-Allow-Methods')).toEqual('GET, HEAD, OPTIONS')
+			expect(response.headers.get('Access-Control-Allow-Headers')).toEqual('Content-Type')
+		});
+
+		it('rejects POST, PUT, and DELETE requests', async () => {
+			const methods = ['POST', 'PUT', 'DELETE'];
+			for (const method of methods) {
+				const request = new Request('http://example.com', {
+					method: method
+				});
+
+				const response = await SELF.fetch(request.url, request);
+				expect(response.status).toBe(405);
+			}
+		})
+
 	})
 
 	describe('/location/1', () => {
 		beforeEach(async () => {
-		    await execSql(`
+			await execSql(`
 				INSERT INTO location (id, name, lat, lng, state, county) VALUES
 				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
@@ -59,7 +94,7 @@ describe('', () => {
 
 	describe('/firsts', () => {
 		beforeEach(async () => {
-		    await execSql(`
+			await execSql(`
 				INSERT INTO location (id, name, lat, lng, state, county) VALUES
 				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
@@ -86,7 +121,7 @@ describe('', () => {
 
 	describe('/species', () => {
 		beforeEach(async () => {
-		    await execSql(`
+			await execSql(`
 				INSERT INTO location (id, name, lat, lng, state, county) VALUES
 				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
@@ -104,7 +139,7 @@ describe('', () => {
 
 	describe('/photo', () => {
 		beforeEach(async () => {
-		    await execSql(`
+			await execSql(`
 				INSERT INTO location (id, name, lat, lng, state, county) VALUES
 				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
