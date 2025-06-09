@@ -82,6 +82,14 @@ const observationSQLStatements : any[] = [];
       continue;
     }
 
+    if (submissionId == 247953720 && taxonomyEntry.category == "domestic") {
+      // This checklist included two exotic escapees, which don't count in eBird
+      // totals, but this data isn't present in the export.
+      // Since this situation won't happen often, hard code it here until an
+      // alternative solution is available.
+      continue;
+    }
+
     const { speciesId, scientificName, taxonomicOrder, familyId, commonNameCodes } : any = taxonomyEntry;
     const observationId = submissionId + '-' + speciesId;
 
@@ -150,12 +158,15 @@ const observationSQLStatements : any[] = [];
   // Prepare bulk insert SQL for observations
   console.log("DELETE FROM observation;")
   if (observationSQLStatements.length > 0) {
-    const observationValues = observationSQLStatements
-      .map(() => '(?, ?, ?, ?, ?, ?, ?)')
-      .join(",\n");
-    const observationParams = observationSQLStatements.flat();
-    console.log(generateSQL(
-      `INSERT INTO observation (id, checklist_id, species_id, location_id, count, seen_at, ml_catalog_numbers) VALUES
+    const chunkSize = 500; // Configurable chunk size
+    for (let i = 0; i < observationSQLStatements.length; i += chunkSize) {
+      const chunk = observationSQLStatements.slice(i, i + chunkSize);
+      const observationValues = chunk
+        .map(() => '(?, ?, ?, ?, ?, ?, ?)')
+        .join(",\n");
+      const observationParams = chunk.flat();
+      console.log(generateSQL(
+        `INSERT INTO observation (id, checklist_id, species_id, location_id, count, seen_at, ml_catalog_numbers) VALUES
        ${observationValues}
        ON CONFLICT(id) DO UPDATE SET
        species_id = excluded.species_id,
@@ -163,8 +174,9 @@ const observationSQLStatements : any[] = [];
        count = excluded.count,
        seen_at = excluded.seen_at,
        ml_catalog_numbers = excluded.ml_catalog_numbers;`,
-      observationParams
-    ));
+        observationParams
+      ));
+    }
   }
 
   // Directory containing metadata JSON files
