@@ -37,7 +37,7 @@ export const LayoutView = (props: LayoutViewProps) => {
         Since 26<sup>th</sup> January 2025 I have{" "}
         <a href="/firsts">seen {props.header.seenCount} different species</a> of wild
         bird, and{" "}
-        <a href="/firsts?type=photo">photographed {props.header.photoCount}.</a>
+        <a href="/firsts?type=photo">photographed&nbsp;{props.header.photoCount}.</a>
       </p>
       </header>
         {props.content}
