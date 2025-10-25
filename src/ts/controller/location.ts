@@ -226,7 +226,7 @@ async function fetchFilterCounts(
     `;
   statement = env.DB.prepare(query);
   let results = await statement.bind(locationId).all<any>();
-  results.results.forEach((result) => {
+  results.results.forEach((result : any) => {
     counts[
       new Filter(ObsType.Sighting, null, result.year, null).toQueryString()
     ] = result.allSightings;
@@ -250,7 +250,7 @@ async function fetchFilterCounts(
     `;
   statement = env.DB.prepare(query);
   results = await statement.bind(locationId).all<any>();
-  results.results.forEach((result) => {
+  results.results.forEach((result : any) => {
     counts[new Filter(ObsType.Photo, null, result.year, null).toQueryString()] =
       result.allPhotos;
     counts[
