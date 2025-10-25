@@ -1,10 +1,12 @@
 Submission ID,Common Name,Scientific Name,Taxonomic Order,Count,State/Province,County,Location ID,Location,Latitude,Longitude,Date,Time,Protocol,Duration (Min),All Obs Reported,Distance Traveled (km),Area Covered (ha),Number of Observers,Breeding Code,Observation Details,Checklist Comments,ML Catalog Numbers
 S225041824,Emu,Dromaius novaehollandiae,13,2,AU-VIC,Glenelg,L42529378,"Beaugleholes Road, Gorae, Victoria, AU (-38.224, 141.494)",-38.2243354,141.4939189,2025-04-13,09:27 AM,eBird - Casual Observation,,0,,,1
 S220144332,Emu,Dromaius novaehollandiae,13,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
+S281165675,Emu,Dromaius novaehollandiae,13,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S224742949,Emu,Dromaius novaehollandiae,13,2,AU-VIC,Moyne,L17542724,Tower Hill Wildlife Reserve--Lava Tongue Boardwalk Track,-38.3163222,142.3654907,2025-04-12,02:59 PM,eBird - Traveling Count,57,1,1.81,,2,,,,633643149
 S220144332,Magpie Goose,Anseranas semipalmata,227,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1,,just fkin hundreds of then
 S254682459,Magpie Goose,Anseranas semipalmata,227,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Magpie Goose,Anseranas semipalmata,227,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1,,,,639699456 639699457
+S281165675,Magpie Goose,Anseranas semipalmata,227,10,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S270510334,Magpie Goose,Anseranas semipalmata,227,1000,AU-QLD,Tablelands,L4868549,Gallo's Farm (Atherton-Malanda Rd),-17.2973527,145.5412169,2025-08-31,12:24 PM,eBird - Stationary Count,4,1,,,1
 S247953720,Domestic goose sp. (Domestic type),Anser sp. (Domestic type),300,X,AU-VIC,South Gippsland,L22131229,Leongatha Wetland,-38.4822395,145.9413964,2025-06-08,03:00 PM,eBird - Traveling Count,51,1,.359,,1,,,,637303655 637303656 637303657
 S216337523,Canada Goose,Branta canadensis,330,2,US-CA,Marin,L868122,Fort Baker,37.8336901,-122.4776373,2025-03-01,01:59 PM,eBird - Stationary Count,15,0,,,1
@@ -12,6 +14,7 @@ S248338208,Cape Barren Goose,Cereopsis novaehollandiae,360,3,AU-VIC,Bass Coast,L
 S220144332,Cape Barren Goose,Cereopsis novaehollandiae,360,12,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Cape Barren Goose,Cereopsis novaehollandiae,360,9,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Cape Barren Goose,Cereopsis novaehollandiae,360,5,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Cape Barren Goose,Cereopsis novaehollandiae,360,16,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1,,including one gosling
 S226472510,Cape Barren Goose,Cereopsis novaehollandiae,360,20,AU-VIC,Greater Geelong,L42821151,"Twentynine Mile Road, Point Wilson, Victoria, AU (-38.034, 144.525)",-38.0340164,144.5246441,2025-04-18,09:38 AM,eBird - Casual Observation,,0,,,1,,,,633948528 633948529
 S229042490,Cape Barren Goose,Cereopsis novaehollandiae,360,2,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1,,,,634383094 634383095
 S226462003,Cape Barren Goose,Cereopsis novaehollandiae,360,14,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-04-18,07:05 AM,eBird - Traveling Count,106,1,4.24,,1
@@ -50,6 +53,7 @@ S223257935,Black Swan,Cygnus atratus,367,10,AU-VIC,Port Phillip,L3963838,Albert 
 S223263758,Black Swan,Cygnus atratus,367,X,AU-VIC,Port Phillip,L7016949,Albert Park--SE Conservation Ponds,-37.8490618,144.9755564,2025-04-06,09:29 AM,eBird - Traveling Count,13,1,.387,,1,,,just a quick one to if grebe were still here. nope.
 S226497985,Black Swan,Cygnus atratus,367,8,AU-VIC,Wyndham,L2694611,Point Cook Coastal Park--Homestead and Beach,-37.9276631,144.7888935,2025-04-18,12:47 PM,eBird - Traveling Count,20,1,.744,,1
 S240745060,Black Swan,Cygnus atratus,367,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
+S272815108,Black Swan,Cygnus atratus,367,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S248338208,Australian Shelduck,Tadorna tadornoides,411,2,AU-VIC,Bass Coast,L2300531,Stockyard Point,-38.3387951,145.5162764,2025-06-09,08:27 AM,eBird - Traveling Count,57,1,2.27,,1,F Flyover
 S225039574,Australian Shelduck,Tadorna tadornoides,411,2,AU-VIC,Glenelg,L42528952,"75 Amors Road, Gorae West, Victoria, AU (-38.255, 141.489)",-38.2548761,141.4889591,2025-04-13,09:11 AM,eBird - Stationary Count,5,1,,,1,,,mostly in the dam beside the road,633643080
 S226469393,Australian Shelduck,Tadorna tadornoides,411,10,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-18,09:09 AM,eBird - Stationary Count,13,1,,,1,,,,633948522
@@ -80,11 +84,13 @@ S221679235,Maned Duck,Chenonetta jubata,445,8,AU-VIC,Monash,L2040886,Bushy Park 
 S223257935,Maned Duck,Chenonetta jubata,445,40,AU-VIC,Port Phillip,L3963838,Albert Park,-37.8474347,144.9701717,2025-04-06,08:37 AM,eBird - Traveling Count,34,1,1.18,,1,,,North wetlands
 S261552120,Maned Duck,Chenonetta jubata,445,40,AU-VIC,Whittlesea,L8573683,Wilton Vale Wetlands,-37.6216947,145.1052784,2025-07-21,12:11 PM,eBird - Traveling Count,21,1,.71,,1
 S228048172,Maned Duck,Chenonetta jubata,445,2,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Maned Duck,Chenonetta jubata,445,2,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S226469393,Australasian Shoveler,Spatula rhynchotis,480,X,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-18,09:09 AM,eBird - Stationary Count,13,1,,,1,,,,633948525
 S226462003,Australasian Shoveler,Spatula rhynchotis,480,X,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-04-18,07:05 AM,eBird - Traveling Count,106,1,4.24,,1
 S241120145,Australasian Shoveler,Spatula rhynchotis,480,X,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-05-22,04:45 PM,eBird - Traveling Count,42,1,5.55,,1
 S224742949,Australasian Shoveler,Spatula rhynchotis,480,10,AU-VIC,Moyne,L17542724,Tower Hill Wildlife Reserve--Lava Tongue Boardwalk Track,-38.3163222,142.3654907,2025-04-12,02:59 PM,eBird - Traveling Count,57,1,1.81,,2
 S240745060,Australasian Shoveler,Spatula rhynchotis,480,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
+S272815108,Australasian Shoveler,Spatula rhynchotis,480,3,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S211048349,Pacific Black Duck,Anas superciliosa,514,X,AU-SA,Adelaide,L2090264,Torrens Lake,-34.9162001,138.5987091,2025-01-29,07:09 AM,eBird - Casual Observation,,0,,,1,,,morning run
 S229439360,Pacific Black Duck,Anas superciliosa,514,X,AU-VIC,Ballarat,L1002051,Lake Wendouree,-37.5498309,143.8333511,2025-04-26,03:17 PM,eBird - Traveling Count,85,1,6.324,,1,,,power lap
 S227180039,Pacific Black Duck,Anas superciliosa,514,2,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,07:30 AM,eBird - Traveling Count,50,1,.7,,1,,,oval then down around the billabong
@@ -135,6 +141,7 @@ S261552120,Pacific Black Duck,Anas superciliosa,514,3,AU-VIC,Whittlesea,L8573683
 S226497985,Pacific Black Duck,Anas superciliosa,514,2,AU-VIC,Wyndham,L2694611,Point Cook Coastal Park--Homestead and Beach,-37.9276631,144.7888935,2025-04-18,12:47 PM,eBird - Traveling Count,20,1,.744,,1
 S240745060,Pacific Black Duck,Anas superciliosa,514,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S219886578,Pacific Black Duck,Anas superciliosa,514,2,AU-VIC,Yarra,L2551991,Yarra Bend Park--Dights Falls,-37.7969592,145.0010042,2025-03-22,01:32 PM,eBird - Traveling Count,77,1,2.5,,1,,,two LBBs and a hawk I couldn't ID
+S272815108,Pacific Black Duck,Anas superciliosa,514,3,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S220837850,Mallard (Domestic type),Anas platyrhynchos (Domestic type),528,5,AU-VIC,Greater Bendigo,L2552267,Lake Tom Thumb,-36.71161,144.26044,2025-03-26,06:22 PM,eBird - Traveling Count,53,1,1.39,,1,,"two white, three green head.","sunset lap, spent a looong time trying to figure the ducks and still mostly failed",632693760 632693761
 S227215461,Gray Teal,Anas gracilis,613,6,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,08:46 AM,eBird - Traveling Count,89,1,3.13,,1,,,walk back from plenty/yarra convergence finishing at lake
 S225068403,Gray Teal,Anas gracilis,613,2,AU-VIC,Glenelg,L42535138,"177 Windham Street, Narrawong, Victoria, AU (-38.257, 141.696)",-38.2573905,141.6961314,2025-04-13,12:16 PM,eBird - Stationary Count,3,1,,,1
@@ -157,6 +164,7 @@ S219013875,Gray Teal,Anas gracilis,613,X,AU-VIC,Melbourne,L2081605,Westgate Park
 S222977983,Gray Teal,Anas gracilis,613,X,AU-VIC,Melbourne,L2081605,Westgate Park,-37.8311412,144.909153,2025-04-05,08:16 AM,eBird - Traveling Count,91,1,1.73,,1,,,"swear i glimpsed a hawk but couldn't find it for proper eyes. present = heaps, just a _lot_ of birds around this morning"
 S254682484,Gray Teal,Anas gracilis,613,2,AU-VIC,Merri-bek,L2550735,Coburg Lake Reserve,-37.73419,144.96957,2025-06-21,10:48 AM,eBird - Traveling Count,89,1,2.328,,1
 S223257935,Gray Teal,Anas gracilis,613,10,AU-VIC,Port Phillip,L3963838,Albert Park,-37.8474347,144.9701717,2025-04-06,08:37 AM,eBird - Traveling Count,34,1,1.18,,1,,,North wetlands
+S272815108,Gray Teal,Anas gracilis,613,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S227180039,Chestnut Teal,Anas castanea,617,1,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,07:30 AM,eBird - Traveling Count,50,1,.7,,1,,,oval then down around the billabong
 S254681774,Chestnut Teal,Anas castanea,617,1,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-06-28,08:59 AM,eBird - Traveling Count,51,1,.718,,1
 S248380845,Chestnut Teal,Anas castanea,617,3,AU-VIC,Bayside,L2549016,Ricketts Point,-37.99426,145.03154,2025-06-09,12:16 PM,eBird - Stationary Count,22,1,,,1
@@ -164,6 +172,7 @@ S248357277,Chestnut Teal,Anas castanea,617,12,AU-VIC,Casey,L10207671,Woodlot Lan
 S220144332,Chestnut Teal,Anas castanea,617,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Chestnut Teal,Anas castanea,617,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Chestnut Teal,Anas castanea,617,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Chestnut Teal,Anas castanea,617,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226469393,Chestnut Teal,Anas castanea,617,X,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-18,09:09 AM,eBird - Stationary Count,13,1,,,1
 S229011528,Chestnut Teal,Anas castanea,617,X,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-25,08:15 AM,eBird - Traveling Count,18,1,.34,,1,,hundreds (thousands?),,634382795
 S226481183,Chestnut Teal,Anas castanea,617,X,AU-VIC,Greater Geelong,L3138097,Western Treatment Plant--Little River Bird Hide,-38.0052031,144.5908579,2025-04-18,10:10 AM,eBird - Stationary Count,11,1,,,1
@@ -254,6 +263,7 @@ S270528389,Pacific Emerald Dove,Chalcophaps longirostris,2132,2,AU-QLD,Tableland
 S229439360,Common Bronzewing,Phaps chalcoptera,2169,2,AU-VIC,Ballarat,L1002051,Lake Wendouree,-37.5498309,143.8333511,2025-04-26,03:17 PM,eBird - Traveling Count,85,1,6.324,,1,,,power lap
 S254681774,Common Bronzewing,Phaps chalcoptera,2169,10,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-06-28,08:59 AM,eBird - Traveling Count,51,1,.718,,1,,,,638161248
 S264317177,Common Bronzewing,Phaps chalcoptera,2169,5,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Common Bronzewing,Phaps chalcoptera,2169,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S261534054,Common Bronzewing,Phaps chalcoptera,2169,3,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:11 AM,eBird - Traveling Count,15,1,.188,,1,,,,639191947 639191948
 S211048349,Crested Pigeon,Ocyphaps lophotes,2175,X,AU-SA,Adelaide,L2090264,Torrens Lake,-34.9162001,138.5987091,2025-01-29,07:09 AM,eBird - Casual Observation,,0,,,1,,,morning run
 S229439360,Crested Pigeon,Ocyphaps lophotes,2175,11,AU-VIC,Ballarat,L1002051,Lake Wendouree,-37.5498309,143.8333511,2025-04-26,03:17 PM,eBird - Traveling Count,85,1,6.324,,1,,,power lap
@@ -275,6 +285,7 @@ S221694232,Crested Pigeon,Ocyphaps lophotes,2175,8,AU-VIC,Monash,L7817345,Napier
 S223257935,Crested Pigeon,Ocyphaps lophotes,2175,4,AU-VIC,Port Phillip,L3963838,Albert Park,-37.8474347,144.9701717,2025-04-06,08:37 AM,eBird - Traveling Count,34,1,1.18,,1,,,North wetlands
 S261552120,Crested Pigeon,Ocyphaps lophotes,2175,3,AU-VIC,Whittlesea,L8573683,Wilton Vale Wetlands,-37.6216947,145.1052784,2025-07-21,12:11 PM,eBird - Traveling Count,21,1,.71,,1
 S261542291,Crested Pigeon,Ocyphaps lophotes,2175,6,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:33 AM,eBird - Traveling Count,40,1,.73,,1
+S272815108,Crested Pigeon,Ocyphaps lophotes,2175,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S270729811,Peaceful Dove,Geopelia placida,2196,3,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1
 S270970306,Peaceful Dove,Geopelia placida,2196,2,AU-QLD,Cairns,L3946551,Cairns Esplanade--Northern End,-16.9058171,145.7640499,2025-09-02,07:02 AM,eBird - Casual Observation,,0,,,1,,,,641267121
 S270995129,Peaceful Dove,Geopelia placida,2196,1,AU-QLD,Cairns,L4955642,Saltwater Lake (Centenary Lakes),-16.9028034,145.7514605,2025-09-02,07:49 AM,eBird - Traveling Count,90,1,1.526,,1,,,most of the walking tour
@@ -307,6 +318,7 @@ S232248594,Dusky Moorhen,Gallinula tenebrosa,5421,5,AU-VIC,Darebin,L1922139,La T
 S220144332,Dusky Moorhen,Gallinula tenebrosa,5421,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Dusky Moorhen,Gallinula tenebrosa,5421,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Dusky Moorhen,Gallinula tenebrosa,5421,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Dusky Moorhen,Gallinula tenebrosa,5421,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S227680290,Dusky Moorhen,Gallinula tenebrosa,5421,5,AU-VIC,Hobsons Bay,L2519055,Jawbone Flora and Fauna Reserve,-37.860833,144.875,2025-04-21,10:53 AM,eBird - Traveling Count,120,1,4.,,1,,,"weather was too good to stay home. wasn't expecting such a haul, including two lifers. neglected to start trace :("
 S263003998,Dusky Moorhen,Gallinula tenebrosa,5421,2,AU-VIC,Hobsons Bay,L2041733,Newport Lakes,-37.8390723,144.8712158,2025-07-27,10:56 AM,eBird - Traveling Count,73,1,1.575,,1
 S228745458,Dusky Moorhen,Gallinula tenebrosa,5421,1,AU-VIC,Melbourne,L6104859,"Oak St Wetland, Flemington",-37.7826378,144.9408352,2025-04-24,05:28 PM,eBird - Traveling Count,12,1,.44,,1
@@ -329,6 +341,7 @@ S223263758,Dusky Moorhen,Gallinula tenebrosa,5421,12,AU-VIC,Port Phillip,L701694
 S261552120,Dusky Moorhen,Gallinula tenebrosa,5421,4,AU-VIC,Whittlesea,L8573683,Wilton Vale Wetlands,-37.6216947,145.1052784,2025-07-21,12:11 PM,eBird - Traveling Count,21,1,.71,,1
 S261534054,Dusky Moorhen,Gallinula tenebrosa,5421,1,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:11 AM,eBird - Traveling Count,15,1,.188,,1
 S219886578,Dusky Moorhen,Gallinula tenebrosa,5421,1,AU-VIC,Yarra,L2551991,Yarra Bend Park--Dights Falls,-37.7969592,145.0010042,2025-03-22,01:32 PM,eBird - Traveling Count,77,1,2.5,,1,,,two LBBs and a hawk I couldn't ID
+S272815108,Dusky Moorhen,Gallinula tenebrosa,5421,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S211048349,Eurasian Coot,Fulica atra,5430,X,AU-SA,Adelaide,L2090264,Torrens Lake,-34.9162001,138.5987091,2025-01-29,07:09 AM,eBird - Casual Observation,,0,,,1,,,morning run
 S229439360,Eurasian Coot,Fulica atra,5430,X,AU-VIC,Ballarat,L1002051,Lake Wendouree,-37.5498309,143.8333511,2025-04-26,03:17 PM,eBird - Traveling Count,85,1,6.324,,1,,,power lap
 S232248594,Eurasian Coot,Fulica atra,5430,7,AU-VIC,Darebin,L1922139,La Trobe University Bundoora--Nangak Tamboree Wildlife Sanctuary (don't list Emu),-37.7164516,145.0554943,2025-05-03,10:30 AM,eBird - Traveling Count,116,1,4.08,,1
@@ -342,6 +355,7 @@ S220626536,Eurasian Coot,Fulica atra,5430,4,AU-VIC,Greater Bendigo,L2991436,Rosa
 S220144332,Eurasian Coot,Fulica atra,5430,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Eurasian Coot,Fulica atra,5430,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Eurasian Coot,Fulica atra,5430,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Eurasian Coot,Fulica atra,5430,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226469393,Eurasian Coot,Fulica atra,5430,X,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-18,09:09 AM,eBird - Stationary Count,13,1,,,1
 S229011528,Eurasian Coot,Fulica atra,5430,2,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-25,08:15 AM,eBird - Traveling Count,18,1,.34,,1
 S229042490,Eurasian Coot,Fulica atra,5430,X,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
@@ -376,6 +390,7 @@ S261552120,Eurasian Coot,Fulica atra,5430,20,AU-VIC,Whittlesea,L8573683,Wilton V
 S261542291,Eurasian Coot,Fulica atra,5430,X,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:33 AM,eBird - Traveling Count,40,1,.73,,1
 S240745060,Eurasian Coot,Fulica atra,5430,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S228048172,Eurasian Coot,Fulica atra,5430,X,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.,634211515
+S272815108,Eurasian Coot,Fulica atra,5430,8,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S211048349,Australasian Swamphen,Porphyrio melanotus,5468,X,AU-SA,Adelaide,L2090264,Torrens Lake,-34.9162001,138.5987091,2025-01-29,07:09 AM,eBird - Casual Observation,,0,,,1,,,morning run
 S229439360,Australasian Swamphen,Porphyrio melanotus,5468,X,AU-VIC,Ballarat,L1002051,Lake Wendouree,-37.5498309,143.8333511,2025-04-26,03:17 PM,eBird - Traveling Count,85,1,6.324,,1,,,power lap
 S227215461,Australasian Swamphen,Porphyrio melanotus,5468,1,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,08:46 AM,eBird - Traveling Count,89,1,3.13,,1,,,walk back from plenty/yarra convergence finishing at lake
@@ -425,6 +440,7 @@ S261552120,Australasian Swamphen,Porphyrio melanotus,5468,7,AU-VIC,Whittlesea,L8
 S261534054,Australasian Swamphen,Porphyrio melanotus,5468,2,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:11 AM,eBird - Traveling Count,15,1,.188,,1
 S240745060,Australasian Swamphen,Porphyrio melanotus,5468,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S228048172,Australasian Swamphen,Porphyrio melanotus,5468,6,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Australasian Swamphen,Porphyrio melanotus,5468,15,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S226854243,Spotless Crake,Zapornia tabuensis,5549,2,AU-VIC,Melbourne,L2071430,Royal Park--Trin Warren Tam-boore,-37.7828922,144.9441719,2025-04-19,04:10 PM,eBird - Traveling Count,70,1,.517,,1,,Darting in an out of reeds on far side from hide.,"not an ideal time and too hot for the small birds, but finally put eyes on the Spotless Crake!",634012419
 S228743793,Spotless Crake,Zapornia tabuensis,5549,2,AU-VIC,Melbourne,L2071430,Royal Park--Trin Warren Tam-boore,-37.7828922,144.9441719,2025-04-24,04:53 PM,eBird - Traveling Count,30,1,.65,,1
 S270510334,Sarus Crane,Antigone antigone,5651,2,AU-QLD,Tablelands,L4868549,Gallo's Farm (Atherton-Malanda Rd),-17.2973527,145.5412169,2025-08-31,12:24 PM,eBird - Stationary Count,4,1,,,1
@@ -440,6 +456,7 @@ S270540042,Pied Stilt,Himantopus leucocephalus,5707,10,AU-QLD,Cairns,L3812503,Ca
 S229015752,Pied Stilt,Himantopus leucocephalus,5707,2,AU-VIC,Greater Geelong,L43353418,"Austin Road, Point Wilson, Victoria, AU (-38.036, 144.51)",-38.0362801,144.5103476,2025-04-25,08:46 AM,eBird - Stationary Count,8,1,,,1
 S220144332,Pied Stilt,Himantopus leucocephalus,5707,9,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S264317177,Pied Stilt,Himantopus leucocephalus,5707,7,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Pied Stilt,Himantopus leucocephalus,5707,8,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226484864,Pied Stilt,Himantopus leucocephalus,5707,10,AU-VIC,Greater Geelong,L11661564,Western Treatment Plant--Lake Borrie Outlet,-38.0114404,144.5817644,2025-04-18,10:43 AM,eBird - Stationary Count,5,1,,,1
 S226481183,Pied Stilt,Himantopus leucocephalus,5707,3,AU-VIC,Greater Geelong,L3138097,Western Treatment Plant--Little River Bird Hide,-38.0052031,144.5908579,2025-04-18,10:10 AM,eBird - Stationary Count,11,1,,,1
 S226486458,Pied Stilt,Himantopus leucocephalus,5707,1,AU-VIC,Greater Geelong,L2548494,Western Treatment Plant--Ponds 28-30 and Adjacent Coast,-38.02088,144.57164,2025-04-18,10:58 AM,eBird - Stationary Count,2,1,,,1
@@ -463,6 +480,7 @@ S229015752,Black-fronted Dotterel,Thinornis melanops,5781,2,AU-VIC,Greater Geelo
 S220144332,Black-fronted Dotterel,Thinornis melanops,5781,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Black-fronted Dotterel,Thinornis melanops,5781,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Black-fronted Dotterel,Thinornis melanops,5781,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Black-fronted Dotterel,Thinornis melanops,5781,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S218555288,Black-fronted Dotterel,Thinornis melanops,5781,1,AU-VIC,Kingston,L8317092,Braeside Park Wetlands,-38.0079817,145.1273346,2025-03-15,01:20 PM,eBird - Traveling Count,90,1,4.,,1
 S221679235,Black-fronted Dotterel,Thinornis melanops,5781,1,AU-VIC,Monash,L2040886,Bushy Park Wetlands,-37.873041,145.1894331,2025-03-30,09:05 AM,eBird - Traveling Count,65,1,.378,,1,,Nearly missed it!,Primarily at the bird hide,632882446 632882450
 S211048349,Masked Lapwing,Vanellus miles,5830,X,AU-SA,Adelaide,L2090264,Torrens Lake,-34.9162001,138.5987091,2025-01-29,07:09 AM,eBird - Casual Observation,,0,,,1,,,morning run
@@ -479,6 +497,7 @@ S224756849,Masked Lapwing,Vanellus miles,5830,3,AU-VIC,Glenelg,L42462145,Kerry a
 S220837850,Masked Lapwing,Vanellus miles,5830,2,AU-VIC,Greater Bendigo,L2552267,Lake Tom Thumb,-36.71161,144.26044,2025-03-26,06:22 PM,eBird - Traveling Count,53,1,1.39,,1,,,"sunset lap, spent a looong time trying to figure the ducks and still mostly failed"
 S220144332,Masked Lapwing,Vanellus miles,5830,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S264317177,Masked Lapwing,Vanellus miles,5830,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Masked Lapwing,Vanellus miles,5830,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226469393,Masked Lapwing,Vanellus miles,5830,2,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-18,09:09 AM,eBird - Stationary Count,13,1,,,1
 S229042490,Masked Lapwing,Vanellus miles,5830,7,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
 S226436774,Masked Lapwing,Vanellus miles,5830,1,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-04-18,06:42 AM,eBird - Stationary Count,15,1,,,1
@@ -498,7 +517,7 @@ S220144332,Red-kneed Dotterel,Erythrogonys cinctus,5843,4,AU-VIC,Greater Geelong
 S229042490,Red-kneed Dotterel,Erythrogonys cinctus,5843,1,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1,,,,634383058
 S240745060,Red-kneed Dotterel,Erythrogonys cinctus,5843,5,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1,,,,636373645
 S262992150,Red-capped Plover,Anarhynchus ruficapillus,5879,1,AU-VIC,Hobsons Bay,L2531387,Kororoit Creek Mouth,-37.8590488,144.8671603,2025-07-27,10:18 AM,eBird - Stationary Count,18,1,,,1,,,thank you to the lovely couple that let us use their scope to see the plover!
-S270729811,Whimbrel,Numenius phaeopus,5951,26,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1,,,,641267444
+S270729811,Whimbrel (White-rumped),Numenius phaeopus [phaeopus Group],5953,26,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1,,,,641267444
 S223274471,Far Eastern Curlew,Numenius madagascariensis,5964,1,AU-VIC,Bayside,L2549016,Ricketts Point,-37.99426,145.03154,2025-04-06,10:22 AM,eBird - Stationary Count,37,1,,,1,,"flew in, landed for a bit, flew out",,633258363 633258364 633258365 633258366
 S270729811,Far Eastern Curlew,Numenius madagascariensis,5964,6,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1
 S270729811,Sharp-tailed Sandpiper,Calidris acuminata,6119,20,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1
@@ -584,6 +603,7 @@ S248380845,Hoary-headed Grebe,Poliocephalus poliocephalus,6781,2,AU-VIC,Bayside,
 S232248594,Hoary-headed Grebe,Poliocephalus poliocephalus,6781,1,AU-VIC,Darebin,L1922139,La Trobe University Bundoora--Nangak Tamboree Wildlife Sanctuary (don't list Emu),-37.7164516,145.0554943,2025-05-03,10:30 AM,eBird - Traveling Count,116,1,4.08,,1,,under bridge over main lake,,634911189
 S259366874,Hoary-headed Grebe,Poliocephalus poliocephalus,6781,1,AU-VIC,Darebin,L1922139,La Trobe University Bundoora--Nangak Tamboree Wildlife Sanctuary (don't list Emu),-37.7164516,145.0554943,2025-07-13,10:17 AM,eBird - Traveling Count,111,1,2.059,,1
 S264317177,Hoary-headed Grebe,Poliocephalus poliocephalus,6781,4,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Hoary-headed Grebe,Poliocephalus poliocephalus,6781,4,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S229011528,Hoary-headed Grebe,Poliocephalus poliocephalus,6781,3,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-25,08:15 AM,eBird - Traveling Count,18,1,.34,,1
 S226489980,Hoary-headed Grebe,Poliocephalus poliocephalus,6781,5,AU-VIC,Greater Geelong,L3966834,Western Treatment Plant--Paradise Rd,-37.9971303,144.5604323,2025-04-18,11:30 AM,eBird - Stationary Count,2,0,,,1,,,,633948564
 S229042490,Hoary-headed Grebe,Poliocephalus poliocephalus,6781,12,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
@@ -644,6 +664,7 @@ S226497985,Little Pied Cormorant,Microcarbo melanoleucos,7293,11,AU-VIC,Wyndham,
 S240745060,Little Pied Cormorant,Microcarbo melanoleucos,7293,10,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S219886578,Little Pied Cormorant,Microcarbo melanoleucos,7293,1,AU-VIC,Yarra,L2551991,Yarra Bend Park--Dights Falls,-37.7969592,145.0010042,2025-03-22,01:32 PM,eBird - Traveling Count,77,1,2.5,,1,,on a log in river under bridge,two LBBs and a hawk I couldn't ID
 S228048172,Little Pied Cormorant,Microcarbo melanoleucos,7293,8,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Little Pied Cormorant,Microcarbo melanoleucos,7293,2,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S229439360,Great Cormorant,Phalacrocorax carbo,7313,1,AU-VIC,Ballarat,L1002051,Lake Wendouree,-37.5498309,143.8333511,2025-04-26,03:17 PM,eBird - Traveling Count,85,1,6.324,,1,,,power lap
 S254681774,Great Cormorant,Phalacrocorax carbo,7313,1,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-06-28,08:59 AM,eBird - Traveling Count,51,1,.718,,1
 S227612570,Great Cormorant,Phalacrocorax carbo,7313,1,AU-VIC,Boroondara,L9305197,Andrews Reserve,-37.8053235,145.0006381,2025-04-21,08:00 AM,eBird - Traveling Count,30,1,5.,,1,,"heard something land in river, assumed a duck. good thing i checked! north side just after reserve",morning run around the trails
@@ -697,6 +718,7 @@ S220837850,Australian Ibis,Threskiornis molucca,7413,18,AU-VIC,Greater Bendigo,L
 S220144332,Australian Ibis,Threskiornis molucca,7413,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Australian Ibis,Threskiornis molucca,7413,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Australian Ibis,Threskiornis molucca,7413,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Australian Ibis,Threskiornis molucca,7413,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S229011528,Australian Ibis,Threskiornis molucca,7413,2,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-25,08:15 AM,eBird - Traveling Count,18,1,.34,,1
 S226481183,Australian Ibis,Threskiornis molucca,7413,X,AU-VIC,Greater Geelong,L3138097,Western Treatment Plant--Little River Bird Hide,-38.0052031,144.5908579,2025-04-18,10:10 AM,eBird - Stationary Count,11,1,,,1
 S229042490,Australian Ibis,Threskiornis molucca,7413,4,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
@@ -769,6 +791,7 @@ S247939025,White-faced Heron,Egretta novaehollandiae,7573,2,AU-VIC,South Gippsla
 S226497985,White-faced Heron,Egretta novaehollandiae,7573,2,AU-VIC,Wyndham,L2694611,Point Cook Coastal Park--Homestead and Beach,-37.9276631,144.7888935,2025-04-18,12:47 PM,eBird - Traveling Count,20,1,.744,,1
 S240745060,White-faced Heron,Egretta novaehollandiae,7573,4,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S228048172,White-faced Heron,Egretta novaehollandiae,7573,1,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,White-faced Heron,Egretta novaehollandiae,7573,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S227215461,Eastern Cattle-Egret,Ardea coromanda,7632,7,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,08:46 AM,eBird - Traveling Count,89,1,3.13,,1,,,walk back from plenty/yarra convergence finishing at lake,634065961
 S225033944,Eastern Cattle-Egret,Ardea coromanda,7632,4,AU-VIC,Glenelg,L42527780,"Amors Road, Gorae West, Victoria, AU (-38.274, 141.486)",-38.2737763,141.4856768,2025-04-13,08:52 AM,eBird - Casual Observation,,0,,,1,,,life spot,633643099
 S229027329,Eastern Cattle-Egret,Ardea coromanda,7632,9,AU-VIC,Greater Geelong,L43355414,"Austin Road, Point Wilson, Victoria, AU (-38.036, 144.508)",-38.0359843,144.5076556,2025-04-25,08:58 AM,eBird - Traveling Count,33,1,3.61,,1,,"with the cows, checks out"
@@ -809,6 +832,7 @@ S218555288,Australian Pelican,Pelecanus conspicillatus,7706,2,AU-VIC,Kingston,L8
 S219013875,Australian Pelican,Pelecanus conspicillatus,7706,3,AU-VIC,Melbourne,L2081605,Westgate Park,-37.8311412,144.909153,2025-03-17,06:09 PM,eBird - Traveling Count,56,1,1.41,,1
 S264901591,Australian Pelican,Pelecanus conspicillatus,7706,1,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,09:00 AM,eBird - Traveling Count,93,1,3.158,,1
 S240745060,Australian Pelican,Pelecanus conspicillatus,7706,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
+S272815108,Australian Pelican,Pelecanus conspicillatus,7706,4,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S216496229,Turkey Vulture,Cathartes aura,7720,X,US-CA,Riverside,L209809,Joshua Tree NP--Barker Dam area,34.0309,-116.1463,2025-03-03,01:44 PM,eBird - Traveling Count,120,1,4.,,1
 S217283865,Turkey Vulture,Cathartes aura,7720,X,US-CA,Riverside,L17498875,Palm Springs International Airport,33.8233941,-116.5075028,2025-03-08,10:26 AM,eBird - Traveling Count,33,1,.273,,1
 S225039574,Black-shouldered Kite,Elanus axillaris,7757,1,AU-VIC,Glenelg,L42528952,"75 Amors Road, Gorae West, Victoria, AU (-38.255, 141.489)",-38.2548761,141.4889591,2025-04-13,09:11 AM,eBird - Stationary Count,5,1,,,1,,"perched in tree, then flew off. very clear view of wings in flight",mostly in the dam beside the road,633643089
@@ -821,6 +845,7 @@ S229012486,Swamp Harrier,Circus approximans,8219,1,AU-VIC,Greater Geelong,L43352
 S229042490,Swamp Harrier,Circus approximans,8219,1,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
 S241120145,Swamp Harrier,Circus approximans,8219,1,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-05-22,04:45 PM,eBird - Traveling Count,42,1,5.55,,1
 S240745060,Swamp Harrier,Circus approximans,8219,1,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
+S281165675,Black Kite,Milvus migrans,8249,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1,,"perched. clear forked tail. tan underbelly, brown wings, yellow beak and feet. Dark masked face."
 S270778055,Black Kite,Milvus migrans,8249,10,AU-QLD,Tablelands,L52299618,Incidental around Atherton Tablelands,-17.2695331,145.4810157,2025-08-31,06:26 AM,eBird - Traveling Count,300,0,100.,,1
 S225041824,Whistling Kite,Haliastur sphenurus,8267,1,AU-VIC,Glenelg,L42529378,"Beaugleholes Road, Gorae, Victoria, AU (-38.224, 141.494)",-38.2243354,141.4939189,2025-04-13,09:27 AM,eBird - Casual Observation,,0,,,1
 S254682459,Whistling Kite,Haliastur sphenurus,8267,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
@@ -849,6 +874,7 @@ S228048172,Laughing Kookaburra,Dacelo novaeguineae,9925,3,AU-VIC,Yarra Ranges,L1
 S270995129,Forest Kingfisher,Todiramphus macleayii,10023,1,AU-QLD,Cairns,L4955642,Saltwater Lake (Centenary Lakes),-16.9028034,145.7514605,2025-09-02,07:49 AM,eBird - Traveling Count,90,1,1.526,,1,,,most of the walking tour,641266964
 S270528389,Forest Kingfisher,Todiramphus macleayii,10023,2,AU-QLD,Tablelands,L13482335,"Allumbah Pocket, Peterson Creek, Yungaburra",-17.2700473,145.5790186,2025-08-31,03:48 PM,eBird - Traveling Count,57,1,.692,,1,,,,641267541 641267542
 S270729811,Sacred Kingfisher,Todiramphus sanctus,10078,2,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1
+S281165675,Sacred Kingfisher,Todiramphus sanctus,10078,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226493937,Nankeen Kestrel,Falco cenchroides,11906,1,AU-VIC,Wyndham,L42825336,"Murtcaim Road, Cocoroc, Victoria, AU (-37.969, 144.575)",-37.9693194,144.5748429,2025-04-18,11:58 AM,eBird - Casual Observation,,0,,,1,,"sitting atop roadsign, then great view in flight of both underside (white) and top (brown with black ends)"
 S226491123,Brown Falcon,Falco berigora,11969,1,AU-VIC,Greater Geelong,L42824750,"Unnamed Road, Point Wilson, Victoria, AU (-37.99, 144.551)",-37.990151,144.5512796,2025-04-18,11:43 AM,eBird - Casual Observation,,0,,,1,,,,633948565
 S229047017,Brown Falcon,Falco berigora,11969,1,AU-VIC,Greater Geelong,L43358715,WTP Gate 5,-37.9942523,144.5327592,2025-04-25,10:45 AM,eBird - Casual Observation,,0,,,1,,"perched in tree, good look at face",WTP Gate 5
@@ -859,6 +885,7 @@ S224716643,Yellow-tailed Black-Cockatoo,Zanda funerea,12034,2,AU-VIC,Corangamite
 S224729159,Yellow-tailed Black-Cockatoo,Zanda funerea,12034,6,AU-VIC,Corangamite,L2547411,Timboon Trestle Bridge,-38.44391,142.96028,2025-04-12,01:21 PM,eBird - Traveling Count,26,1,.394,,1,,flying overhead
 S224756849,Yellow-tailed Black-Cockatoo,Zanda funerea,12034,2,AU-VIC,Glenelg,L42462145,Kerry and Shane's Place,-38.3050553,141.5243919,2025-04-12,05:45 PM,eBird - Traveling Count,11,1,.088,,1
 S261542291,Gang-gang Cockatoo,Callocephalon fimbriatum,12058,3,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:33 AM,eBird - Traveling Count,40,1,.73,,1,,,,639191935
+S272815108,Gang-gang Cockatoo,Callocephalon fimbriatum,12058,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S227180039,Galah,Eolophus roseicapilla,12059,40,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,07:30 AM,eBird - Traveling Count,50,1,.7,,1,,,oval then down around the billabong,634065865
 S227215461,Galah,Eolophus roseicapilla,12059,4,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,08:46 AM,eBird - Traveling Count,89,1,3.13,,1,,,walk back from plenty/yarra convergence finishing at lake
 S254681774,Galah,Eolophus roseicapilla,12059,3,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-06-28,08:59 AM,eBird - Traveling Count,51,1,.718,,1
@@ -868,6 +895,7 @@ S220828773,Galah,Eolophus roseicapilla,12059,2,AU-VIC,Greater Bendigo,L2552293,B
 S220837850,Galah,Eolophus roseicapilla,12059,6,AU-VIC,Greater Bendigo,L2552267,Lake Tom Thumb,-36.71161,144.26044,2025-03-26,06:22 PM,eBird - Traveling Count,53,1,1.39,,1,,,"sunset lap, spent a looong time trying to figure the ducks and still mostly failed"
 S220626536,Galah,Eolophus roseicapilla,12059,2,AU-VIC,Greater Bendigo,L2991436,Rosalind Park,-36.7569,144.27933,2025-03-25,06:43 PM,eBird - Traveling Count,36,1,1.38,,1
 S264317177,Galah,Eolophus roseicapilla,12059,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1,,,,639699465
+S281165675,Galah,Eolophus roseicapilla,12059,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S229047017,Galah,Eolophus roseicapilla,12059,4,AU-VIC,Greater Geelong,L43358715,WTP Gate 5,-37.9942523,144.5327592,2025-04-25,10:45 AM,eBird - Casual Observation,,0,,,1,,,WTP Gate 5
 S247504729,Galah,Eolophus roseicapilla,12059,2,AU-VIC,Latrobe,L37935044,Moe Botanic Gardens,-38.1780546,146.2719405,2025-06-07,11:40 AM,eBird - Traveling Count,30,1,1.14,,1
 S219350493,Galah,Eolophus roseicapilla,12059,3,AU-VIC,Melbourne,L1122069,Fitzroy Gardens,-37.8126,144.9805,2025-03-19,05:36 PM,eBird - Traveling Count,65,1,2.17,,1
@@ -880,6 +908,7 @@ S221694232,Galah,Eolophus roseicapilla,12059,2,AU-VIC,Monash,L7817345,Napier Par
 S223259778,Galah,Eolophus roseicapilla,12059,2,AU-VIC,Port Phillip,L3963838,Albert Park,-37.8474347,144.9701717,2025-04-06,09:21 AM,eBird - Casual Observation,,0,,,1
 S247189866,Galah,Eolophus roseicapilla,12059,2,AU-VIC,South Gippsland,L46917598,"156 Griggs Road, Hallston, Victoria, AU (-38.348, 146.027)",-38.3476726,146.0269503,2025-06-06,04:44 PM,eBird - Traveling Count,20,1,.432,,1
 S247939025,Galah,Eolophus roseicapilla,12059,4,AU-VIC,South Gippsland,L46917598,"156 Griggs Road, Hallston, Victoria, AU (-38.348, 146.027)",-38.3476726,146.0269503,2025-06-08,01:29 PM,eBird - Casual Observation,,0,,,1
+S272815108,Galah,Eolophus roseicapilla,12059,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S219350493,Little Corella,Cacatua sanguinea,12072,X,AU-VIC,Melbourne,L1122069,Fitzroy Gardens,-37.8126,144.9805,2025-03-19,05:36 PM,eBird - Traveling Count,65,1,2.17,,1
 S221694232,Little Corella,Cacatua sanguinea,12072,2,AU-VIC,Monash,L7817345,Napier Park,-37.8794669,145.1897656,2025-03-30,10:22 AM,eBird - Traveling Count,94,1,3.74,,1,,,Fantail and thornbill were in shepherds bush
 S229439360,Long-billed Corella,Cacatua tenuirostris,12079,X,AU-VIC,Ballarat,L1002051,Lake Wendouree,-37.5498309,143.8333511,2025-04-26,03:17 PM,eBird - Traveling Count,85,1,6.324,,1,,,power lap
@@ -908,10 +937,12 @@ S221694232,Sulphur-crested Cockatoo,Cacatua galerita,12095,X,AU-VIC,Monash,L7817
 S270778055,Sulphur-crested Cockatoo,Cacatua galerita,12095,30,AU-QLD,Tablelands,L52299618,Incidental around Atherton Tablelands,-17.2695331,145.4810157,2025-08-31,06:26 AM,eBird - Traveling Count,300,0,100.,,1
 S261552120,Sulphur-crested Cockatoo,Cacatua galerita,12095,1,AU-VIC,Whittlesea,L8573683,Wilton Vale Wetlands,-37.6216947,145.1052784,2025-07-21,12:11 PM,eBird - Traveling Count,21,1,.71,,1
 S261542291,Sulphur-crested Cockatoo,Cacatua galerita,12095,2,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:33 AM,eBird - Traveling Count,40,1,.73,,1
+S272815108,Sulphur-crested Cockatoo,Cacatua galerita,12095,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S227215461,Australian King-Parrot,Alisterus scapularis,12147,2,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,08:46 AM,eBird - Traveling Count,89,1,3.13,,1,,,walk back from plenty/yarra convergence finishing at lake,634065973
 S224715114,Australian King-Parrot,Alisterus scapularis,12147,5,AU-VIC,Corangamite,L2549960,Power Creek Reserve,-38.48678,142.98173,2025-04-12,10:00 AM,eBird - Traveling Count,63,1,.475,,1,,,"definitely saw a new honey eater, just don't know which one!"
 S247504729,Australian King-Parrot,Alisterus scapularis,12147,4,AU-VIC,Latrobe,L37935044,Moe Botanic Gardens,-38.1780546,146.2719405,2025-06-07,11:40 AM,eBird - Traveling Count,30,1,1.14,,1
 S261542291,Australian King-Parrot,Alisterus scapularis,12147,3,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:33 AM,eBird - Traveling Count,40,1,.73,,1
+S272815108,Australian King-Parrot,Alisterus scapularis,12147,5,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S229001154,Blue-winged Parrot,Neophema chrysostoma,12320,10,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-25,08:05 AM,eBird - Casual Observation,,0,,,1,,on fence beside road,on road just before hide,634382751
 S254681774,Crimson Rosella,Platycercus elegans,12362,1,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-06-28,08:59 AM,eBird - Traveling Count,51,1,.718,,1
 S247479448,Crimson Rosella,Platycercus elegans,12362,1,AU-VIC,Baw Baw,L2548468,Mount Worth State Park,-38.28454,145.98701,2025-06-07,09:53 AM,eBird - Traveling Count,19,1,.27,,1,,,moonlight Creek carpark
@@ -930,6 +961,7 @@ S261534054,Crimson Rosella,Platycercus elegans,12362,1,AU-VIC,Whittlesea,L255252
 S261542291,Crimson Rosella,Platycercus elegans,12362,4,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:33 AM,eBird - Traveling Count,40,1,.73,,1
 S219886578,Crimson Rosella,Platycercus elegans,12362,2,AU-VIC,Yarra,L2551991,Yarra Bend Park--Dights Falls,-37.7969592,145.0010042,2025-03-22,01:32 PM,eBird - Traveling Count,77,1,2.5,,1,,"immature, hanging out with red rumps",two LBBs and a hawk I couldn't ID
 S228048172,Crimson Rosella,Platycercus elegans,12362,4,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Crimson Rosella,Platycercus elegans,12362,11,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S248357277,Eastern Rosella,Platycercus eximius,12374,2,AU-VIC,Casey,L10207671,Woodlot Lane Nature Reserve,-38.2219845,145.4054786,2025-06-09,09:59 AM,eBird - Traveling Count,32,1,.57,,1
 S224724688,Eastern Rosella,Platycercus eximius,12374,1,AU-VIC,Corangamite,L2549969,"Timboon Rail Trail, Timboon",-38.48127,142.97384,2025-04-12,11:28 AM,eBird - Traveling Count,70,1,1.205,,1,,,more small birds in tall trees,633643188
 S220828773,Eastern Rosella,Platycercus eximius,12374,2,AU-VIC,Greater Bendigo,L2552293,Bendigo Sewage Ponds,-36.6910642,144.3054449,2025-03-26,05:12 PM,eBird - Stationary Count,8,1,,,1,,,"too far away to id a few on the water, not sure where allowed to get closer"
@@ -938,6 +970,7 @@ S230985386,Eastern Rosella,Platycercus eximius,12374,2,AU-VIC,Greater Bendigo,L2
 S220837850,Eastern Rosella,Platycercus eximius,12374,2,AU-VIC,Greater Bendigo,L2552267,Lake Tom Thumb,-36.71161,144.26044,2025-03-26,06:22 PM,eBird - Traveling Count,53,1,1.39,,1,,,"sunset lap, spent a looong time trying to figure the ducks and still mostly failed"
 S220626536,Eastern Rosella,Platycercus eximius,12374,2,AU-VIC,Greater Bendigo,L2991436,Rosalind Park,-36.7569,144.27933,2025-03-25,06:43 PM,eBird - Traveling Count,36,1,1.38,,1
 S264317177,Eastern Rosella,Platycercus eximius,12374,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1,,,,639699466
+S281165675,Eastern Rosella,Platycercus eximius,12374,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S235234139,Eastern Rosella,Platycercus eximius,12374,2,AU-VIC,Melbourne,L44505788,"East Melbourne, Victoria, AU (-37.818, 144.98)",-37.8176594,144.9801045,2025-05-10,08:40 AM,eBird - Stationary Count,5,1,,,1,,haven't seen them around here before
 S219171569,Eastern Rosella,Platycercus eximius,12374,1,AU-VIC,Melbourne,L2552179,Royal Park,-37.7892413,144.9508023,2025-03-18,05:11 PM,eBird - Traveling Count,60,1,2.5,,1,,,"track stopped, did a whole lap"
 S264879019,Eastern Rosella,Platycercus eximius,12374,6,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,08:19 AM,eBird - Traveling Count,22,1,.238,,1
@@ -950,6 +983,7 @@ S230985386,Red-rumped Parrot,Psephotus haematonotus,12396,4,AU-VIC,Greater Bendi
 S220144332,Red-rumped Parrot,Psephotus haematonotus,12396,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Red-rumped Parrot,Psephotus haematonotus,12396,7,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Red-rumped Parrot,Psephotus haematonotus,12396,14,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Red-rumped Parrot,Psephotus haematonotus,12396,10,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S264879019,Red-rumped Parrot,Psephotus haematonotus,12396,2,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,08:19 AM,eBird - Traveling Count,22,1,.238,,1
 S264881345,Red-rumped Parrot,Psephotus haematonotus,12396,1,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,08:48 AM,eBird - Stationary Count,4,1,,,1
 S264901591,Red-rumped Parrot,Psephotus haematonotus,12396,9,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,09:00 AM,eBird - Traveling Count,93,1,3.158,,1
@@ -977,6 +1011,7 @@ S259366874,Rainbow Lorikeet,Trichoglossus moluccanus,12562,11,AU-VIC,Darebin,L19
 S220626536,Rainbow Lorikeet,Trichoglossus moluccanus,12562,27,AU-VIC,Greater Bendigo,L2991436,Rosalind Park,-36.7569,144.27933,2025-03-25,06:43 PM,eBird - Traveling Count,36,1,1.38,,1
 S235250929,Rainbow Lorikeet,Trichoglossus moluccanus,12562,7,AU-VIC,Greater Geelong,L3637443,Geelong Botanic Gardens,-38.150015,144.3775606,2025-05-10,09:57 AM,eBird - Traveling Count,44,1,2.34,,1,,,with mum. got a good look at a small grey bird i didn't recognize with yellow(?) splotches on wings. female Robin?
 S254682459,Rainbow Lorikeet,Trichoglossus moluccanus,12562,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
+S281165675,Rainbow Lorikeet,Trichoglossus moluccanus,12562,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S227680290,Rainbow Lorikeet,Trichoglossus moluccanus,12562,1,AU-VIC,Hobsons Bay,L2519055,Jawbone Flora and Fauna Reserve,-37.860833,144.875,2025-04-21,10:53 AM,eBird - Traveling Count,120,1,4.,,1,,,"weather was too good to stay home. wasn't expecting such a haul, including two lifers. neglected to start trace :("
 S263003998,Rainbow Lorikeet,Trichoglossus moluccanus,12562,4,AU-VIC,Hobsons Bay,L2041733,Newport Lakes,-37.8390723,144.8712158,2025-07-27,10:56 AM,eBird - Traveling Count,73,1,1.575,,1
 S223283709,Rainbow Lorikeet,Trichoglossus moluccanus,12562,4,AU-VIC,Kingston,L2041660,Karkarook Park,-37.9423192,145.0810933,2025-04-06,11:25 AM,eBird - Traveling Count,62,1,1.95,,1,,,,633261704 633261705 633261706
@@ -1009,6 +1044,7 @@ S224729159,White-throated Treecreeper,Cormobates leucophaea,17402,1,AU-VIC,Coran
 S225062313,White-throated Treecreeper,Cormobates leucophaea,17402,1,AU-VIC,Glenelg,L17557497,Cobboboonee National Park--Surrey Ridge Picnic Area,-38.184832,141.504709,2025-04-13,10:30 AM,eBird - Traveling Count,34,1,1.1,,2
 S247518817,White-throated Treecreeper,Cormobates leucophaea,17402,1,AU-VIC,Latrobe,L2549812,Lake Narracan,-38.15777,146.31111,2025-06-07,01:24 PM,eBird - Traveling Count,46,1,1.52,,1
 S270520002,White-throated Treecreeper,Cormobates leucophaea,17402,1,AU-QLD,Tablelands,L3594363,Mount Hypipamee National Park--picnic area,-17.428377,145.4862205,2025-08-31,01:24 PM,eBird - Traveling Count,113,1,1.168,,1
+S272815108,White-throated Treecreeper,Cormobates leucophaea,17402,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S264881345,Brown Treecreeper,Climacteris picumnus,17413,1,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,08:48 AM,eBird - Stationary Count,4,1,,,1,,,,639796270
 S264901591,Brown Treecreeper,Climacteris picumnus,17413,2,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,09:00 AM,eBird - Traveling Count,93,1,3.158,,1
 S229439360,Superb Fairywren,Malurus cyaneus,17490,1,AU-VIC,Ballarat,L1002051,Lake Wendouree,-37.5498309,143.8333511,2025-04-26,03:17 PM,eBird - Traveling Count,85,1,6.324,,1,,,power lap
@@ -1027,6 +1063,7 @@ S230985386,Superb Fairywren,Malurus cyaneus,17490,6,AU-VIC,Greater Bendigo,L2551
 S220144332,Superb Fairywren,Malurus cyaneus,17490,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1,,"tens, including two males"
 S254682459,Superb Fairywren,Malurus cyaneus,17490,10,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Superb Fairywren,Malurus cyaneus,17490,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1,,,,639699467
+S281165675,Superb Fairywren,Malurus cyaneus,17490,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S229047017,Superb Fairywren,Malurus cyaneus,17490,2,AU-VIC,Greater Geelong,L43358715,WTP Gate 5,-37.9942523,144.5327592,2025-04-25,10:45 AM,eBird - Casual Observation,,0,,,1,,,WTP Gate 5
 S229011528,Superb Fairywren,Malurus cyaneus,17490,10,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-25,08:15 AM,eBird - Traveling Count,18,1,.34,,1,,on walk in
 S226481183,Superb Fairywren,Malurus cyaneus,17490,4,AU-VIC,Greater Geelong,L3138097,Western Treatment Plant--Little River Bird Hide,-38.0052031,144.5908579,2025-04-18,10:10 AM,eBird - Stationary Count,11,1,,,1
@@ -1049,6 +1086,7 @@ S247953720,Superb Fairywren,Malurus cyaneus,17490,1,AU-VIC,South Gippsland,L2213
 S226497985,Superb Fairywren,Malurus cyaneus,17490,3,AU-VIC,Wyndham,L2694611,Point Cook Coastal Park--Homestead and Beach,-37.9276631,144.7888935,2025-04-18,12:47 PM,eBird - Traveling Count,20,1,.744,,1
 S240745060,Superb Fairywren,Malurus cyaneus,17490,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S228048172,Superb Fairywren,Malurus cyaneus,17490,14,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Superb Fairywren,Malurus cyaneus,17490,5,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S225050951,Eastern Spinebill,Acanthorhynchus tenuirostris,17524,2,AU-VIC,Glenelg,L42531207,"Fish Hole Road, Gorae West, Victoria, AU (-38.213, 141.484)",-38.2125916,141.484263,2025-04-13,09:33 AM,eBird - Stationary Count,38,1,,,2
 S263003998,Eastern Spinebill,Acanthorhynchus tenuirostris,17524,1,AU-VIC,Hobsons Bay,L2041733,Newport Lakes,-37.8390723,144.8712158,2025-07-27,10:56 AM,eBird - Traveling Count,73,1,1.575,,1
 S223819461,Eastern Spinebill,Acanthorhynchus tenuirostris,17524,4,AU-VIC,Melbourne,L919153,Royal Botanic Gardens Melbourne,-37.8297966,144.9805232,2025-04-08,05:06 PM,eBird - Traveling Count,44,1,2.02,,1,,,"100 birds! returned to where i thought i saw Eastern Soinebill the other week, and sure enough I was right. Bonus kookaburra too which is the first I've seen this year.    Heard but not seen: Little Raven, Pied Currawong"
@@ -1057,6 +1095,7 @@ S270528389,Lewin's Honeyeater,Meliphaga lewinii,17559,2,AU-QLD,Tablelands,L13482
 S270528428,Lewin's Honeyeater,Meliphaga lewinii,17559,2,AU-QLD,Tablelands,L928828,Crater Lakes National Park--Lake Eacham,-17.2857129,145.6286654,2025-08-31,09:44 AM,eBird - Traveling Count,84,1,1.642,,1
 S227180039,Yellow-faced Honeyeater,Caligavis chrysops,17607,1,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,07:30 AM,eBird - Traveling Count,50,1,.7,,1,,,oval then down around the billabong
 S225050951,Yellow-faced Honeyeater,Caligavis chrysops,17607,8,AU-VIC,Glenelg,L42531207,"Fish Hole Road, Gorae West, Victoria, AU (-38.213, 141.484)",-38.2125916,141.484263,2025-04-13,09:33 AM,eBird - Stationary Count,38,1,,,2,,,,633643035
+S272815108,Yellow-faced Honeyeater,Caligavis chrysops,17607,2,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S230985386,Yellow-tufted Honeyeater,Lichenostomus melanops,17619,2,AU-VIC,Greater Bendigo,L2551118,Crusoe Reservoir and No. 7 Park,-36.8200453,144.224267,2025-04-30,06:51 AM,eBird - Traveling Count,91,1,4.18,,1,,,quick lap of the reservoir
 S232248594,Bell Miner,Manorina melanophrys,17627,1,AU-VIC,Darebin,L1922139,La Trobe University Bundoora--Nangak Tamboree Wildlife Sanctuary (don't list Emu),-37.7164516,145.0554943,2025-05-03,10:30 AM,eBird - Traveling Count,116,1,4.08,,1,,heard a heap but only actually saw one
 S259366874,Bell Miner,Manorina melanophrys,17627,1,AU-VIC,Darebin,L1922139,La Trobe University Bundoora--Nangak Tamboree Wildlife Sanctuary (don't list Emu),-37.7164516,145.0554943,2025-07-13,10:17 AM,eBird - Traveling Count,111,1,2.059,,1
@@ -1127,6 +1166,7 @@ S220626536,Red Wattlebird,Anthochaera carunculata,17681,1,AU-VIC,Greater Bendigo
 S235250929,Red Wattlebird,Anthochaera carunculata,17681,7,AU-VIC,Greater Geelong,L3637443,Geelong Botanic Gardens,-38.150015,144.3775606,2025-05-10,09:57 AM,eBird - Traveling Count,44,1,2.34,,1,,,with mum. got a good look at a small grey bird i didn't recognize with yellow(?) splotches on wings. female Robin?
 S220144332,Red Wattlebird,Anthochaera carunculata,17681,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S264317177,Red Wattlebird,Anthochaera carunculata,17681,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Red Wattlebird,Anthochaera carunculata,17681,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S262986636,Red Wattlebird,Anthochaera carunculata,17681,7,AU-VIC,Hobsons Bay,L2519666,Altona Coastal Park,-37.861111,144.856667,2025-07-27,09:04 AM,eBird - Traveling Count,60,1,1.591,,1
 S227680290,Red Wattlebird,Anthochaera carunculata,17681,4,AU-VIC,Hobsons Bay,L2519055,Jawbone Flora and Fauna Reserve,-37.860833,144.875,2025-04-21,10:53 AM,eBird - Traveling Count,120,1,4.,,1,,,"weather was too good to stay home. wasn't expecting such a haul, including two lifers. neglected to start trace :("
 S263003998,Red Wattlebird,Anthochaera carunculata,17681,9,AU-VIC,Hobsons Bay,L2041733,Newport Lakes,-37.8390723,144.8712158,2025-07-27,10:56 AM,eBird - Traveling Count,73,1,1.575,,1
@@ -1149,11 +1189,13 @@ S254682484,Red Wattlebird,Anthochaera carunculata,17681,4,AU-VIC,Merri-bek,L2550
 S221433266,Red Wattlebird,Anthochaera carunculata,17681,4,AU-VIC,Merri-bek,L2552489,Merri Creek--Kirkdale St Park-Merri Park,-37.77234,144.98519,2025-03-29,04:34 PM,eBird - Traveling Count,37,1,.534,,1,,,terrible light just trying out new camera anyways
 S247953720,Red Wattlebird,Anthochaera carunculata,17681,1,AU-VIC,South Gippsland,L22131229,Leongatha Wetland,-38.4822395,145.9413964,2025-06-08,03:00 PM,eBird - Traveling Count,51,1,.359,,1
 S228048172,Red Wattlebird,Anthochaera carunculata,17681,1,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Red Wattlebird,Anthochaera carunculata,17681,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S270729811,Varied Honeyeater,Gavicalis versicolor,17689,3,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1
 S270970306,Varied Honeyeater,Gavicalis versicolor,17689,1,AU-QLD,Cairns,L3946551,Cairns Esplanade--Northern End,-16.9058171,145.7640499,2025-09-02,07:02 AM,eBird - Casual Observation,,0,,,1,,,,641267234
 S220626536,White-plumed Honeyeater,Ptilotula penicillata,17702,1,AU-VIC,Greater Bendigo,L2991436,Rosalind Park,-36.7569,144.27933,2025-03-25,06:43 PM,eBird - Traveling Count,36,1,1.38,,1
 S220144332,White-plumed Honeyeater,Ptilotula penicillata,17702,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S264317177,White-plumed Honeyeater,Ptilotula penicillata,17702,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,White-plumed Honeyeater,Ptilotula penicillata,17702,8,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S229042490,White-plumed Honeyeater,Ptilotula penicillata,17702,1,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
 S227680290,White-plumed Honeyeater,Ptilotula penicillata,17702,1,AU-VIC,Hobsons Bay,L2519055,Jawbone Flora and Fauna Reserve,-37.860833,144.875,2025-04-21,10:53 AM,eBird - Traveling Count,120,1,4.,,1,,first spot in first tree out of car,"weather was too good to stay home. wasn't expecting such a haul, including two lifers. neglected to start trace :("
 S263003998,White-plumed Honeyeater,Ptilotula penicillata,17702,3,AU-VIC,Hobsons Bay,L2041733,Newport Lakes,-37.8390723,144.8712158,2025-07-27,10:56 AM,eBird - Traveling Count,73,1,1.575,,1
@@ -1165,6 +1207,7 @@ S222977983,White-plumed Honeyeater,Ptilotula penicillata,17702,4,AU-VIC,Melbourn
 S264879019,White-plumed Honeyeater,Ptilotula penicillata,17702,3,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,08:19 AM,eBird - Traveling Count,22,1,.238,,1
 S264901591,White-plumed Honeyeater,Ptilotula penicillata,17702,1,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,09:00 AM,eBird - Traveling Count,93,1,3.158,,1
 S264910682,White-plumed Honeyeater,Ptilotula penicillata,17702,6,AU-VIC,Melton,L2551217,Melton Botanic Gardens,-37.69277,144.58861,2025-08-04,11:00 AM,eBird - Traveling Count,42,1,1.113,,1
+S272815108,White-plumed Honeyeater,Ptilotula penicillata,17702,3,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S270995129,Brown-backed Honeyeater,Ramsayornis modestus,17719,1,AU-QLD,Cairns,L4955642,Saltwater Lake (Centenary Lakes),-16.9028034,145.7514605,2025-09-02,07:49 AM,eBird - Traveling Count,90,1,1.526,,1,,,most of the walking tour,641266954
 S229042490,White-fronted Chat,Epthianura albifrons,17733,1,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1,,,,634383080
 S226462003,White-fronted Chat,Epthianura albifrons,17733,5,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-04-18,07:05 AM,eBird - Traveling Count,106,1,4.24,,1,,,,633948494
@@ -1177,6 +1220,7 @@ S225062313,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,1,AU-VIC,Gl
 S225065091,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,1,AU-VIC,Glenelg,L42462145,Kerry and Shane's Place,-38.3050553,141.5243919,2025-04-13,11:50 AM,eBird - Casual Observation,,0,,,1
 S220144332,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S264317177,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,3,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,5,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S262986636,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,6,AU-VIC,Hobsons Bay,L2519666,Altona Coastal Park,-37.861111,144.856667,2025-07-27,09:04 AM,eBird - Traveling Count,60,1,1.591,,1
 S227680290,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,9,AU-VIC,Hobsons Bay,L2519055,Jawbone Flora and Fauna Reserve,-37.860833,144.875,2025-04-21,10:53 AM,eBird - Traveling Count,120,1,4.,,1,,,"weather was too good to stay home. wasn't expecting such a haul, including two lifers. neglected to start trace :("
 S263003998,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,8,AU-VIC,Hobsons Bay,L2041733,Newport Lakes,-37.8390723,144.8712158,2025-07-27,10:56 AM,eBird - Traveling Count,73,1,1.575,,1
@@ -1185,6 +1229,7 @@ S219013875,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,6,AU-VIC,Me
 S222977983,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,3,AU-VIC,Melbourne,L2081605,Westgate Park,-37.8311412,144.909153,2025-04-05,08:16 AM,eBird - Traveling Count,91,1,1.73,,1,,,"swear i glimpsed a hawk but couldn't find it for proper eyes. present = heaps, just a _lot_ of birds around this morning",633202126
 S264901591,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,5,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,09:00 AM,eBird - Traveling Count,93,1,3.158,,1
 S264910682,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,4,AU-VIC,Melton,L2551217,Melton Botanic Gardens,-37.69277,144.58861,2025-08-04,11:00 AM,eBird - Traveling Count,42,1,1.113,,1
+S272815108,New Holland Honeyeater,Phylidonyris novaehollandiae,17918,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S248357277,White-eared Honeyeater,Nesoptilotis leucotis,17929,4,AU-VIC,Casey,L10207671,Woodlot Lane Nature Reserve,-38.2219845,145.4054786,2025-06-09,09:59 AM,eBird - Traveling Count,32,1,.57,,1
 S224715114,White-eared Honeyeater,Nesoptilotis leucotis,17929,1,AU-VIC,Corangamite,L2549960,Power Creek Reserve,-38.48678,142.98173,2025-04-12,10:00 AM,eBird - Traveling Count,63,1,.475,,1,,,"definitely saw a new honey eater, just don't know which one!"
 S224724688,White-eared Honeyeater,Nesoptilotis leucotis,17929,1,AU-VIC,Corangamite,L2549969,"Timboon Rail Trail, Timboon",-38.48127,142.97384,2025-04-12,11:28 AM,eBird - Traveling Count,70,1,1.205,,1,,,more small birds in tall trees
@@ -1193,6 +1238,7 @@ S228048172,White-eared Honeyeater,Nesoptilotis leucotis,17929,2,AU-VIC,Yarra Ran
 S270995129,White-throated Honeyeater,Melithreptus albogularis,17939,2,AU-QLD,Cairns,L4955642,Saltwater Lake (Centenary Lakes),-16.9028034,145.7514605,2025-09-02,07:49 AM,eBird - Traveling Count,90,1,1.526,,1,,,most of the walking tour
 S225050951,White-naped Honeyeater,Melithreptus lunatus,17943,4,AU-VIC,Glenelg,L42531207,"Fish Hole Road, Gorae West, Victoria, AU (-38.213, 141.484)",-38.2125916,141.484263,2025-04-13,09:33 AM,eBird - Stationary Count,38,1,,,2,,,,633643033 633643034
 S225017078,White-naped Honeyeater,Melithreptus lunatus,17943,1,AU-VIC,Glenelg,L42462145,Kerry and Shane's Place,-38.3050553,141.5243919,2025-04-13,07:39 AM,eBird - Stationary Count,4,0,,,1,,,just the new ones
+S272815108,White-naped Honeyeater,Melithreptus lunatus,17943,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S270528428,Macleay's Honeyeater,Xanthotis macleayanus,17987,2,AU-QLD,Tablelands,L928828,Crater Lakes National Park--Lake Eacham,-17.2857129,145.6286654,2025-08-31,09:44 AM,eBird - Traveling Count,84,1,1.642,,1
 S270970306,Helmeted Friarbird,Philemon buceroides,18004,1,AU-QLD,Cairns,L3946551,Cairns Esplanade--Northern End,-16.9058171,145.7640499,2025-09-02,07:02 AM,eBird - Casual Observation,,0,,,1
 S270995129,Helmeted Friarbird,Philemon buceroides,18004,3,AU-QLD,Cairns,L4955642,Saltwater Lake (Centenary Lakes),-16.9028034,145.7514605,2025-09-02,07:49 AM,eBird - Traveling Count,90,1,1.526,,1,,,most of the walking tour
@@ -1202,6 +1248,8 @@ S232248594,Spotted Pardalote,Pardalotus punctatus,18037,1,AU-VIC,Darebin,L192213
 S230985386,Spotted Pardalote,Pardalotus punctatus,18037,1,AU-VIC,Greater Bendigo,L2551118,Crusoe Reservoir and No. 7 Park,-36.8200453,144.224267,2025-04-30,06:51 AM,eBird - Traveling Count,91,1,4.18,,1,,,quick lap of the reservoir
 S220144332,Spotted Pardalote,Pardalotus punctatus,18037,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S264317177,Spotted Pardalote,Pardalotus punctatus,18037,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Spotted Pardalote,Pardalotus punctatus,18037,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
+S281165675,Striated Pardalote,Pardalotus striatus,18045,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S270520002,Yellow-throated Scrubwren,Neosericornis citreogularis,18096,1,AU-QLD,Tablelands,L3594363,Mount Hypipamee National Park--picnic area,-17.428377,145.4862205,2025-08-31,01:24 PM,eBird - Traveling Count,113,1,1.168,,1,,,,641267585
 S227215461,White-browed Scrubwren,Sericornis frontalis,18118,2,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,08:46 AM,eBird - Traveling Count,89,1,3.13,,1,,,walk back from plenty/yarra convergence finishing at lake
 S254681774,White-browed Scrubwren,Sericornis frontalis,18118,1,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-06-28,08:59 AM,eBird - Traveling Count,51,1,.718,,1
@@ -1232,12 +1280,14 @@ S235279594,Brown Thornbill,Acanthiza pusilla,18210,1,AU-VIC,Moorabool,L2308187,L
 S224742949,Brown Thornbill,Acanthiza pusilla,18210,3,AU-VIC,Moyne,L17542724,Tower Hill Wildlife Reserve--Lava Tongue Boardwalk Track,-38.3163222,142.3654907,2025-04-12,02:59 PM,eBird - Traveling Count,57,1,1.81,,2
 S247953720,Brown Thornbill,Acanthiza pusilla,18210,1,AU-VIC,South Gippsland,L22131229,Leongatha Wetland,-38.4822395,145.9413964,2025-06-08,03:00 PM,eBird - Traveling Count,51,1,.359,,1
 S228048172,Brown Thornbill,Acanthiza pusilla,18210,14,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,Consistently in trees the whole way around the lake.,Lap of the lake with J.
+S272815108,Brown Thornbill,Acanthiza pusilla,18210,2,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S220618105,Buff-rumped Thornbill,Acanthiza reguloides,18224,1,AU-VIC,Greater Bendigo,L2551118,Crusoe Reservoir and No. 7 Park,-36.8200453,144.224267,2025-03-25,04:52 PM,eBird - Traveling Count,29,1,.239,,1,,,lot of small birds with tinges of yellow high up in trees i couldn't tell apart
 S235279594,Buff-rumped Thornbill,Acanthiza reguloides,18224,1,AU-VIC,Moorabool,L2308187,Long Forest Nature Conservation Reserve,-37.6623526,144.5059204,2025-05-10,12:40 PM,eBird - Traveling Count,51,1,2.68,,1,,,lot of thornbill but hard to id
 S261534054,thornbill sp.,Acanthiza sp.,18229,2,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:11 AM,eBird - Traveling Count,15,1,.188,,1
 S270490488,Brown Gerygone,Gerygone mouki,18234,1,AU-QLD,Tablelands,L941549,Crater Lakes National Park--Lake Barrine,-17.2458518,145.6392395,2025-08-31,07:37 AM,eBird - Traveling Count,104,1,1.184,,1
 S270528428,Brown Gerygone,Gerygone mouki,18234,1,AU-QLD,Tablelands,L928828,Crater Lakes National Park--Lake Eacham,-17.2857129,145.6286654,2025-08-31,09:44 AM,eBird - Traveling Count,84,1,1.642,,1
 S270490488,Chowchilla,Orthonyx spaldingii,18328,4,AU-QLD,Tablelands,L941549,Crater Lakes National Park--Lake Barrine,-17.2458518,145.6392395,2025-08-31,07:37 AM,eBird - Traveling Count,104,1,1.184,,1
+S281165675,White-winged Triller,Lalage tricolor,18611,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1,,"heard it first, took a while to get eyes on but got a great look at it singing"
 S270528389,Varied Triller,Lalage leucomela,18615,1,AU-QLD,Tablelands,L13482335,"Allumbah Pocket, Peterson Creek, Yungaburra",-17.2700473,145.5790186,2025-08-31,03:48 PM,eBird - Traveling Count,57,1,.692,,1
 S247479448,Gray Shrikethrush,Colluricincla harmonica,19116,2,AU-VIC,Baw Baw,L2548468,Mount Worth State Park,-38.28454,145.98701,2025-06-07,09:53 AM,eBird - Traveling Count,19,1,.27,,1,,,moonlight Creek carpark
 S247937686,Gray Shrikethrush,Colluricincla harmonica,19116,6,AU-VIC,Baw Baw,L2548468,Mount Worth State Park,-38.28454,145.98701,2025-06-08,09:58 AM,eBird - Traveling Count,118,1,4.19,,1,,,"heard: whipbird, raven (both types), gang gang.    Moonlight Creek carpark and a bit of the walk",637303631
@@ -1273,12 +1323,14 @@ S270528428,Australasian Figbird,Sphecotheres vieilloti,19489,2,AU-QLD,Tablelands
 S270490488,Yellow-breasted Boatbill,Machaerirhynchus flaviventer,19505,1,AU-QLD,Tablelands,L941549,Crater Lakes National Park--Lake Barrine,-17.2458518,145.6392395,2025-08-31,07:37 AM,eBird - Traveling Count,104,1,1.184,,1
 S270729811,White-breasted Woodswallow,Artamus leucorynchus,19517,5,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1,,,,641267441
 S270970306,White-breasted Woodswallow,Artamus leucorynchus,19517,2,AU-QLD,Cairns,L3946551,Cairns Esplanade--Northern End,-16.9058171,145.7640499,2025-09-02,07:02 AM,eBird - Casual Observation,,0,,,1,,,,641267235
+S281165675,Dusky Woodswallow,Artamus cyanopterus,19540,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S224724688,Gray Butcherbird,Cracticus torquatus,19552,1,AU-VIC,Corangamite,L2549969,"Timboon Rail Trail, Timboon",-38.48127,142.97384,2025-04-12,11:28 AM,eBird - Traveling Count,70,1,1.205,,1,,,more small birds in tall trees
 S219171569,Gray Butcherbird,Cracticus torquatus,19552,1,AU-VIC,Melbourne,L2552179,Royal Park,-37.7892413,144.9508023,2025-03-18,05:11 PM,eBird - Traveling Count,60,1,2.5,,1,,,"track stopped, did a whole lap"
 S221694232,Gray Butcherbird,Cracticus torquatus,19552,1,AU-VIC,Monash,L7817345,Napier Park,-37.8794669,145.1897656,2025-03-30,10:22 AM,eBird - Traveling Count,94,1,3.74,,1,,,Fantail and thornbill were in shepherds bush
 S261545243,Gray Butcherbird,Cracticus torquatus,19552,1,AU-VIC,Whittlesea,L4503550,"Cades Road Wetland, Whittlesea",-37.53167,145.1289,2025-07-21,11:34 AM,eBird - Casual Observation,,0,,,1,,,,639191944
 S219886578,Gray Butcherbird,Cracticus torquatus,19552,1,AU-VIC,Yarra,L2551991,Yarra Bend Park--Dights Falls,-37.7969592,145.0010042,2025-03-22,01:32 PM,eBird - Traveling Count,77,1,2.5,,1,,,two LBBs and a hawk I couldn't ID
 S228048172,Gray Butcherbird,Cracticus torquatus,19552,1,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,At picnic area.,Lap of the lake with J.
+S272815108,Gray Butcherbird,Cracticus torquatus,19552,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S270995129,Black Butcherbird,Melloria quoyi,19566,2,AU-QLD,Cairns,L4955642,Saltwater Lake (Centenary Lakes),-16.9028034,145.7514605,2025-09-02,07:49 AM,eBird - Traveling Count,90,1,1.526,,1,,,most of the walking tour,641267075
 S211048349,Australian Magpie,Gymnorhina tibicen,19572,X,AU-SA,Adelaide,L2090264,Torrens Lake,-34.9162001,138.5987091,2025-01-29,07:09 AM,eBird - Casual Observation,,0,,,1,,,morning run
 S229439360,Australian Magpie,Gymnorhina tibicen,19572,4,AU-VIC,Ballarat,L1002051,Lake Wendouree,-37.5498309,143.8333511,2025-04-26,03:17 PM,eBird - Traveling Count,85,1,6.324,,1,,,power lap
@@ -1304,6 +1356,7 @@ S229015752,Australian Magpie,Gymnorhina tibicen,19572,6,AU-VIC,Greater Geelong,L
 S235250929,Australian Magpie,Gymnorhina tibicen,19572,5,AU-VIC,Greater Geelong,L3637443,Geelong Botanic Gardens,-38.150015,144.3775606,2025-05-10,09:57 AM,eBird - Traveling Count,44,1,2.34,,1,,,with mum. got a good look at a small grey bird i didn't recognize with yellow(?) splotches on wings. female Robin?
 S220144332,Australian Magpie,Gymnorhina tibicen,19572,5,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S264317177,Australian Magpie,Gymnorhina tibicen,19572,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Australian Magpie,Gymnorhina tibicen,19572,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226472510,Australian Magpie,Gymnorhina tibicen,19572,1,AU-VIC,Greater Geelong,L42821151,"Twentynine Mile Road, Point Wilson, Victoria, AU (-38.034, 144.525)",-38.0340164,144.5246441,2025-04-18,09:38 AM,eBird - Casual Observation,,0,,,1
 S229042490,Australian Magpie,Gymnorhina tibicen,19572,2,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
 S262986636,Australian Magpie,Gymnorhina tibicen,19572,1,AU-VIC,Hobsons Bay,L2519666,Altona Coastal Park,-37.861111,144.856667,2025-07-27,09:04 AM,eBird - Traveling Count,60,1,1.591,,1
@@ -1343,6 +1396,7 @@ S240745060,Australian Magpie,Gymnorhina tibicen,19572,X,AU-VIC,Wyndham,L7895962,
 S212493868,Australian Magpie,Gymnorhina tibicen,19572,X,AU-VIC,Yarra,L2552176,Edinburgh Gardens,-37.78767,144.98296,2025-02-09,07:30 AM,eBird - Traveling Count,6,0,1.,,1,,,morning run
 S219886578,Australian Magpie,Gymnorhina tibicen,19572,2,AU-VIC,Yarra,L2551991,Yarra Bend Park--Dights Falls,-37.7969592,145.0010042,2025-03-22,01:32 PM,eBird - Traveling Count,77,1,2.5,,1,,,two LBBs and a hawk I couldn't ID
 S228048172,Australian Magpie,Gymnorhina tibicen,19572,10,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Australian Magpie,Gymnorhina tibicen,19572,6,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S227215461,Pied Currawong,Strepera graculina,19586,4,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,08:46 AM,eBird - Traveling Count,89,1,3.13,,1,,,walk back from plenty/yarra convergence finishing at lake
 S254681774,Pied Currawong,Strepera graculina,19586,1,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-06-28,08:59 AM,eBird - Traveling Count,51,1,.718,,1
 S227612570,Pied Currawong,Strepera graculina,19586,1,AU-VIC,Boroondara,L9305197,Andrews Reserve,-37.8053235,145.0006381,2025-04-21,08:00 AM,eBird - Traveling Count,30,1,5.,,1,,on low branch south side of golf course,morning run around the trails
@@ -1359,6 +1413,7 @@ S219013875,Pied Currawong,Strepera graculina,19586,1,AU-VIC,Melbourne,L2081605,W
 S254682484,Pied Currawong,Strepera graculina,19586,5,AU-VIC,Merri-bek,L2550735,Coburg Lake Reserve,-37.73419,144.96957,2025-06-21,10:48 AM,eBird - Traveling Count,89,1,2.328,,1
 S221433266,Pied Currawong,Strepera graculina,19586,10,AU-VIC,Merri-bek,L2552489,Merri Creek--Kirkdale St Park-Merri Park,-37.77234,144.98519,2025-03-29,04:34 PM,eBird - Traveling Count,37,1,.534,,1,,"heaps fighting/playing in trees, back up on the road a bit",terrible light just trying out new camera anyways,632831368
 S228048172,Pied Currawong,Strepera graculina,19586,1,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Pied Currawong,Strepera graculina,19586,8,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S261534054,Gray Currawong,Strepera versicolor,19597,1,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:11 AM,eBird - Traveling Count,15,1,.188,,1
 S261542291,Gray Currawong,Strepera versicolor,19597,1,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:33 AM,eBird - Traveling Count,40,1,.73,,1,,,,639191940
 S270729811,Willie-wagtail,Rhipidura leucophrys,20050,2,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1
@@ -1370,6 +1425,7 @@ S230985386,Willie-wagtail,Rhipidura leucophrys,20050,4,AU-VIC,Greater Bendigo,L2
 S220144332,Willie-wagtail,Rhipidura leucophrys,20050,4,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Willie-wagtail,Rhipidura leucophrys,20050,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Willie-wagtail,Rhipidura leucophrys,20050,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Willie-wagtail,Rhipidura leucophrys,20050,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226472510,Willie-wagtail,Rhipidura leucophrys,20050,1,AU-VIC,Greater Geelong,L42821151,"Twentynine Mile Road, Point Wilson, Victoria, AU (-38.034, 144.525)",-38.0340164,144.5246441,2025-04-18,09:38 AM,eBird - Casual Observation,,0,,,1
 S229047017,Willie-wagtail,Rhipidura leucophrys,20050,3,AU-VIC,Greater Geelong,L43358715,WTP Gate 5,-37.9942523,144.5327592,2025-04-25,10:45 AM,eBird - Casual Observation,,0,,,1,,,WTP Gate 5
 S229011528,Willie-wagtail,Rhipidura leucophrys,20050,1,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-25,08:15 AM,eBird - Traveling Count,18,1,.34,,1,,on walk in
@@ -1392,6 +1448,7 @@ S264910682,Willie-wagtail,Rhipidura leucophrys,20050,2,AU-VIC,Melton,L2551217,Me
 S213329687,Willie-wagtail,Rhipidura leucophrys,20050,X,AU-VIC,Mornington Peninsula,L15931230,RACV Cape Schanck Resort,-38.4627217,144.8933785,2025-02-15,10:07 AM,eBird - Traveling Count,180,0,28.,,1,,,few swallows and wattle birds maybe but not sure. heard a kookaburra. ran to two bays track
 S240745060,Willie-wagtail,Rhipidura leucophrys,20050,3,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S219886578,Willie-wagtail,Rhipidura leucophrys,20050,1,AU-VIC,Yarra,L2551991,Yarra Bend Park--Dights Falls,-37.7969592,145.0010042,2025-03-22,01:32 PM,eBird - Traveling Count,77,1,2.5,,1,,,two LBBs and a hawk I couldn't ID
+S272815108,Willie-wagtail,Rhipidura leucophrys,20050,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S227180039,Gray Fantail,Rhipidura albiscapa,20165,2,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,07:30 AM,eBird - Traveling Count,50,1,.7,,1,,,oval then down around the billabong
 S227215461,Gray Fantail,Rhipidura albiscapa,20165,1,AU-VIC,Banyule,L922048,Banyule Flats Reserve,-37.7491958,145.0893223,2025-04-20,08:46 AM,eBird - Traveling Count,89,1,3.13,,1,,,walk back from plenty/yarra convergence finishing at lake
 S247479448,Gray Fantail,Rhipidura albiscapa,20165,1,AU-VIC,Baw Baw,L2548468,Mount Worth State Park,-38.28454,145.98701,2025-06-07,09:53 AM,eBird - Traveling Count,19,1,.27,,1,,,moonlight Creek carpark
@@ -1407,6 +1464,7 @@ S225050951,Gray Fantail,Rhipidura albiscapa,20165,1,AU-VIC,Glenelg,L42531207,"Fi
 S224756849,Gray Fantail,Rhipidura albiscapa,20165,1,AU-VIC,Glenelg,L42462145,Kerry and Shane's Place,-38.3050553,141.5243919,2025-04-12,05:45 PM,eBird - Traveling Count,11,1,.088,,1
 S230985386,Gray Fantail,Rhipidura albiscapa,20165,1,AU-VIC,Greater Bendigo,L2551118,Crusoe Reservoir and No. 7 Park,-36.8200453,144.224267,2025-04-30,06:51 AM,eBird - Traveling Count,91,1,4.18,,1,,,quick lap of the reservoir
 S220144332,Gray Fantail,Rhipidura albiscapa,20165,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
+S281165675,Gray Fantail,Rhipidura albiscapa,20165,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226462003,Gray Fantail,Rhipidura albiscapa,20165,1,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-04-18,07:05 AM,eBird - Traveling Count,106,1,4.24,,1
 S227680290,Gray Fantail,Rhipidura albiscapa,20165,4,AU-VIC,Hobsons Bay,L2519055,Jawbone Flora and Fauna Reserve,-37.860833,144.875,2025-04-21,10:53 AM,eBird - Traveling Count,120,1,4.,,1,,,"weather was too good to stay home. wasn't expecting such a haul, including two lifers. neglected to start trace :("
 S218555288,Gray Fantail,Rhipidura albiscapa,20165,3,AU-VIC,Kingston,L8317092,Braeside Park Wetlands,-38.0079817,145.1273346,2025-03-15,01:20 PM,eBird - Traveling Count,90,1,4.,,1,,,,632126047
@@ -1426,6 +1484,7 @@ S247189866,Gray Fantail,Rhipidura albiscapa,20165,1,AU-VIC,South Gippsland,L4691
 S247953720,Gray Fantail,Rhipidura albiscapa,20165,2,AU-VIC,South Gippsland,L22131229,Leongatha Wetland,-38.4822395,145.9413964,2025-06-08,03:00 PM,eBird - Traveling Count,51,1,.359,,1
 S270520002,Gray Fantail,Rhipidura albiscapa,20165,3,AU-QLD,Tablelands,L3594363,Mount Hypipamee National Park--picnic area,-17.428377,145.4862205,2025-08-31,01:24 PM,eBird - Traveling Count,113,1,1.168,,1,,,,641267632
 S228048172,Gray Fantail,Rhipidura albiscapa,20165,5,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Gray Fantail,Rhipidura albiscapa,20165,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S270995129,Spangled Drongo,Dicrurus bracteatus,20293,1,AU-QLD,Cairns,L4955642,Saltwater Lake (Centenary Lakes),-16.9028034,145.7514605,2025-09-02,07:49 AM,eBird - Traveling Count,90,1,1.526,,1,,,most of the walking tour,641267079
 S270490488,Victoria's Riflebird,Ptiloris victoriae,20386,5,AU-QLD,Tablelands,L941549,Crater Lakes National Park--Lake Barrine,-17.2458518,145.6392395,2025-08-31,07:37 AM,eBird - Traveling Count,104,1,1.184,,1
 S270528428,Victoria's Riflebird,Ptiloris victoriae,20386,1,AU-QLD,Tablelands,L928828,Crater Lakes National Park--Lake Eacham,-17.2857129,145.6286654,2025-08-31,09:44 AM,eBird - Traveling Count,84,1,1.642,,1
@@ -1445,6 +1504,7 @@ S235250929,Magpie-lark,Grallina cyanoleuca,20716,3,AU-VIC,Greater Geelong,L36374
 S220144332,Magpie-lark,Grallina cyanoleuca,20716,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Magpie-lark,Grallina cyanoleuca,20716,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Magpie-lark,Grallina cyanoleuca,20716,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Magpie-lark,Grallina cyanoleuca,20716,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226472510,Magpie-lark,Grallina cyanoleuca,20716,2,AU-VIC,Greater Geelong,L42821151,"Twentynine Mile Road, Point Wilson, Victoria, AU (-38.034, 144.525)",-38.0340164,144.5246441,2025-04-18,09:38 AM,eBird - Casual Observation,,0,,,1
 S229042490,Magpie-lark,Grallina cyanoleuca,20716,1,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
 S227680290,Magpie-lark,Grallina cyanoleuca,20716,10,AU-VIC,Hobsons Bay,L2519055,Jawbone Flora and Fauna Reserve,-37.860833,144.875,2025-04-21,10:53 AM,eBird - Traveling Count,120,1,4.,,1,,,"weather was too good to stay home. wasn't expecting such a haul, including two lifers. neglected to start trace :("
@@ -1475,9 +1535,11 @@ S261542291,Magpie-lark,Grallina cyanoleuca,20716,4,AU-VIC,Whittlesea,L2552529,Ya
 S240745060,Magpie-lark,Grallina cyanoleuca,20716,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S212493868,Magpie-lark,Grallina cyanoleuca,20716,X,AU-VIC,Yarra,L2552176,Edinburgh Gardens,-37.78767,144.98296,2025-02-09,07:30 AM,eBird - Traveling Count,6,0,1.,,1,,,morning run
 S228048172,Magpie-lark,Grallina cyanoleuca,20716,2,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Magpie-lark,Grallina cyanoleuca,20716,1,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S220144332,White-winged Chough,Corcorax melanorhamphos,20783,5,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,White-winged Chough,Corcorax melanorhamphos,20783,5,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,White-winged Chough,Corcorax melanorhamphos,20783,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,White-winged Chough,Corcorax melanorhamphos,20783,6,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S216780187,Steller's Jay,Cyanocitta stelleri,21046,1,US-CA,Riverside,L40880506,Palm Springs Aerial Tramway,33.8126744,-116.6420125,2025-03-05,11:03 AM,eBird - Traveling Count,9,1,.59,,1
 S216337350,American Crow,Corvus brachyrhynchos,21333,X,US-CA,San Francisco,L854587,San Francisco Ferry Building,37.7952236,-122.3942045,2025-03-01,01:53 PM,eBird - Stationary Count,15,0,,,1
 S220618105,Australian Raven,Corvus coronoides,21384,2,AU-VIC,Greater Bendigo,L2551118,Crusoe Reservoir and No. 7 Park,-36.8200453,144.224267,2025-03-25,04:52 PM,eBird - Traveling Count,29,1,.239,,1,,,lot of small birds with tinges of yellow high up in trees i couldn't tell apart
@@ -1501,6 +1563,7 @@ S220626536,Little Raven,Corvus mellori,21387,8,AU-VIC,Greater Bendigo,L2991436,R
 S220144332,Little Raven,Corvus mellori,21387,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1
 S254682459,Little Raven,Corvus mellori,21387,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Little Raven,Corvus mellori,21387,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Little Raven,Corvus mellori,21387,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S229042490,Little Raven,Corvus mellori,21387,2,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
 S226462003,Little Raven,Corvus mellori,21387,10,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-04-18,07:05 AM,eBird - Traveling Count,106,1,4.24,,1,,,,633948487
 S262986636,Little Raven,Corvus mellori,21387,2,AU-VIC,Hobsons Bay,L2519666,Altona Coastal Park,-37.861111,144.856667,2025-07-27,09:04 AM,eBird - Traveling Count,60,1,1.591,,1
@@ -1557,6 +1620,7 @@ S220837850,Welcome Swallow,Hirundo neoxena,23954,X,AU-VIC,Greater Bendigo,L25522
 S220626536,Welcome Swallow,Hirundo neoxena,23954,7,AU-VIC,Greater Bendigo,L2991436,Rosalind Park,-36.7569,144.27933,2025-03-25,06:43 PM,eBird - Traveling Count,36,1,1.38,,1
 S220144332,Welcome Swallow,Hirundo neoxena,23954,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1,,amazing views from the marshland hide
 S264317177,Welcome Swallow,Hirundo neoxena,23954,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Welcome Swallow,Hirundo neoxena,23954,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S226469393,Welcome Swallow,Hirundo neoxena,23954,X,AU-VIC,Greater Geelong,L7136077,Western Treatment Plant--Austin Road Lagoon,-38.0394051,144.5153511,2025-04-18,09:09 AM,eBird - Stationary Count,13,1,,,1
 S229042490,Welcome Swallow,Hirundo neoxena,23954,X,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
 S226462003,Welcome Swallow,Hirundo neoxena,23954,X,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-04-18,07:05 AM,eBird - Traveling Count,106,1,4.24,,1,,,,633948482
@@ -1584,6 +1648,7 @@ S261552120,Welcome Swallow,Hirundo neoxena,23954,1,AU-VIC,Whittlesea,L8573683,Wi
 S261542291,Welcome Swallow,Hirundo neoxena,23954,1,AU-VIC,Whittlesea,L2552529,Yan Yean Reservoir,-37.5573839,145.137248,2025-07-21,10:33 AM,eBird - Traveling Count,40,1,.73,,1
 S240745060,Welcome Swallow,Hirundo neoxena,23954,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River,-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S228048172,Welcome Swallow,Hirundo neoxena,23954,X,AU-VIC,Yarra Ranges,L1598583,Lysterfield Park,-37.9483398,145.297966,2025-04-22,09:51 AM,eBird - Traveling Count,210,1,7.11,,1,,,Lap of the lake with J.
+S272815108,Welcome Swallow,Hirundo neoxena,23954,3,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S270510334,Fairy Martin,Petrochelidon ariel,24045,6,AU-QLD,Tablelands,L4868549,Gallo's Farm (Atherton-Malanda Rd),-17.2973527,145.5412169,2025-08-31,12:24 PM,eBird - Stationary Count,4,1,,,1
 S264879019,Tree Martin,Petrochelidon nigricans,24046,4,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,08:19 AM,eBird - Traveling Count,22,1,.238,,1
 S264901591,Tree Martin,Petrochelidon nigricans,24046,4,AU-VIC,Melton,L2552178,Eynesbury Forest and Grasslands,-37.78699,144.57183,2025-08-04,09:00 AM,eBird - Traveling Count,93,1,3.158,,1
@@ -1626,6 +1691,7 @@ S227612570,Common Myna,Acridotheres tristis,27617,X,AU-VIC,Boroondara,L9305197,A
 S270729811,Common Myna,Acridotheres tristis,27617,X,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1
 S270995129,Common Myna,Acridotheres tristis,27617,3,AU-QLD,Cairns,L4955642,Saltwater Lake (Centenary Lakes),-16.9028034,145.7514605,2025-09-02,07:49 AM,eBird - Traveling Count,90,1,1.526,,1,,,most of the walking tour
 S248369182,Common Myna,Acridotheres tristis,27617,2,AU-VIC,Casey,L2991373,Sawtells Inlet (south of Hwy),-38.2152749,145.3766476,2025-06-09,10:47 AM,eBird - Traveling Count,35,1,.529,,1
+S281165675,Common Myna,Acridotheres tristis,27617,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S227680290,Common Myna,Acridotheres tristis,27617,8,AU-VIC,Hobsons Bay,L2519055,Jawbone Flora and Fauna Reserve,-37.860833,144.875,2025-04-21,10:53 AM,eBird - Traveling Count,120,1,4.,,1,,,"weather was too good to stay home. wasn't expecting such a haul, including two lifers. neglected to start trace :("
 S262992150,Common Myna,Acridotheres tristis,27617,1,AU-VIC,Hobsons Bay,L2531387,Kororoit Creek Mouth,-37.8590488,144.8671603,2025-07-27,10:18 AM,eBird - Stationary Count,18,1,,,1,,,thank you to the lovely couple that let us use their scope to see the plover!
 S263003998,Common Myna,Acridotheres tristis,27617,3,AU-VIC,Hobsons Bay,L2041733,Newport Lakes,-37.8390723,144.8712158,2025-07-27,10:56 AM,eBird - Traveling Count,73,1,1.575,,1
@@ -1661,6 +1727,7 @@ S248338208,Eurasian Blackbird,Turdus merula,28232,1,AU-VIC,Bass Coast,L2300531,S
 S224724688,Eurasian Blackbird,Turdus merula,28232,1,AU-VIC,Corangamite,L2549969,"Timboon Rail Trail, Timboon",-38.48127,142.97384,2025-04-12,11:28 AM,eBird - Traveling Count,70,1,1.205,,1,,,more small birds in tall trees
 S235250929,Eurasian Blackbird,Turdus merula,28232,1,AU-VIC,Greater Geelong,L3637443,Geelong Botanic Gardens,-38.150015,144.3775606,2025-05-10,09:57 AM,eBird - Traveling Count,44,1,2.34,,1,,,with mum. got a good look at a small grey bird i didn't recognize with yellow(?) splotches on wings. female Robin?
 S264317177,Eurasian Blackbird,Turdus merula,28232,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1
+S281165675,Eurasian Blackbird,Turdus merula,28232,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S262986636,Eurasian Blackbird,Turdus merula,28232,2,AU-VIC,Hobsons Bay,L2519666,Altona Coastal Park,-37.861111,144.856667,2025-07-27,09:04 AM,eBird - Traveling Count,60,1,1.591,,1
 S227680290,Eurasian Blackbird,Turdus merula,28232,1,AU-VIC,Hobsons Bay,L2519055,Jawbone Flora and Fauna Reserve,-37.860833,144.875,2025-04-21,10:53 AM,eBird - Traveling Count,120,1,4.,,1,,,"weather was too good to stay home. wasn't expecting such a haul, including two lifers. neglected to start trace :("
 S263003998,Eurasian Blackbird,Turdus merula,28232,1,AU-VIC,Hobsons Bay,L2041733,Newport Lakes,-37.8390723,144.8712158,2025-07-27,10:56 AM,eBird - Traveling Count,73,1,1.575,,1
@@ -1674,6 +1741,7 @@ S264901591,Eurasian Blackbird,Turdus merula,28232,1,AU-VIC,Melton,L2552178,Eynes
 S264910682,Eurasian Blackbird,Turdus merula,28232,5,AU-VIC,Melton,L2551217,Melton Botanic Gardens,-37.69277,144.58861,2025-08-04,11:00 AM,eBird - Traveling Count,42,1,1.113,,1
 S247953720,Eurasian Blackbird,Turdus merula,28232,4,AU-VIC,South Gippsland,L22131229,Leongatha Wetland,-38.4822395,145.9413964,2025-06-08,03:00 PM,eBird - Traveling Count,51,1,.359,,1,,,,637303667
 S261552120,Eurasian Blackbird,Turdus merula,28232,2,AU-VIC,Whittlesea,L8573683,Wilton Vale Wetlands,-37.6216947,145.1052784,2025-07-21,12:11 PM,eBird - Traveling Count,21,1,.71,,1
+S272815108,Eurasian Blackbird,Turdus merula,28232,2,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S217110538,Phainopepla,Phainopepla nitens,29638,X,US-CA,Riverside,L949191,Tahquitz Canyon,33.80531,-116.558434,2025-03-07,02:47 PM,eBird - Traveling Count,64,1,2.26,,1
 S222991894,Mistletoebird,Dicaeum hirundinaceum,29844,1,AU-VIC,Melbourne,L2071430,Royal Park--Trin Warren Tam-boore,-37.7828922,144.9441719,2025-04-05,10:05 AM,eBird - Traveling Count,60,1,.369,,1,,,"lotta big lenses out this morning, hope everyone got the shot they were after! thanks for the tips.",633202151 633202152
 S270729811,Sahul Sunbird,Cinnyris frenatus,30189,1,AU-QLD,Cairns,L930524,Cairns Esplanade,-16.9166305,145.7749471,2025-09-01,06:18 AM,eBird - Traveling Count,74,1,1.638,,1
@@ -1683,13 +1751,16 @@ S225050951,Red-browed Firetail,Neochmia temporalis,30748,1,AU-VIC,Glenelg,L42531
 S220144332,Red-browed Firetail,Neochmia temporalis,30748,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-03-23,02:04 PM,eBird - Traveling Count,110,1,4.77,,1,,at least 10
 S254682459,Red-browed Firetail,Neochmia temporalis,30748,10,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Red-browed Firetail,Neochmia temporalis,30748,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1,,,,639699480 639699481
+S281165675,Red-browed Firetail,Neochmia temporalis,30748,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S262986636,Red-browed Firetail,Neochmia temporalis,30748,1,AU-VIC,Hobsons Bay,L2519666,Altona Coastal Park,-37.861111,144.856667,2025-07-27,09:04 AM,eBird - Traveling Count,60,1,1.591,,1
+S272815108,Red-browed Firetail,Neochmia temporalis,30748,12,AU-ACT,,L921851,Jerrabomberra Wetlands Nature Reserve,-35.3145649,149.1622353,2025-09-12,06:25 AM,eBird - Traveling Count,89,1,2.929,,1
 S229027329,Zebra Finch,Taeniopygia guttata,30760,6,AU-VIC,Greater Geelong,L43355414,"Austin Road, Point Wilson, Victoria, AU (-38.036, 144.508)",-38.0359843,144.5076556,2025-04-25,08:58 AM,eBird - Traveling Count,33,1,3.61,,1,,,,634382906
 S211048349,House Sparrow,Passer domesticus,31261,X,AU-SA,Adelaide,L2090264,Torrens Lake,-34.9162001,138.5987091,2025-01-29,07:09 AM,eBird - Casual Observation,,0,,,1,,,morning run
 S270970306,House Sparrow,Passer domesticus,31261,1,AU-QLD,Cairns,L3946551,Cairns Esplanade--Northern End,-16.9058171,145.7640499,2025-09-02,07:02 AM,eBird - Casual Observation,,0,,,1
 S224756849,House Sparrow,Passer domesticus,31261,10,AU-VIC,Glenelg,L42462145,Kerry and Shane's Place,-38.3050553,141.5243919,2025-04-12,05:45 PM,eBird - Traveling Count,11,1,.088,,1
 S254682459,House Sparrow,Passer domesticus,31261,10,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,House Sparrow,Passer domesticus,31261,X,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1,,,,639699470 639699471 639699472
+S281165675,House Sparrow,Passer domesticus,31261,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-10-25,09:44 AM,eBird - Traveling Count,147,1,2.212,,1
 S229042490,House Sparrow,Passer domesticus,31261,3,AU-VIC,Greater Geelong,L1174063,Western Treatment Plant--T Section Ponds,-38.0449142,144.5078087,2025-04-25,09:31 AM,eBird - Traveling Count,53,1,2.28,,1
 S226462003,House Sparrow,Passer domesticus,31261,2,AU-VIC,Greater Geelong,L2591344,Western Treatment Plant--Western Lagoons,-38.0426849,144.5231031,2025-04-18,07:05 AM,eBird - Traveling Count,106,1,4.24,,1
 S221437729,House Sparrow,Passer domesticus,31261,6,AU-VIC,Melbourne,L1121752,Melbourne CBD,-37.8123,144.9623,2025-03-28,05:30 PM,eBird - Stationary Count,15,1,,,1,,,"on the roof at work, need to get these of my needs list!"

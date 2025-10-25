@@ -70,7 +70,7 @@ const observationSQLStatements : any[] = [];
       continue;
     }
 
-    if (!(taxonomyEntry.category == "species" || taxonomyEntry.category == "domestic")) {
+    if (!(taxonomyEntry.category == "species" || taxonomyEntry.category == "domestic" || taxonomyEntry.category == "form")) {
       continue;
     }
 
