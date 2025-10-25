@@ -1,0 +1,1 @@
+Use `bin/test` to run tests.
