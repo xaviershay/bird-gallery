@@ -107,30 +107,28 @@ async function fetchFilterCounts(env: Env): Promise<Record<string, number>> {
   let results = await statement.bind().all<any>();
 
   let counts: Record<string, number> = {};
-  counts[new Filter(ObsType.Sighting, null, null, null, null).toQueryString()] = 0;
+  counts[Filter.create({ type: ObsType.Sighting }).toQueryString()] = 0;
   results.results.forEach((result) => {
     counts[
-      new Filter(
-        ObsType.Sighting,
-        result.state, // region
-        null,         // county
-        result.year,  // period
-        null          // view
-      ).toQueryString()
+      Filter.create({
+        type: ObsType.Sighting,
+        region: result.state,
+        period: result.year
+      }).toQueryString()
     ] = result.allRegionFirstSightings;
-    counts[new Filter(ObsType.Sighting, null, null, null, null).toQueryString()] +=
+    counts[Filter.create({ type: ObsType.Sighting }).toQueryString()] +=
       result.allFirstSightings;
     counts[
-      new Filter(ObsType.Sighting, null, null, result.year, null).toQueryString()
+      Filter.create({ type: ObsType.Sighting, period: result.year }).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(ObsType.Sighting, null, null, result.year, null).toQueryString()
+      Filter.create({ type: ObsType.Sighting, period: result.year }).toQueryString()
     ] += result.allFirstSightings;
     counts[
-      new Filter(ObsType.Sighting, result.state, null, null, null).toQueryString()
+      Filter.create({ type: ObsType.Sighting, region: result.state }).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(ObsType.Sighting, result.state, null, null, null).toQueryString()
+      Filter.create({ type: ObsType.Sighting, region: result.state }).toQueryString()
     ] += result.allRegionFirstSightings;
   });
 
@@ -154,24 +152,24 @@ async function fetchFilterCounts(env: Env): Promise<Record<string, number>> {
   statement = env.DB.prepare(query);
   results = await statement.bind().all<any>();
 
-  counts[new Filter(ObsType.Photo, null, null, null, null).toQueryString()] = 0;
+  counts[Filter.create({ type: ObsType.Photo }).toQueryString()] = 0;
   results.results.forEach((result) => {
     counts[
-      new Filter(ObsType.Photo, result.state, null, result.year, null).toQueryString()
+      Filter.create({ type: ObsType.Photo, region: result.state, period: result.year }).toQueryString()
     ] = result.allRegionFirstPhotos;
-    counts[new Filter(ObsType.Photo, null, null, null, null).toQueryString()] +=
+    counts[Filter.create({ type: ObsType.Photo }).toQueryString()] +=
       result.allFirstPhotos;
     counts[
-      new Filter(ObsType.Photo, null, null, result.year, null).toQueryString()
+      Filter.create({ type: ObsType.Photo, period: result.year }).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(ObsType.Photo, null, null, result.year, null).toQueryString()
+      Filter.create({ type: ObsType.Photo, period: result.year }).toQueryString()
     ] += result.allFirstPhotos;
     counts[
-      new Filter(ObsType.Photo, result.state, null, null, null).toQueryString()
+      Filter.create({ type: ObsType.Photo, region: result.state }).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(ObsType.Photo, result.state, null, null, null).toQueryString()
+      Filter.create({ type: ObsType.Photo, region: result.state }).toQueryString()
     ] += result.allRegionFirstPhotos;
   });
 
@@ -193,16 +191,16 @@ async function fetchFilterCounts(env: Env): Promise<Record<string, number>> {
   results = await statement.bind().all<any>();
 
   // Seed zero for overall melbourne counts
-  counts[new Filter(ObsType.Sighting, null, null, null, null).toQueryString()] ||= 0;
+  counts[Filter.create({ type: ObsType.Sighting }).toQueryString()] ||= 0;
   let melbourneSightingsTotal = 0;
   results.results.forEach((result) => {
     counts[
-      new Filter(ObsType.Sighting, null, "melbourne", result.year, null).toQueryString()
+      Filter.create({ type: ObsType.Sighting, county: "melbourne", period: result.year }).toQueryString()
     ] = result.allCountyFirstSightings;
     melbourneSightingsTotal += result.allCountyFirstSightings;
   });
   counts[
-    new Filter(ObsType.Sighting, null, "melbourne", null, null).toQueryString()
+    Filter.create({ type: ObsType.Sighting, county: "melbourne" }).toQueryString()
   ] = melbourneSightingsTotal;
 
   // County = Melbourne (photos)
@@ -225,12 +223,12 @@ async function fetchFilterCounts(env: Env): Promise<Record<string, number>> {
   let melbournePhotosTotal = 0;
   results.results.forEach((result) => {
     counts[
-      new Filter(ObsType.Photo, null, "melbourne", result.year, null).toQueryString()
+      Filter.create({ type: ObsType.Photo, county: "melbourne", period: result.year }).toQueryString()
     ] = result.allCountyFirstPhotos;
     melbournePhotosTotal += result.allCountyFirstPhotos;
   });
   counts[
-    new Filter(ObsType.Photo, null, "melbourne", null, null).toQueryString()
+    Filter.create({ type: ObsType.Photo, county: "melbourne" }).toQueryString()
   ] = melbournePhotosTotal;
 
   return counts;

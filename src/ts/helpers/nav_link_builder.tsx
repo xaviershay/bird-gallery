@@ -15,13 +15,13 @@ export const navLinkBuilder = (
 ) => {
   const currentQuery = currentFilter.toQueryString();
   return (filterChange: PartialFilter): React.ReactNode => {
-    const newFilter = new Filter(
-      filterChange.type,
-      filterChange.region ?? null,
-      filterChange.county ?? null,
-      filterChange.period,
-      filterChange.view ?? null
-    );
+    const newFilter = Filter.create({
+      type: filterChange.type,
+      region: filterChange.region ?? null,
+      county: filterChange.county ?? null,
+      period: filterChange.period,
+      view: filterChange.view ?? null
+    });
     const text = filterCounts[newFilter.toQueryString()] || 0;
     const url = `?${newFilter.toQueryString()}`;
     return (

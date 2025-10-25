@@ -1,5 +1,13 @@
 import { ObsType } from "../types";
 
+export interface FilterOptions {
+  type: ObsType;
+  region?: string | null;
+  county?: string | null;
+  period?: string | null;
+  view?: string | null;
+}
+
 export interface Filter {
   type: ObsType;
   region: string | null;
@@ -10,15 +18,23 @@ export interface Filter {
 }
 
 export class Filter {
-  constructor(
+  private constructor(
     public type: ObsType,
     public region: string | null,
     public county: string | null = null,
     public period: string | null,
-    public view: string | null = null,
-    // New params should be added to the end with defaults to avoid breaking existing calls
-    public _reserved?: never
+    public view: string | null = null
   ) {}
+
+  static create(options: FilterOptions): Filter {
+    return new Filter(
+      options.type,
+      options.region ?? null,
+      options.county ?? null,
+      options.period ?? null,
+      options.view ?? null
+    );
+  }
 
   static fromQueryString(params: URLSearchParams) {
     return new Filter(
