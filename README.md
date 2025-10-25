@@ -98,6 +98,6 @@ Keeping track of frustrations I've had with eBird.
 - JSON API for download observations rather than request emailed file. _Use
   case:_ easier to refresh my own calculations/dashboard.
 - Ability to fetch lists of other users' (where displayed publicly). _Use case:_
-- build some social features with my friends, e.g. "which bird have I seen that
+  build some social features with my friends, e.g. "which bird have I seen that
   you haven't? I can show you" or "which bird in a region have neither of us
   seen"
