@@ -142,7 +142,7 @@ async function fetchSpeciesObservations(
       ) AS ranked
       WHERE 1=1
         AND species_id = ?
-      ORDER BY seen_at DESC;
+      ORDER BY seen_at DESC, name ASC;
     `;
   params.push(speciesId);
 

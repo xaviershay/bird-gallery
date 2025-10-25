@@ -122,7 +122,7 @@ async function fetchLocationObservations(
       ) AS ranked
       WHERE row_num = 1
         AND location_id = ?
-      ORDER BY seen_at DESC;
+      ORDER BY seen_at DESC, name ASC;
     `;
     if (filter.period) {
       params.push(filter.period);
@@ -144,7 +144,7 @@ async function fetchLocationObservations(
         ${periodCondition}
         ${filter.type === ObsType.Photo ? "AND o1.has_photo" : ""}
       GROUP BY o1.species_id
-      ORDER BY o1.seen_at DESC;
+      ORDER BY o1.seen_at DESC, o1.common_name ASC;
     `;
     params.push(locationId);
     if (filter.period) {

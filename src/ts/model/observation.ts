@@ -30,7 +30,7 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
           ${photoCondition}
       ) AS ranked
       WHERE row_num = 1
-      ORDER BY seen_at DESC;
+      ORDER BY seen_at DESC, name ASC;
     `;
   var statement = env.DB.prepare(query);
   const params: (string | null)[] = [];
