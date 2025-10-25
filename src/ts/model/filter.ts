@@ -5,7 +5,7 @@ export interface Filter {
   region: string | null;
   county: string | null;
   period: string | null;
-  blah: string | null;
+  view: string | null;
   toQueryString(): string; // Added method declaration
 }
 
@@ -15,7 +15,7 @@ export class Filter {
     public region: string | null,
     public county: string | null = null,
     public period: string | null,
-    public blah: string | null = null,
+    public view: string | null = null,
     // New params should be added to the end with defaults to avoid breaking existing calls
     public _reserved?: never
   ) {}
@@ -26,7 +26,7 @@ export class Filter {
       params.has("region") ? params.get("region") : null,
       params.has("county") ? params.get("county") : null,
       params.has("period") ? params.get("period") : null,
-      params.has("blah") ? params.get("blah") : null
+      params.has("view") ? params.get("view") : null
     );
   }
 
@@ -36,7 +36,7 @@ export class Filter {
       region: this.region,
       county: this.county,
       period: this.period,
-      blah: this.blah
+      view: this.view
     }
   }
 
@@ -57,7 +57,7 @@ export class Filter {
     if (this.region) parts.region = this.region;
     if (this.county) parts.county = this.county;
     if (this.period) parts.period = this.period;
-    if (this.blah) parts.blah = this.blah;
+    if (this.view) parts.view = this.view;
 
     return new URLSearchParams(parts).toString();
   }

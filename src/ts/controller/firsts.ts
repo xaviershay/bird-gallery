@@ -115,7 +115,7 @@ async function fetchFilterCounts(env: Env): Promise<Record<string, number>> {
         result.state, // region
         null,         // county
         result.year,  // period
-        null          // blah
+        null          // view
       ).toQueryString()
     ] = result.allRegionFirstSightings;
     counts[new Filter(ObsType.Sighting, null, null, null, null).toQueryString()] +=

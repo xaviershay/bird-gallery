@@ -102,7 +102,7 @@ async function fetchLocationObservations(
   let query = "";
   const params: (number | string)[] = [];
 
-  if (filter.blah == "firsts") {
+  if (filter.view == "firsts") {
     // Only birds first seen at this location
     query = `
       SELECT

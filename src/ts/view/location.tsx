@@ -49,28 +49,28 @@ export const LocationView = (data: LocationViewProps) => {
               <td>
                 {navLink({
                   type: ObsType.Photo,
-                  blah: "firsts",
+                  view: "firsts",
                   period: null,
                 })}
               </td>
               <td>
                 {navLink({
                   type: ObsType.Sighting,
-                  blah: "firsts",
+                  view: "firsts",
                   period: null,
                 })}
               </td>
               <td>
                 {navLink({
                   type: ObsType.Photo,
-                  blah: null,
+                  view: null,
                   period: null,
                 })}
               </td>
               <td>
                 {navLink({
                   type: ObsType.Sighting,
-                  blah: null,
+                  view: null,
                   period: null,
                 })}
               </td>
@@ -80,28 +80,28 @@ export const LocationView = (data: LocationViewProps) => {
               <td>
                 {navLink({
                   type: ObsType.Photo,
-                  blah: "firsts",
+                  view: "firsts",
                   period: "2025",
                 })}
               </td>
               <td>
                 {navLink({
                   type: ObsType.Sighting,
-                  blah: "firsts",
+                  view: "firsts",
                   period: "2025",
                 })}
               </td>
               <td>
                 {navLink({
                   type: ObsType.Photo,
-                  blah: null,
+                  view: null,
                   period: "2025",
                 })}
               </td>
               <td>
                 {navLink({
                   type: ObsType.Sighting,
-                  blah: null,
+                  view: null,
                   period: "2025",
                 })}
               </td>

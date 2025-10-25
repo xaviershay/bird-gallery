@@ -6,7 +6,7 @@ interface PartialFilter {
   region?: string | null;
   county?: string | null;
   period: string | null;
-  blah?: string | null;
+  view?: string | null;
 }
 
 export const navLinkBuilder = (
@@ -20,7 +20,7 @@ export const navLinkBuilder = (
       filterChange.region ?? null,
       filterChange.county ?? null,
       filterChange.period,
-      filterChange.blah ?? null
+      filterChange.view ?? null
     );
     const text = filterCounts[newFilter.toQueryString()] || 0;
     const url = `?${newFilter.toQueryString()}`;
