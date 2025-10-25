@@ -4,13 +4,14 @@ import speciesLink from "../helpers/species_link";
 interface MissingPhotosViewProps {
   species: Species[],
   region: string | null,
+  county: string | null,
   stats: {
     regionCount: Record<string, number>
   }
 }
 
 export const MissingPhotosView = (props: MissingPhotosViewProps) => {
-  const { region, stats, species } = props;
+  const { region, county, stats, species } = props;
 
   return (
     <>
@@ -23,16 +24,20 @@ export const MissingPhotosView = (props: MissingPhotosViewProps) => {
           <table>
             <tr>
               <th></th>
+              <th>Melbourne</th>
               <th>Victoria, AU</th>
               <th>World</th>
             </tr>
             <tr>
               <th>Life</th>
               <td>
+                <a className={county == 'melbourne' ? 'active' : ''} href={`/report/nophotos?county=melbourne`}>{stats.regionCount['melbourne']}</a>
+              </td>
+              <td>
                 <a className={region == 'au-vic' ? 'active' : ''} href={`/report/nophotos?region=au-vic`}>{stats.regionCount['au-vic']}</a>
               </td>
               <td>
-                <a className={region == null ? 'active' : ''} href={`/report/nophotos`}>{stats.regionCount['']}</a>
+                <a className={region == null && county == null ? 'active' : ''} href={`/report/nophotos`}>{stats.regionCount['']}</a>
               </td>
             </tr>
           </table>
