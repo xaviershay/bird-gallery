@@ -31,6 +31,7 @@ export const FirstsView = (data: FirstsViewProps) => {
           <table>
             <tr>
               <th></th>
+              <th colSpan={2}>Melbourne</th>
               <th colSpan={2}>Victoria, AU</th>
               <th colSpan={2}>World</th>
             </tr>
@@ -40,9 +41,27 @@ export const FirstsView = (data: FirstsViewProps) => {
               <th>Seen</th>
               <th>Photo</th>
               <th>Seen</th>
+              <th>Photo</th>
+              <th>Seen</th>
             </tr>
             <tr>
               <th className="period">Life</th>
+              <td>
+                {navLink({
+                  type: ObsType.Photo,
+                  county: "melbourne",
+                  region: null,
+                  period: null,
+                })}
+              </td>
+              <td>
+                {navLink({
+                  type: ObsType.Sighting,
+                  county: "melbourne",
+                  region: null,
+                  period: null,
+                })}
+              </td>
               <td>
                 {navLink({
                   type: ObsType.Photo,
@@ -74,6 +93,22 @@ export const FirstsView = (data: FirstsViewProps) => {
             </tr>
             <tr>
               <th className="period">2025</th>
+              <td>
+                {navLink({
+                  type: ObsType.Photo,
+                  county: "melbourne",
+                  region: null,
+                  period: "2025",
+                })}
+              </td>
+              <td>
+                {navLink({
+                  type: ObsType.Sighting,
+                  county: "melbourne",
+                  region: null,
+                  period: "2025",
+                })}
+              </td>
               <td>
                 {navLink({
                   type: ObsType.Photo,

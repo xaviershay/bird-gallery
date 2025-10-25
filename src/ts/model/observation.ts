@@ -4,8 +4,10 @@ import { Filter } from "../model/filter";
 export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation[]> {
   const yearCondition = filter.period ? `AND strftime('%Y', seen_at) = ?` : "";
   const regionCondition = filter.region
-    ? `AND LOWER(state) LIKE LOWER(?) || '%'`
+    ? `AND LOWER(state) LIKE LOWER(?) || '%'
+    `
     : "";
+  const countyCondition = filter.county ? `AND LOWER(county) = LOWER(?)` : "";
   const photoCondition = filter.type == ObsType.Photo ? "AND has_photo" : "";
   const query = `
       SELECT
@@ -24,6 +26,7 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
         WHERE 1=1
           ${yearCondition}
           ${regionCondition}
+          ${countyCondition}
           ${photoCondition}
       ) AS ranked
       WHERE row_num = 1
@@ -36,6 +39,9 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
   }
   if (filter.region) {
     params.push(filter.region);
+  }
+  if (filter.county) {
+    params.push(filter.county);
   }
   statement = statement.bind(...params);
   const { results } = await statement.all<any>();

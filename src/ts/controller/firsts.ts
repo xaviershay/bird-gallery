@@ -107,29 +107,30 @@ async function fetchFilterCounts(env: Env): Promise<Record<string, number>> {
   let results = await statement.bind().all<any>();
 
   let counts: Record<string, number> = {};
-  counts[new Filter(ObsType.Sighting, null, null, null).toQueryString()] = 0;
+  counts[new Filter(ObsType.Sighting, null, null, null, null).toQueryString()] = 0;
   results.results.forEach((result) => {
     counts[
       new Filter(
         ObsType.Sighting,
-        result.state,
-        result.year,
-        null
+        result.state, // region
+        null,         // county
+        result.year,  // period
+        null          // blah
       ).toQueryString()
     ] = result.allRegionFirstSightings;
-    counts[new Filter(ObsType.Sighting, null, null, null).toQueryString()] +=
+    counts[new Filter(ObsType.Sighting, null, null, null, null).toQueryString()] +=
       result.allFirstSightings;
     counts[
-      new Filter(ObsType.Sighting, null, result.year, null).toQueryString()
+      new Filter(ObsType.Sighting, null, null, result.year, null).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(ObsType.Sighting, null, result.year, null).toQueryString()
+      new Filter(ObsType.Sighting, null, null, result.year, null).toQueryString()
     ] += result.allFirstSightings;
     counts[
-      new Filter(ObsType.Sighting, result.state, null, null).toQueryString()
+      new Filter(ObsType.Sighting, result.state, null, null, null).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(ObsType.Sighting, result.state, null, null).toQueryString()
+      new Filter(ObsType.Sighting, result.state, null, null, null).toQueryString()
     ] += result.allRegionFirstSightings;
   });
 
@@ -153,26 +154,84 @@ async function fetchFilterCounts(env: Env): Promise<Record<string, number>> {
   statement = env.DB.prepare(query);
   results = await statement.bind().all<any>();
 
-  counts[new Filter(ObsType.Photo, null, null, null).toQueryString()] = 0;
+  counts[new Filter(ObsType.Photo, null, null, null, null).toQueryString()] = 0;
   results.results.forEach((result) => {
     counts[
-      new Filter(ObsType.Photo, result.state, result.year, null).toQueryString()
+      new Filter(ObsType.Photo, result.state, null, result.year, null).toQueryString()
     ] = result.allRegionFirstPhotos;
-    counts[new Filter(ObsType.Photo, null, null, null).toQueryString()] +=
+    counts[new Filter(ObsType.Photo, null, null, null, null).toQueryString()] +=
       result.allFirstPhotos;
     counts[
-      new Filter(ObsType.Photo, null, result.year, null).toQueryString()
+      new Filter(ObsType.Photo, null, null, result.year, null).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(ObsType.Photo, null, result.year, null).toQueryString()
+      new Filter(ObsType.Photo, null, null, result.year, null).toQueryString()
     ] += result.allFirstPhotos;
     counts[
-      new Filter(ObsType.Photo, result.state, null, null).toQueryString()
+      new Filter(ObsType.Photo, result.state, null, null, null).toQueryString()
     ] ||= 0;
     counts[
-      new Filter(ObsType.Photo, result.state, null, null).toQueryString()
+      new Filter(ObsType.Photo, result.state, null, null, null).toQueryString()
     ] += result.allRegionFirstPhotos;
   });
+
+  // County = Melbourne (sightings)
+  query = `
+      SELECT
+        year,
+        COUNT(*) as allSightings,
+        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allCountyFirstSightings
+      FROM (
+        SELECT *,
+          ROW_NUMBER() OVER (PARTITION BY species_id, year ORDER BY seen_at ASC) AS row_num
+        FROM observation_wide
+        WHERE LOWER(county) = 'melbourne'
+      )
+      GROUP BY year
+    `;
+  statement = env.DB.prepare(query);
+  results = await statement.bind().all<any>();
+
+  // Seed zero for overall melbourne counts
+  counts[new Filter(ObsType.Sighting, null, null, null, null).toQueryString()] ||= 0;
+  let melbourneSightingsTotal = 0;
+  results.results.forEach((result) => {
+    counts[
+      new Filter(ObsType.Sighting, null, "melbourne", result.year, null).toQueryString()
+    ] = result.allCountyFirstSightings;
+    melbourneSightingsTotal += result.allCountyFirstSightings;
+  });
+  counts[
+    new Filter(ObsType.Sighting, null, "melbourne", null, null).toQueryString()
+  ] = melbourneSightingsTotal;
+
+  // County = Melbourne (photos)
+  query = `
+      SELECT
+        year,
+        COUNT(*) as allPhotos,
+        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allCountyFirstPhotos
+      FROM (
+        SELECT *,
+          ROW_NUMBER() OVER (PARTITION BY species_id, year ORDER BY seen_at ASC) AS row_num
+        FROM observation_wide
+        WHERE has_photo AND LOWER(county) = 'melbourne'
+      )
+      GROUP BY year
+    `;
+  statement = env.DB.prepare(query);
+  results = await statement.bind().all<any>();
+
+  let melbournePhotosTotal = 0;
+  results.results.forEach((result) => {
+    counts[
+      new Filter(ObsType.Photo, null, "melbourne", result.year, null).toQueryString()
+    ] = result.allCountyFirstPhotos;
+    melbournePhotosTotal += result.allCountyFirstPhotos;
+  });
+  counts[
+    new Filter(ObsType.Photo, null, "melbourne", null, null).toQueryString()
+  ] = melbournePhotosTotal;
 
   return counts;
 }

@@ -4,6 +4,7 @@ import { ObsType } from "../types";
 interface PartialFilter {
   type: ObsType;
   region?: string | null;
+  county?: string | null;
   period: string | null;
   blah?: string | null;
 }
@@ -17,6 +18,7 @@ export const navLinkBuilder = (
     const newFilter = new Filter(
       filterChange.type,
       filterChange.region ?? null,
+      filterChange.county ?? null,
       filterChange.period,
       filterChange.blah ?? null
     );
