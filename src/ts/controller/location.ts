@@ -183,9 +183,9 @@ async function fetchFilterCounts(
   let statement = env.DB.prepare(query);
   let result = await statement.bind(locationId).first<any>();
 
-  counts[new Filter(ObsType.Sighting, null, null, null).toQueryString()] =
+  counts[new Filter(ObsType.Sighting, null, null, null, null).toQueryString()] =
     result.allSightings;
-  counts[new Filter(ObsType.Sighting, null, null, "firsts").toQueryString()] =
+  counts[new Filter(ObsType.Sighting, null, null, null, "firsts").toQueryString()] =
     result.allFirstSightings;
 
   query = `
@@ -204,9 +204,9 @@ async function fetchFilterCounts(
   statement = env.DB.prepare(query);
   result = await statement.bind(locationId).first<any>();
 
-  counts[new Filter(ObsType.Photo, null, null, null).toQueryString()] =
+  counts[new Filter(ObsType.Photo, null, null, null, null).toQueryString()] =
     result.allPhotos;
-  counts[new Filter(ObsType.Photo, null, null, "firsts").toQueryString()] =
+  counts[new Filter(ObsType.Photo, null, null, null, "firsts").toQueryString()] =
     result.allFirstPhotos;
 
   query = `
@@ -227,10 +227,10 @@ async function fetchFilterCounts(
   let results = await statement.bind(locationId).all<any>();
   results.results.forEach((result : any) => {
     counts[
-      new Filter(ObsType.Sighting, null, result.year, null).toQueryString()
+      new Filter(ObsType.Sighting, null, null, result.year, null).toQueryString()
     ] = result.allSightings;
     counts[
-      new Filter(ObsType.Sighting, null, result.year, "firsts").toQueryString()
+      new Filter(ObsType.Sighting, null, null, result.year, "firsts").toQueryString()
     ] = result.allFirstSightings;
   });
 
@@ -250,10 +250,10 @@ async function fetchFilterCounts(
   statement = env.DB.prepare(query);
   results = await statement.bind(locationId).all<any>();
   results.results.forEach((result : any) => {
-    counts[new Filter(ObsType.Photo, null, result.year, null).toQueryString()] =
+    counts[new Filter(ObsType.Photo, null, null, result.year, null).toQueryString()] =
       result.allPhotos;
     counts[
-      new Filter(ObsType.Photo, null, result.year, "firsts").toQueryString()
+      new Filter(ObsType.Photo, null, null, result.year, "firsts").toQueryString()
     ] = result.allFirstPhotos;
   });
 
