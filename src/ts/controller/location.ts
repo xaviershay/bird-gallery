@@ -1,4 +1,3 @@
-import { Env } from "../routes";
 import { Observation, Location, ObsType } from "../types";
 import { Filter } from "../model/filter";
 import { LocationView } from "../view/location";
