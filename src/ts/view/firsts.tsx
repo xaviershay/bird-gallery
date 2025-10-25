@@ -17,7 +17,7 @@ export const FirstsView = (data: FirstsViewProps) => {
   const { filter, filterCounts, photos } = data;
   const navLink = navLinkBuilder(data.filter, filterCounts);
   const scriptContent = `
-    urlF = (id) => ("/location/" + id + "?view=firsts");
+    urlF = (id) => ("/location/" + id + "?view=firsts&${data.filter.toQueryString()}");
     initMap("/firsts.geojson?${data.filter.toQueryString()}", urlF);
   `;
 
