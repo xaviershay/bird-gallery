@@ -169,8 +169,8 @@ async function fetchFilterCounts(
   let counts: Record<string, number> = {};
   let query = `
       SELECT
-        COUNT(*) as allSightings,
-        COUNT(CASE WHEN has_photo THEN 1 END) as allPhotos,
+        COUNT(DISTINCT species_id) as allSightings,
+        COUNT(DISTINCT CASE WHEN has_photo THEN species_id END) as allPhotos,
         COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstSightings,
         COUNT(CASE WHEN has_photo AND row_num = 1 THEN 1 END) as allFirstPhotos
       FROM (
@@ -190,7 +190,7 @@ async function fetchFilterCounts(
 
   query = `
       SELECT
-        COUNT(*) as allPhotos,
+        COUNT(DISTINCT species_id) as allPhotos,
         COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstPhotos
       FROM (
         SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
@@ -212,8 +212,8 @@ async function fetchFilterCounts(
   query = `
       SELECT
         STRFTIME("%Y", seen_at) as year,
-        COUNT(*) as allSightings,
-        COUNT(CASE WHEN has_photo THEN 1 END) as allPhotos,
+        COUNT(DISTINCT species_id) as allSightings,
+        COUNT(DISTINCT CASE WHEN has_photo THEN species_id END) as allPhotos,
         COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstSightings,
         COUNT(CASE WHEN has_photo AND row_num = 1 THEN 1 END) as allFirstPhotos
       FROM (
@@ -237,7 +237,7 @@ async function fetchFilterCounts(
   query = `
       SELECT
         STRFTIME("%Y", seen_at) as year,
-        COUNT(*) as allPhotos,
+        COUNT(DISTINCT species_id) as allPhotos,
         COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstPhotos
       FROM (
         SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id, STRFTIME("%Y", seen_at) ORDER BY seen_at ASC) AS row_num

@@ -90,6 +90,48 @@ describe('', () => {
       expect(content).toContain("Rainbow Lorikeet");
       expect(content).not.toContain("Old Lorikeet");
     });
+
+    it('only counts species seen at the location in All/Seen column', async () => {
+      // Add multiple observations of the same species at the same location
+      await execSql(`
+        INSERT INTO observation VALUES
+            ('219171571-railor5', 219171571, 'railor5', 2552179, 2, '2025-04-01T10:00:00', null);
+        INSERT INTO observation VALUES
+            ('219171572-railor5', 219171572, 'railor5', 2552179, 2, '2025-05-01T10:00:00', null);
+      `);
+
+      const response = await SELF.fetch('https://localhost/location/2552179');
+      const content = await response.text();
+      
+      // Should show 2 unique species (Rainbow Lorikeet and Old Lorikeet)
+      // even though Rainbow Lorikeet was seen 3 times total
+      // The All/Seen column for Life should show "2"
+      // and for 2025 should show "1" (only Rainbow Lorikeet in 2025)
+      
+      // Check for the 2025 row - should show 1 for All/Seen
+      const yearRowMatch = content.match(/<tr>\s*<th[^>]*>2025<\/th>[\s\S]*?<\/tr>/);
+      expect(yearRowMatch).toBeTruthy();
+      
+      if (yearRowMatch) {
+        const yearRow = yearRowMatch[0];
+        // Extract all the link counts from the row
+        const counts = yearRow.match(/href="[^"]*">(\d+)<\/a>/g);
+        expect(counts).toBeTruthy();
+        
+        if (counts) {
+          // Parse the numbers from each link
+          const numbers = counts.map(c => {
+            const match = c.match(/>(\d+)</);
+            return match ? parseInt(match[1]) : 0;
+          });
+          
+          // The last number should be the All/Seen count for 2025
+          // Should be 1 (only Rainbow Lorikeet), not 3 (three observations)
+          const allSeenCount = numbers[numbers.length - 1];
+          expect(allSeenCount).toBe(1);
+        }
+      }
+    });
   })
 
   describe('/firsts', () => {
