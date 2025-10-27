@@ -1,5 +1,6 @@
 import { Env } from "../routes";
 import { Observation, Photo, Species } from "../types";
+import { parseDbDate } from "../helpers/date_utils";
 
 
 export async function fetchPhoto(
@@ -26,7 +27,7 @@ export async function fetchPhoto(
       width: result.width,
       height: result.height,
       commonName: result.common_name,
-      takenAt: new Date(result.taken_at),
+      takenAt: parseDbDate(result.taken_at),
       rating: result.rating,
       iso: result.iso,
       fNumber: result.fnumber,

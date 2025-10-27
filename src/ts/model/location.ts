@@ -1,5 +1,6 @@
 import { Observation, Location, ObsType } from "../types";
 import { Filter } from "./filter";
+import { parseDbDate } from "../helpers/date_utils";
 
 export async function fetchLocation(
   env: Env,
@@ -104,7 +105,7 @@ export async function fetchLocationObservations(
 
   return result.results.map((row: any) => ({
     ...row,
-    seenAt: new Date(row.seenAt),
-    lastSeenAt: new Date(row.lastSeenAt),
+    seenAt: parseDbDate(row.seenAt),
+    lastSeenAt: row.lastSeenAt ? parseDbDate(row.lastSeenAt) : null,
   }));
 }

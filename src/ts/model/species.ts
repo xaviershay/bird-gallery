@@ -1,4 +1,5 @@
 import { Observation, Photo, Species } from "../types";
+import { parseDbDate } from "../helpers/date_utils";
 
 export async function fetchSpecies(
   env: Env,
@@ -83,6 +84,6 @@ export async function fetchSpeciesObservations(
       id: row.locationId,
       name: row.locationName,
     },
-    seenAt: new Date(row.seenAt),
+    seenAt: parseDbDate(row.seenAt),
   }));
 }

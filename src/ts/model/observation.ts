@@ -1,5 +1,6 @@
 import { Observation, ObsType } from "../types";
 import { Filter } from "../model/filter";
+import { parseDbDate } from "../helpers/date_utils";
 
 export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation[]> {
   const yearCondition = filter.period ? `AND strftime('%Y', seen_at) = ?` : "";
@@ -52,6 +53,6 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
       name: record.locationName,
     },
     hasPhoto: record.hasPhoto == 1,
-    seenAt: new Date(record.seenAt + "Z"), // Treat seenAt as UTC by appending "Z"
+    seenAt: parseDbDate(record.seenAt),
   }));
 }

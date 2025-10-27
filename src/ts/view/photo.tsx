@@ -42,7 +42,7 @@ export const PhotoView = (data: PhotoViewProps) => {
         </tr>
         <tr>
             <th>Taken At</th>
-            <td>{format(new Date(photo.takenAt), 'MMMM d, yyyy h:mm a')}</td>
+            <td>{format(photo.takenAt, 'MMMM d, yyyy h:mm a')}</td>
         </tr>
         <tr>
             <th>Location</th>

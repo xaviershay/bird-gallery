@@ -80,7 +80,7 @@ This document contains prompts for refactoring and improving code quality in the
 - Add `D1ResultRow` interfaces for common query patterns
 - Use type guards where appropriate
 
-### 5. Standardize Date Handling
+### 5. Standardize Date Handling ✅ DONE
 **Problem**: Inconsistent date handling - sometimes appending "Z" (`new Date(record.seenAt + "Z")`), sometimes not. Mix of string dates and Date objects.
 
 **Prompt**: Create consistent date utilities:
@@ -89,6 +89,24 @@ This document contains prompts for refactoring and improving code quality in the
 - Standardize on UTC storage and local display
 - Replace all date parsing with utility functions
 - Add validation for date inputs
+
+**Completed**: Date handling has been standardized across the codebase:
+- Created `helpers/date_utils.ts` with utility functions:
+  - `parseDbDate()` - Parses database date strings, intelligently handling both plain dates and ISO 8601 with timezones
+  - `parseDbDateNullable()` - Version that returns null for null/undefined inputs
+  - `parseDate()` - For dates that don't need UTC treatment
+- Documented timezone assumptions:
+  - Database stores dates in local time without timezone info
+  - Dates are treated as UTC for consistency by appending "Z"
+  - Function detects and handles dates that already have timezone indicators
+- Updated all model files to use `parseDbDate()`:
+  - `model/observation.ts` - Uses `parseDbDate()` for `seenAt`
+  - `model/location.ts` - Uses `parseDbDate()` for `seenAt` and `lastSeenAt`
+  - `model/species.ts` - Uses `parseDbDate()` for `seenAt`
+  - `model/photo.ts` - Uses `parseDbDate()` for `takenAt`
+- Updated view files to use Date objects directly (removed redundant `new Date()` wrapping)
+- Added comprehensive JSDoc comments with examples
+- All 97 tests pass
 
 ### 6. Extract Domain Models
 **Problem**: Types in `types.ts` are plain interfaces without behavior. Business logic (like date formatting, URL generation) is scattered.
