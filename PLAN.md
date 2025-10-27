@@ -192,7 +192,7 @@ This document contains prompts for refactoring and improving code quality in the
 - Extract common patterns like the map initialization script into reusable components
 - Consider creating a `BaseView` or `Page` component for common structure
 
-### 12. Extract Map Component
+### 12. Extract Map Component ✅ DONE
 **Problem**: Map initialization code is duplicated with inline `<script>` tags in multiple views (`FirstsView`, `SpeciesView`).
 
 **Prompt**: Create a reusable map component:
@@ -201,6 +201,29 @@ This document contains prompts for refactoring and improving code quality in the
 - Encapsulate the map initialization script
 - Make map configuration (like mapbox token) more explicit
 - Consider server-side vs client-side rendering approach
+
+**Completed**: Successfully extracted map initialization into a reusable component:
+- Created `view/components/map.tsx` with `MapView` component:
+  - Props: `dataUrl` (GeoJSON data source URL), `urlBuilder` (function string for building location URLs), optional `height`
+  - Encapsulates the map div, script loading, and initialization
+  - Well-documented with JSDoc comments explaining parameters and usage
+  - Handles both the map container and script injection in one component
+- Updated `FirstsView` to use `MapView`:
+  - Removed duplicate script tags and inline JavaScript
+  - Reduced from 5 lines of map code to 3 lines with clear props
+  - Map configuration is now explicit and declarative
+- Updated `SpeciesView` to use `MapView`:
+  - Removed duplicate script tags and inline JavaScript
+  - Reduced from 5 lines of map code to 3 lines with clear props
+  - Consistent API with FirstsView
+- Benefits:
+  - **Eliminated duplication**: Map initialization logic now exists in one place
+  - **Improved maintainability**: Changes to map setup only need to be made once
+  - **Better readability**: Views are cleaner and more declarative
+  - **Type safety**: Props are properly typed with TypeScript
+  - **Documentation**: JSDoc comments explain the component's purpose and usage
+- All 97 tests continue to pass
+- Map configuration (Mapbox token) remains in `/js/map.js` for now (accessible globally)
 
 ### 13. Improve Helper Function Organization
 **Problem**: Helper functions inconsistently return React nodes vs strings. Some are in `.tsx` files, some in `.ts` files.
@@ -335,8 +358,6 @@ This document contains prompts for refactoring and improving code quality in the
 - Add path aliases for cleaner imports (e.g., `@models/`, `@controllers/`)
 - Configure proper source maps for debugging
 - Add stricter TypeScript checks: `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`
-- Consider adding ESLint with Airbnb or similar config
-- Add Prettier for consistent formatting
 
 ## Specific Bug Fixes
 

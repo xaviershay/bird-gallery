@@ -5,6 +5,7 @@ import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
 import { ThumbnailStrip } from "./thumbnail_strip";
 import { navLinkBuilder } from "../helpers/nav_link_builder";
+import { MapView } from "./components/map";
 
 interface FirstsViewProps {
   filter: Filter; // TODO: should probably be "data source" or something better
@@ -16,10 +17,6 @@ interface FirstsViewProps {
 export const FirstsView = (data: FirstsViewProps) => {
   const { filter, filterCounts, photos } = data;
   const navLink = navLinkBuilder(data.filter, filterCounts);
-  const scriptContent = `
-    urlF = (id) => ("/location/" + id + "?view=firsts&${data.filter.toQueryString()}");
-    initMap("/firsts.geojson?${data.filter.toQueryString()}", urlF);
-  `;
 
   return (
     <>
@@ -141,7 +138,10 @@ export const FirstsView = (data: FirstsViewProps) => {
           </table>
         </nav>
         <ThumbnailStrip photos={photos} />
-        <div id="map"></div>
+        <MapView
+          dataUrl={`/firsts.geojson?${data.filter.toQueryString()}`}
+          urlBuilder={`(id) => ("/location/" + id + "?view=firsts&${data.filter.toQueryString()}")`}
+        />
         <table className="bird-list">
           <thead>
             <tr>
@@ -161,8 +161,6 @@ export const FirstsView = (data: FirstsViewProps) => {
           </tbody>
         </table>
       </section>
-      <script src="/js/map.js"></script>
-      <script dangerouslySetInnerHTML={{ __html: scriptContent }}></script>
     </>
   );
 };

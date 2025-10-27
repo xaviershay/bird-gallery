@@ -3,6 +3,7 @@ import { speciesUrl } from "../helpers/species_link";
 import formatLocationName from "../helpers/format_location_name";
 import { formatDate } from "../helpers/format_date";
 import { ThumbnailStrip } from "./thumbnail_strip";
+import { MapView } from "./components/map";
 
 interface SpeciesViewProps {
   observations: Array<Observation>;
@@ -12,10 +13,6 @@ interface SpeciesViewProps {
 export const SpeciesView = (data: SpeciesViewProps) => {
   const { observations, species } = data;
   const observationCount = observations.length;
-  const scriptContent = `
-    urlF = (id) => ("/location/" + id);
-    initMap("${speciesUrl(species.id, { format: "geojson" })}", urlF);
-  `;
 
   return (
     <>
@@ -25,7 +22,10 @@ export const SpeciesView = (data: SpeciesViewProps) => {
           {species.name}
         </h2>
         <ThumbnailStrip photos={species.photos} />
-        <div id="map"></div>
+        <MapView
+          dataUrl={speciesUrl(species.id, { format: "geojson" })}
+          urlBuilder="(id) => ('/location/' + id)"
+        />
         <table className="bird-list">
           <thead>
             <tr>
@@ -49,8 +49,6 @@ export const SpeciesView = (data: SpeciesViewProps) => {
           </tbody>
         </table>
       </section>
-      <script src="/js/map.js"></script>
-      <script dangerouslySetInnerHTML={{ __html: scriptContent }}></script>
     </>
   );
 };
