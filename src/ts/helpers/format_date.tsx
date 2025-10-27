@@ -15,7 +15,7 @@ export const formatDate = (date: Date): React.ReactNode => {
   return (
     <>
       {day}
-      <sup>{suffix}</sup> {month} {year}
+      <sup>{suffix}</sup> {month + ' ' + year}
     </>
   );
 };
