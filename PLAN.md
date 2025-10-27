@@ -39,7 +39,7 @@ This document contains prompts for refactoring and improving code quality in the
 - Updated `controller/location.ts`, `controller/species.ts`, and `controller/firsts.ts` to import and use model functions
 - All 97 tests pass after refactoring
 
-### 2. Consolidate Filter Count Logic
+### 2. Consolidate Filter Count Logic ✅ DONE
 **Problem**: `fetchFilterCounts` is duplicated in `controller/location.ts` and `controller/firsts.ts` with similar but different implementations. Both generate filter combinations using the same patterns.
 
 **Prompt**: Create a `model/filter_counts.ts` module that:
@@ -47,6 +47,16 @@ This document contains prompts for refactoring and improving code quality in the
 - Uses a builder pattern to construct the filter combinations
 - Reduces duplication between location and firsts controllers
 - Makes the filter counting logic testable independently
+
+**Completed**: Filter count logic has been consolidated into a single module:
+- Enhanced `model/filter_counts.ts` with two specialized functions:
+  - `fetchGlobalFilterCounts()` - For the firsts page (handles region, county, and period filters)
+  - `fetchLocationFilterCounts()` - For location pages (handles period and view filters)
+- Removed duplicate `fetchLocationFilterCounts()` from `model/location.ts`
+- Updated `controller/location.ts` to import from `model/filter_counts.ts`
+- Added JSDoc comments to document the purpose of each function
+- Added a helper function `processYearGroupedResults()` to reduce internal duplication
+- All 97 tests continue to pass
 
 ### 3. Create a Repository Pattern
 **Problem**: SQL queries are directly embedded in model functions with inconsistent error handling and query construction patterns.

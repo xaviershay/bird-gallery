@@ -4,7 +4,8 @@ import { LayoutView } from "../view/layout";
 import { respondWith, corsHeaders } from "./base";
 import { fetchHeaderStats } from "../model/header_stats";
 import { fetchPhotos } from "../model/photo";
-import { fetchLocation, fetchLocationObservations, fetchLocationFilterCounts } from "../model/location";
+import { fetchLocation, fetchLocationObservations } from "../model/location";
+import { fetchLocationFilterCounts } from "../model/filter_counts";
 import { prerender } from "react-dom/static";
 
 export async function handleLocation(
