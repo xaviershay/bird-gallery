@@ -145,12 +145,12 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
   let melbourneSightingsTotal = 0;
   results.results.forEach((result) => {
     counts[
-      Filter.create({ type: ObsType.Sighting, county: REGIONS.MELBOURNE, period: result.year }).toQueryString()
+      Filter.create({ type: ObsType.Sighting, county: REGIONS.COUNTY.id, period: result.year }).toQueryString()
     ] = result.allCountyFirstSightings;
     melbourneSightingsTotal += result.allCountyFirstSightings;
   });
   counts[
-    Filter.create({ type: ObsType.Sighting, county: REGIONS.MELBOURNE }).toQueryString()
+    Filter.create({ type: ObsType.Sighting, county: REGIONS.COUNTY.id }).toQueryString()
   ] = melbourneSightingsTotal;
 
   // County = Melbourne (photos)
@@ -173,12 +173,12 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
   let melbournePhotosTotal = 0;
   results.results.forEach((result) => {
     counts[
-      Filter.create({ type: ObsType.Photo, county: REGIONS.MELBOURNE, period: result.year }).toQueryString()
+      Filter.create({ type: ObsType.Photo, county: REGIONS.COUNTY.id, period: result.year }).toQueryString()
     ] = result.allCountyFirstPhotos;
     melbournePhotosTotal += result.allCountyFirstPhotos;
   });
   counts[
-    Filter.create({ type: ObsType.Photo, county: REGIONS.MELBOURNE }).toQueryString()
+    Filter.create({ type: ObsType.Photo, county: REGIONS.COUNTY.id }).toQueryString()
   ] = melbournePhotosTotal;
 
   return counts;

@@ -6,11 +6,18 @@
  */
 
 /**
- * Known region identifiers used in filtering
+ * Geographic regions used in filtering
+ * Each region has an ID (used in database queries) and a label (displayed to users)
  */
 export const REGIONS = {
-  VICTORIA_AU: "au-vic",
-  MELBOURNE: "melbourne",
+  STATE: {
+    id: "au-vic",
+    label: "Victoria, AU",
+  },
+  COUNTY: {
+    id: "melbourne",
+    label: "Melbourne",
+  },
 } as const;
 
 /**
