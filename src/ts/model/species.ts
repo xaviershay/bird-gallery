@@ -6,7 +6,7 @@ export async function fetchSpecies(
   speciesId: string
 ): Promise<Species | null> {
   try {
-    var query = `
+    let query = `
       SELECT
         id,
         common_name as name
@@ -15,8 +15,8 @@ export async function fetchSpecies(
       LIMIT 1;
     `;
 
-    var statement = env.DB.prepare(query);
-    var result = await statement.bind(speciesId).first<any>();
+    let statement = env.DB.prepare(query);
+    const result = await statement.bind(speciesId).first<any>();
 
     if (!result) {
       return null;

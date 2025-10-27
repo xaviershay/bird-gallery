@@ -6,6 +6,7 @@ import { formatDate } from "../helpers/format_date";
 import { ThumbnailStrip } from "./thumbnail_strip";
 import { navLinkBuilder } from "../helpers/nav_link_builder";
 import { MapView } from "./components/map";
+import { REGIONS } from "../config/constants";
 
 interface FirstsViewProps {
   filter: Filter; // TODO: should probably be "data source" or something better
@@ -46,7 +47,7 @@ export const FirstsView = (data: FirstsViewProps) => {
               <td>
                 {navLink({
                   type: ObsType.Photo,
-                  county: "melbourne",
+                  county: REGIONS.MELBOURNE,
                   region: null,
                   period: null,
                 })}
@@ -54,7 +55,7 @@ export const FirstsView = (data: FirstsViewProps) => {
               <td>
                 {navLink({
                   type: ObsType.Sighting,
-                  county: "melbourne",
+                  county: REGIONS.MELBOURNE,
                   region: null,
                   period: null,
                 })}
@@ -62,14 +63,14 @@ export const FirstsView = (data: FirstsViewProps) => {
               <td>
                 {navLink({
                   type: ObsType.Photo,
-                  region: "au-vic",
+                  region: REGIONS.VICTORIA_AU,
                   period: null,
                 })}
               </td>
               <td>
                 {navLink({
                   type: ObsType.Sighting,
-                  region: "au-vic",
+                  region: REGIONS.VICTORIA_AU,
                   period: null,
                 })}
               </td>
@@ -93,7 +94,7 @@ export const FirstsView = (data: FirstsViewProps) => {
               <td>
                 {navLink({
                   type: ObsType.Photo,
-                  county: "melbourne",
+                  county: REGIONS.MELBOURNE,
                   region: null,
                   period: "2025",
                 })}
@@ -101,7 +102,7 @@ export const FirstsView = (data: FirstsViewProps) => {
               <td>
                 {navLink({
                   type: ObsType.Sighting,
-                  county: "melbourne",
+                  county: REGIONS.MELBOURNE,
                   region: null,
                   period: "2025",
                 })}
@@ -109,14 +110,14 @@ export const FirstsView = (data: FirstsViewProps) => {
               <td>
                 {navLink({
                   type: ObsType.Photo,
-                  region: "au-vic",
+                  region: REGIONS.VICTORIA_AU,
                   period: "2025",
                 })}
               </td>
               <td>
                 {navLink({
                   type: ObsType.Sighting,
-                  region: "au-vic",
+                  region: REGIONS.VICTORIA_AU,
                   period: "2025",
                 })}
               </td>

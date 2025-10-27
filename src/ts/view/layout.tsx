@@ -1,5 +1,6 @@
 import React from "react";
 import { HeaderStats } from "../model/header_stats";
+import { APP_TITLE, TRACKING_START_DATE, EXTERNAL_SERVICES } from "../config/constants";
 
 interface LayoutViewProps {
   title: string,
@@ -14,27 +15,27 @@ export const LayoutView = (props: LayoutViewProps) => {
         <meta charSet="utf-8" />
         <link
           rel="stylesheet"
-          href="https://cdn.simplecss.org/simple.min.css"
+          href={EXTERNAL_SERVICES.SIMPLE_CSS}
         />
-        <script src="https://kit.fontawesome.com/c9d2c1b382.js" crossOrigin="anonymous"></script>
+        <script src={EXTERNAL_SERVICES.FONT_AWESOME} crossOrigin="anonymous"></script>
         <meta
           name="viewport"
           content="initial-scale=1,maximum-scale=1,user-scalable=no"
         />
         <link
-          href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css"
+          href={EXTERNAL_SERVICES.MAPBOX_CSS}
           rel="stylesheet"
         />
-        <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter&display=swap" rel="stylesheet" />
+        <script src={EXTERNAL_SERVICES.MAPBOX_JS}></script>
+        <link href={EXTERNAL_SERVICES.GOOGLE_FONTS} rel="stylesheet" />
         <link rel="stylesheet" href="/css/custom.css" />
         <title>{props.title}</title>
       </head>
       <body>
     <header>
-        <h1><a href="/">Xavier&apos;s Bird Lists</a></h1>
+        <h1><a href="/">{APP_TITLE}</a></h1>
       <p>
-        Since 26<sup>th</sup> January 2025 I have{" "}
+        Since {TRACKING_START_DATE} I have{" "}
         <a href="/firsts">seen {props.header.seenCount} different species</a> of wild
         bird, and{" "}
         <a href="/firsts?type=photo">photographed&nbsp;{props.header.photoCount}.</a>

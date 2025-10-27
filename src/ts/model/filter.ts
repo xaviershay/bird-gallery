@@ -8,15 +8,6 @@ export interface FilterOptions {
   view?: string | null;
 }
 
-export interface Filter {
-  type: ObsType;
-  region: string | null;
-  county: string | null;
-  period: string | null;
-  view: string | null;
-  toQueryString(): string; // Added method declaration
-}
-
 export class Filter {
   private constructor(
     public type: ObsType,

@@ -33,7 +33,7 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
       WHERE row_num = 1
       ORDER BY seen_at DESC, name ASC;
     `;
-  var statement = env.DB.prepare(query);
+  let statement = env.DB.prepare(query);
   const params: (string | null)[] = [];
   if (filter.period) {
     params.push(filter.period);
