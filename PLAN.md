@@ -23,7 +23,7 @@ This document contains prompts for refactoring and improving code quality in the
 
 ## Architecture & Organization
 
-### 1. Extract Data Access Layer
+### 1. Extract Data Access Layer ✅ DONE
 **Problem**: Database queries are scattered throughout controllers. `fetchLocation`, `fetchLocationObservations`, `fetchFilterCounts` are in `controller/location.ts` rather than a model file.
 
 **Prompt**: Move all database fetch functions from controllers to appropriate model files. Create a consistent pattern:
@@ -31,6 +31,13 @@ This document contains prompts for refactoring and improving code quality in the
 - `model/observation.ts` should contain all observation-related queries (already has `fetchFirsts`)
 - Controllers should only handle HTTP routing, request parsing, and response formatting
 - Each model file should export public fetch functions that controllers import
+
+**Completed**: All database queries have been extracted from controllers to model files:
+- Created `model/location.ts` with `fetchLocation`, `fetchLocationObservations`, and `fetchLocationFilterCounts`
+- Created `model/species.ts` with `fetchSpecies` and `fetchSpeciesObservations`
+- Created `model/filter_counts.ts` with `fetchGlobalFilterCounts` (consolidating duplicated logic from firsts controller)
+- Updated `controller/location.ts`, `controller/species.ts`, and `controller/firsts.ts` to import and use model functions
+- All 97 tests pass after refactoring
 
 ### 2. Consolidate Filter Count Logic
 **Problem**: `fetchFilterCounts` is duplicated in `controller/location.ts` and `controller/firsts.ts` with similar but different implementations. Both generate filter combinations using the same patterns.
