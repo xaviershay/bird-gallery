@@ -11,5 +11,7 @@
   "fNumber": 3.5,
   "iso": 100,
   "zoom": 75,
+  "camera": "COOLPIX P950",
+  "lens": null,
   "name": "Emu"
 }

@@ -60,12 +60,15 @@ fs.readdir(photosDir, async (err, files) => {
         fNumber: metadata.FNumber,
         iso,
         zoom,
+        camera: metadata.Model,
+        lens: metadata.LensModel ?? null,
         name: name
       };
 
       // a) Enforce presence: raise if any field is undefined or null
+      // Exception: lens can be null (not all cameras have lens metadata)
       const missing = Object.entries(photoMetadata)
-        .filter(([_, v]) => v === undefined || v === null)
+        .filter(([k, v]) => (v === undefined || v === null) && k !== 'lens')
         .map(([k]) => k);
       if (missing.length > 0) {
         throw new Error(
