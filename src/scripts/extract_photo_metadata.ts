@@ -74,7 +74,7 @@ fs.readdir(photosDir, async (err, files) => {
       }
 
       fs.writeFileSync(metadataPath, JSON.stringify(photoMetadata, null, 2));
-      console.log(`Metadata for ${file} written to ${metadataPath}`);
+      // console.log(`Metadata for ${file} written to ${metadataPath}`);
   }
 
   // After processing all photos, check for orphaned metadata files
