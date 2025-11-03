@@ -244,6 +244,52 @@ describe('', () => {
     });
   });
 
+  describe('/report/locations', () => {
+    beforeEach(async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county) VALUES
+          (1, 'Alpha Park', -37.70, 144.90, 'AU-VIC', 'Melbourne'),
+          (2, 'Beta Lake', -37.80, 144.95, 'AU-VIC', 'Melbourne');
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+          ('sp1', 'Species One', 'S1', 1, 'S1', 'fam1'),
+          ('sp2', 'Species Two', 'S2', 2, 'S2', 'fam1');
+        INSERT INTO observation VALUES
+          ('o1-sp1', 1, 'sp1', 1, 1, '2025-01-10T10:00:00', NULL);
+        INSERT INTO observation VALUES
+          ('o2-sp2', 2, 'sp2', 1, 1, '2025-02-15T12:00:00', NULL);
+        INSERT INTO observation VALUES
+          ('o3-sp1', 3, 'sp1', 2, 1, '2025-03-20T09:00:00', NULL);
+        -- Duplicate species at Alpha Park to ensure unique species counting
+        INSERT INTO observation VALUES
+          ('o4-sp1b', 4, 'sp1', 1, 1, '2025-04-01T09:00:00', NULL);
+      `);
+    });
+
+    it('renders table of locations with species counts and last seen', async () => {
+      const response = await SELF.fetch('https://localhost/report/locations');
+      const content = await response.text();
+      // Should include both locations
+      expect(content).toContain('Alpha Park');
+      expect(content).toContain('Beta Lake');
+      // Alpha Park should have 2 unique species, Beta Lake 1
+      // Check counts appear
+      expect(content).toMatch(/Alpha Park[\s\S]*?<td>2<\/td>/);
+      expect(content).toMatch(/Beta Lake[\s\S]*?<td>1<\/td>/);
+      // Order should be Alpha Park first (higher species count)
+      expect(content.indexOf('Alpha Park')).toBeLessThan(content.indexOf('Beta Lake'));
+    });
+
+    it('returns GeoJSON with one feature per location and count of unique species', async () => {
+  const response = await SELF.fetch('https://localhost/report/locations.geojson');
+  const json: any = await response.json();
+      expect(json.type).toBe('FeatureCollection');
+      expect(json.features.length).toBe(2);
+      const byName = Object.fromEntries(json.features.map((f: any) => [f.properties.name, f.properties.count]));
+      expect(byName['Alpha Park']).toBe(2);
+      expect(byName['Beta Lake']).toBe(1);
+    });
+  });
+
   describe('caching', () => {
     beforeEach(async () => {
       // Set version in metadata table

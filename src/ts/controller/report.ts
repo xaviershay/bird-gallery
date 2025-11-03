@@ -1,7 +1,8 @@
 import { respondWith, corsHeaders } from "./base";
-import { fetchSpeciesMissingPhotos } from "../model/report";
+import { fetchSpeciesMissingPhotos, fetchLocationsSummary, fetchUniqueSpeciesByLocationObservations } from "../model/report";
 import { MissingPhotosView } from "../view/missing_photos";
-import { renderPageWithLayout, parseStringPathId } from "./helpers";
+import { LocationsView } from "../view/locations";
+import { renderPageWithLayout, parseStringPathId, geoJsonResponse } from "./helpers";
 
 export async function handleReport(
   request: Request,
@@ -38,6 +39,20 @@ export async function handleReport(
 
       const content = MissingPhotosView({ species, region, county, stats: { regionCount } });
       return renderPageWithLayout(content, "Missing Photos - Xavier's Bird Lists", env);
+    case "locations":
+      // Map data endpoint
+      if (url.pathname.endsWith('.geojson')) {
+        const observations = await fetchUniqueSpeciesByLocationObservations(env);
+        return geoJsonResponse(observations);
+      }
+
+      // HTML page
+      const locations = await fetchLocationsSummary(env);
+      return renderPageWithLayout(
+        LocationsView({ locations }),
+        "Locations - Xavier's Bird Lists",
+        env
+      );
   }
   return respondWith(200, { message: "Report" }, corsHeaders);
 }
