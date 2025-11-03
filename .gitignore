@@ -1,5 +1,6 @@
 node_modules
 .wrangler
+.cloudflare_api_token
 dist
 out
 src/load.js

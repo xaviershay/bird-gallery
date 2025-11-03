@@ -18,6 +18,6 @@ for photo in "$PHOTOS_DIR"/*.jpg; do
     # Create a resized version with max height of 150px, preserving metadata
     convert "$photo" -resize x150 -auto-orient "$THUMBNAILS_DIR/$filename"
   else
-    echo "Thumbnail already exists for $filename"
+    # echo "Thumbnail already exists for $filename"
   fi
 done

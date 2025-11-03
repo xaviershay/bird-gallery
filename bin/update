@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -ex
+
+bin/generate-thumbnails
+bin/extract-photo-metadata
+
+bin/sync-photos
+bin/load-data-local

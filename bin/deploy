@@ -2,5 +2,32 @@
 
 set -ex
 
+# Load CLOUDFLARE_API_TOKEN safely from repo root if not already set
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TOKEN_FILE="$ROOT_DIR/.cloudflare_api_token"
+
+if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+	if [[ -f "$TOKEN_FILE" ]]; then
+		# Avoid leaking secrets in -x trace
+		__had_xtrace=0
+		if [[ $- == *x* ]]; then
+			set +x
+			__had_xtrace=1
+		fi
+		export CLOUDFLARE_API_TOKEN="$(head -n1 "$TOKEN_FILE" | tr -d ' \r\n')"
+		if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+			echo "Error: .cloudflare_api_token exists but is empty." 1>&2
+			exit 1
+		fi
+		if [[ $__had_xtrace -eq 1 ]]; then
+			set -x
+		fi
+	else
+		echo "Error: CLOUDFLARE_API_TOKEN not set and $TOKEN_FILE not found." 1>&2
+		echo "Create the file with your Cloudflare API token (no quotes, first line only)." 1>&2
+		exit 1
+	fi
+fi
+
 npx wrangler deploy --env=prod
 bin/load-data-remote
