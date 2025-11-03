@@ -1,3 +1,4 @@
 # Ensure shell scripts always use LF line endings
 # CRLF line endings (\r\n) break shell script execution
 bin/* text eol=lf
+* text eol=lf
