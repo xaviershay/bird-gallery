@@ -3,7 +3,8 @@
   "height": 2807,
   "width": 5194,
   "tags": [
-    "ebird/Gray Teal"
+    "birdtype/Female",
+    "ebird/Chestnut Teal"
   ],
   "rating": 2,
   "takenAt": "2025-11-01T04:37:37.000Z",
@@ -11,5 +12,5 @@
   "fNumber": 6.3,
   "iso": 500,
   "zoom": 400,
-  "name": "Gray Teal"
+  "name": "Chestnut Teal"
 }
