@@ -22,7 +22,7 @@ const taxonomyRecords = parse(taxonomyData, { columns: true, skip_empty_lines: t
 // Create a lookup map for taxonomy data
 const taxonomyMap = new Map(
   taxonomyRecords.map((record : any) => [
-    record['COMMON_NAME'].toLowerCase(),
+    record['PRIMARY_COM_NAME'].toLowerCase(),
     {
       speciesId: record['SPECIES_CODE'],
       scientificName: record['SCIENTIFIC_NAME'],
@@ -57,13 +57,20 @@ const observationSQLStatements : any[] = [];
       'ML Catalog Numbers': mlCatalogNumbers
     } = record;
 
+    // The 2025 taxonomy update broke something: https://www.aba.org/the-2025-e-bird-clements-taxonomy-update/
+    // Checklists record the bird as "Eurasian Whimbrel" but this name does not exist in the taxonomy!
+    // (true as of 2025-11-10)
+    const replacement: Record<string, string> = {
+      //'Eurasian Whimbrel': 'Whimbrel (White-rumped)'
+    };
+    const key = replacement[commonName] ?? commonName;
     const timeParsed = time && time.trim() 
       ? format(parseDate(time, 'hh:mm a', new Date()), 'HH:mm:ss') 
       : '00:00:00';
     const seenAt = `${date}T${timeParsed}`;
     const submissionId = parseInt(submissionIdRaw.replace(/^S/, ''));
     const locationId = parseInt(locationIdRaw.replace(/^L/, ''));
-    const taxonomyEntry : any = taxonomyMap.get(commonName.toLowerCase());
+    const taxonomyEntry : any = taxonomyMap.get(key.toLowerCase());
 
     if (!taxonomyEntry) {
       console.error(`Taxonomy entry not found for common name: ${commonName}`);
