@@ -17,21 +17,31 @@ const taxonomyFilePath = 'data/ebird-taxonomy.csv';
 const csvData = readFileSync(csvFilePath, 'utf-8');
 const taxonomyData = readFileSync(taxonomyFilePath, 'utf-8');
 const records = parse(csvData, { columns: true, skip_empty_lines: true, relax_column_count: true });
-const taxonomyRecords = parse(taxonomyData, { columns: true, skip_empty_lines: true });
+const taxonomyRecords = parse(taxonomyData, { columns: true, skip_empty_lines: true, bom: true });
 
 // Create a lookup map for taxonomy data
 const taxonomyMap = new Map(
-  taxonomyRecords.map((record : any) => [
-    record['PRIMARY_COM_NAME'].toLowerCase(),
-    {
-      speciesId: record['SPECIES_CODE'],
-      scientificName: record['SCIENTIFIC_NAME'],
-      taxonomicOrder: parseInt(record['TAXON_ORDER']),
-      commonNameCodes: record['COM_NAME_CODES'],
-      familyId: record['FAMILY_CODE'],
-      category: record['CATEGORY']
-    },
-  ])
+  taxonomyRecords.map((record: any) => {
+    const primaryComName = record['PRIMARY_COM_NAME'];
+    const speciesCode = record['SPECIES_CODE'];
+    const scientificName = record['SCI_NAME'];
+    const taxonOrderRaw = record['TAXON_ORDER'];
+    const commonNameCodes = record['REPORT_AS'];
+    const familyCode = record['FAMILY'];
+    const category = record['CATEGORY'];
+
+    return [
+      primaryComName.toLowerCase(),
+      {
+        speciesId: speciesCode,
+        scientificName,
+        taxonomicOrder: parseInt(taxonOrderRaw),
+        commonNameCodes,
+        familyId: familyCode,
+        category,
+      },
+    ];
+  })
 );
 
 // Create sets to store unique location and species records
@@ -77,7 +87,7 @@ const observationSQLStatements : any[] = [];
       continue;
     }
 
-    if (!(taxonomyEntry.category == "species" || taxonomyEntry.category == "domestic" || taxonomyEntry.category == "form")) {
+    if (!(taxonomyEntry.category == "species" || taxonomyEntry.category == "domestic" || taxonomyEntry.category == "form" || taxonomyEntry.category == "issf")) {
       continue;
     }
 
