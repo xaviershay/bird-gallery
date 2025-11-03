@@ -9,7 +9,26 @@ export async function fetchPhoto(
 ): Promise<{photo: Photo, observation: Observation} | null> {
   const query = `
     SELECT
-      *
+      photo.file_name,
+      photo.width,
+      photo.height,
+      photo.taken_at,
+      photo.rating,
+      photo.iso,
+      photo.fnumber,
+      photo.exposure,
+      photo.zoom,
+      photo.tags,
+      photo.camera,
+      photo.lens,
+      observation_wide.id AS observation_id,
+      observation_wide.species_id,
+      observation_wide.common_name,
+      observation_wide.location_id,
+      observation_wide.location_name,
+      observation_wide.lat,
+      observation_wide.lng,
+      observation_wide.seen_at
     FROM
       photo INNER JOIN observation_wide ON observation_id = observation_wide.id 
     WHERE
@@ -33,7 +52,9 @@ export async function fetchPhoto(
       fNumber: result.fnumber,
       exposure: result.exposure,
       zoom: result.zoom,
-      tags: result.tags
+      tags: result.tags,
+      camera: result.camera,
+      lens: result.lens
     },
     observation: {
       id: result.observation_id,

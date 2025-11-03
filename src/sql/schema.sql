@@ -54,7 +54,9 @@ CREATE TABLE photo (
   fnumber TEXT NOT NULL,
   exposure REAL NOT NULL,
   zoom TEXT NOT NULL,
-  tags TEXT NOT NULL
+  tags TEXT NOT NULL,
+  camera TEXT NOT NULL,
+  lens TEXT
 );
 
 DROP VIEW IF EXISTS observation_wide;

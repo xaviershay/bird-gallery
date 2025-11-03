@@ -32,11 +32,11 @@ export const HomeView = (props: HomeViewProps) => {
         </h2>
         <ThumbnailStrip photos={photos} />
         <p>
-          Since 9<sup>th</sup> March 2025 I have shot with a{" "}
+          On 9<sup>th</sup> March 2025 I started shooting with a{" "} 
           <a href="https://www.nikonusa.com/p/coolpix-p950/26532/overview">
             Nikon P950.
-          </a>{" "}
-          I use <a href="https://www.digikam.org/">Digikam</a> for management
+          </a> then switched to an <a href="https://explore.omsystem.com/au/en/om-1-mark-ii">OM-1</a>
+          in November 2025.  I use <a href="https://www.digikam.org/">Digikam</a> for management
           and <a href="https://www.darktable.org/">Darktable</a> for processing.
         </p>
 

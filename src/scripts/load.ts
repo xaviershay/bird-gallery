@@ -206,7 +206,8 @@ const observationSQLStatements : any[] = [];
     const filePath = path.join(metadataDir, file);
     const metadata = JSON.parse(readFileSync(filePath, 'utf-8'));
 
-    const { fileName, takenAt, name, height, width, rating, exposureTime, fNumber, iso, zoom, tags } = metadata;
+
+    const { fileName, takenAt, name, height, width, rating, exposureTime, fNumber, iso, zoom, tags, camera, lens } = metadata;
     const photoTime = new Date(takenAt);
 
     let formattedTags = '';
@@ -287,7 +288,9 @@ const observationSQLStatements : any[] = [];
           fNumber,
           iso,
           zoom,
-          formattedTags
+          formattedTags,
+          camera,
+          lens || null
         ]);
       } else {
         console.error(`No observation within time tolerance for photo: ${fileName} (closest match was ${Math.round(closestMatch.timeDifference / (60 * 60 * 1000))} hours away)`);
@@ -298,11 +301,11 @@ const observationSQLStatements : any[] = [];
   // Prepare bulk insert SQL for photos
   if (photoSQLStatements.length > 0) {
     const photoValues = photoSQLStatements
-      .map(() => '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      .map(() => '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
       .join(',\n');
     const photoParams = photoSQLStatements.flat();
     console.log(generateSQL(
-      `INSERT INTO photo (file_name, observation_id, taken_at, rating, height, width, exposure, fnumber, iso, zoom, tags) VALUES
+      `INSERT INTO photo (file_name, observation_id, taken_at, rating, height, width, exposure, fnumber, iso, zoom, tags, camera, lens) VALUES
        ${photoValues}
        ON CONFLICT(file_name) DO UPDATE SET
        observation_id = excluded.observation_id,
@@ -314,7 +317,9 @@ const observationSQLStatements : any[] = [];
        fnumber = excluded.fnumber,
        iso = excluded.iso,
        zoom = excluded.zoom,
-       tags = excluded.tags;`,
+       tags = excluded.tags,
+       camera = excluded.camera,
+       lens = excluded.lens;`,
       photoParams
     ));
   }

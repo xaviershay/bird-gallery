@@ -1,5 +1,6 @@
 import { formatExposure } from "../helpers/format_exposure";
 import formatLocationName from "../helpers/format_location_name";
+import { formatCamera } from "../helpers/format_camera";
 import photoUrl from "../helpers/photo_url";
 import { Observation, Photo } from "../types";
 import { format } from 'date-fns';
@@ -50,8 +51,14 @@ export const PhotoView = (data: PhotoViewProps) => {
         </tr>
         <tr>
             <th>Camera</th>
-            <td>Nikon COOLPIX 950</td>
+            <td>{formatCamera(photo.camera)}</td>
         </tr>
+        {photo.lens &&
+          <tr>
+              <th>Lens</th>
+              <td>{photo.lens}</td>
+          </tr>
+        }
         <tr>
             <th>Aperture</th>
             <td>f/{photo.fNumber}</td>

@@ -22,6 +22,8 @@ export interface Photo {
   exposure: number;
   zoom: string;
   tags: string;
+  camera: string;
+  lens: string | null;
 }
 
 export interface Species {
