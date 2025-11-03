@@ -37,7 +37,19 @@ fs.readdir(photosDir, async (err, files) => {
       }
       const name = ebirdTag.split("/")[1];
 
-      const photoMetadata = {
+      // Prefer standard tags with sensible fallbacks across cameras
+      const iso =
+        metadata.ISO ??
+        metadata.PhotographicSensitivity ??
+        metadata.ISOSpeedRatings;
+
+      const zoom =
+        metadata.FocalLengthIn35mmFormat ??
+        metadata.FocalLengthIn35mm ??
+        metadata.FocalLengthIn35mmFilm ??
+        metadata.FocalLength; // fallback to optical focal length (mm)
+
+      const photoMetadata: Record<string, unknown> = {
         fileName: fileName + ".jpg",
         height: metadata.ExifImageHeight,
         width: metadata.ExifImageWidth,
@@ -46,10 +58,20 @@ fs.readdir(photosDir, async (err, files) => {
         takenAt: metadata.DateTimeOriginal,
         exposureTime: metadata.ExposureTime,
         fNumber: metadata.FNumber,
-        iso: metadata.ISO,
-        zoom: metadata.FocalLengthIn35mmFormat,
+        iso,
+        zoom,
         name: name
       };
+
+      // a) Enforce presence: raise if any field is undefined or null
+      const missing = Object.entries(photoMetadata)
+        .filter(([_, v]) => v === undefined || v === null)
+        .map(([k]) => k);
+      if (missing.length > 0) {
+        throw new Error(
+          `Missing required metadata fields for ${filePath}: ${missing.join(", ")}`
+        );
+      }
 
       fs.writeFileSync(metadataPath, JSON.stringify(photoMetadata, null, 2));
       console.log(`Metadata for ${file} written to ${metadataPath}`);
