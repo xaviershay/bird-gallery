@@ -230,7 +230,10 @@ const observationSQLStatements : any[] = [];
     );
     
     if (potentialMatches.length === 0) {
-      console.error(`No matching species with ML Catalog Numbers found for photo: ${fileName} (${name})`);
+      // I have a few photos of these that don't match but I'm not going to delete them so just ignore
+      if (name !== "Domestic Goose") {
+        console.error(`No matching species with ML Catalog Numbers found for photo: ${fileName} (${name})`);
+      }
     } else {
       // Calculate time differences and find the closest match
       const matchesWithTimeDiff = potentialMatches.map(observation => {
@@ -254,11 +257,21 @@ const observationSQLStatements : any[] = [];
         );
         
         if (closeMatches.length > 1) {
-          console.error(`Multiple potential matches for photo ${fileName} (${name}):`);
-          closeMatches.forEach(match => {
-            const [obsId, checklistId, , locationId, , seenAt] = match.observation;
-            console.error(`  Observation ${obsId}, Location ${locationId}, Time ${seenAt}, Diff: ${Math.round(match.timeDifference / (60 * 1000))} minutes`);
-          });
+          // Only report error if observation was within the last month
+          const [, , , , , seenAt] = closestMatch.observation;
+          const observationTime = new Date(seenAt);
+          const oneMonthAgo = new Date();
+          oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+          
+          // Since this isn't necessarily an issue, flag it when first found,
+          // but stop reporting over time to not clog up output.
+          if (observationTime >= oneMonthAgo) {
+            console.error(`Multiple potential matches for photo ${fileName} (${name}):`);
+            closeMatches.forEach(match => {
+              const [obsId, checklistId, , locationId, , seenAt] = match.observation;
+              console.error(`  Observation ${obsId}, Location ${locationId}, Time ${seenAt}, Diff: ${Math.round(match.timeDifference / (60 * 1000))} minutes`);
+            });
+          }
         }
         
         const matchingObservation = closestMatch.observation;
