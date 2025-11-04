@@ -260,11 +260,12 @@ function initMap(sourceJson, urlF) {
         if (src && src.setData) src.setData(fc);
       }
 
+      // TODO: not sure why this gets scheduled?
       function scheduleComputeLabels() {
         if (clusterComputeTimer) clearTimeout(clusterComputeTimer);
         clusterComputeTimer = setTimeout(() => {
           computeLabelsForVisibleClusters();
-        }, 200);
+        }, 0);
       }
 
       // Recompute labels after pans and when data changes
