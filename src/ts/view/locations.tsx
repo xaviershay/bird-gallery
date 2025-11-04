@@ -33,13 +33,13 @@ export const LocationsView = ({ locations }: LocationsViewProps) => {
               <th>#</th>
               <th>Location</th>
               <th>Species</th>
-              <th>Last Seen</th>
+              <th>Last Vist</th>
             </tr>
           </thead>
           <tbody>
             {locations.map((loc, index) => (
               <tr key={loc.id}>
-                <td>{index + 1}</td>
+                <td>{locations.length - index}</td>
                 <td>
                   <a href={`/location/${loc.id}`}>{formatLocationName(loc.name)}</a>
                 </td>

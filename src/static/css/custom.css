@@ -249,8 +249,12 @@ h2 {
   max-width: 200px;
 }
 
+.locations-list td:nth-child(1),
+.locations-list th:nth-child(1),
 .locations-list td:nth-child(3),
-.locations-list th:nth-child(3) {
+.locations-list th:nth-child(3),
+.locations-list td:nth-child(4),
+.locations-list th:nth-child(4) {
   text-align: center;
   white-space: nowrap;
 }

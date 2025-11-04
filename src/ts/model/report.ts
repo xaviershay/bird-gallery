@@ -66,7 +66,7 @@ export async function fetchLocationsSummary(env: Env): Promise<LocationSummary[]
     INNER JOIN location l ON l.id = o.location_id
     WHERE l.hotspot = 1
     GROUP BY l.id
-    ORDER BY speciesCount DESC, lastSeenAt DESC
+    ORDER BY lastSeenAt DESC, speciesCount DESC
   `;
 
   const { results } = await env.DB.prepare(query).all<any>();
