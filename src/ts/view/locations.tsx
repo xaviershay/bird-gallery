@@ -22,11 +22,12 @@ export const LocationsView = ({ locations }: LocationsViewProps) => {
         <h2>
           <i className="fa-solid fa-location-dot"></i> Locations
         </h2>
+        <p>Map shows unique species seen in the area.</p>
         <MapView
           dataUrl="/report/locations.geojson"
           urlBuilder="(id) => ('/location/' + id)"
         />
-        <table className="bird-list">
+        <table className="locations-list">
           <thead>
             <tr>
               <th>#</th>

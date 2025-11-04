@@ -63,8 +63,8 @@ describe('', () => {
   describe('/location/1', () => {
     beforeEach(async () => {
       await execSql(`
-				INSERT INTO location (id, name, lat, lng, state, county) VALUES
-				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne', 1);
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
@@ -137,8 +137,8 @@ describe('', () => {
   describe('/firsts', () => {
     beforeEach(async () => {
       await execSql(`
-				INSERT INTO location (id, name, lat, lng, state, county) VALUES
-				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne', 1);
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO observation VALUES
@@ -164,8 +164,8 @@ describe('', () => {
   describe('/species', () => {
     beforeEach(async () => {
       await execSql(`
-				INSERT INTO location (id, name, lat, lng, state, county) VALUES
-				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne', 1);
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO observation VALUES
@@ -182,8 +182,8 @@ describe('', () => {
   describe('/photo', () => {
     beforeEach(async () => {
       await execSql(`
-				INSERT INTO location (id, name, lat, lng, state, county) VALUES
-				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne', 1);
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO observation VALUES
@@ -205,8 +205,8 @@ describe('', () => {
   describe('/report/nophotos', () => {
     beforeEach(async () => {
       await execSql(`
-				INSERT INTO location (id, name, lat, lng, state, county) VALUES
-				    (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne');
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne', 1);
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
@@ -247,9 +247,9 @@ describe('', () => {
   describe('/report/locations', () => {
     beforeEach(async () => {
       await execSql(`
-        INSERT INTO location (id, name, lat, lng, state, county) VALUES
-          (1, 'Alpha Park', -37.70, 144.90, 'AU-VIC', 'Melbourne'),
-          (2, 'Beta Lake', -37.80, 144.95, 'AU-VIC', 'Melbourne');
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+          (1, 'Alpha Park', -37.70, 144.90, 'AU-VIC', 'Melbourne', 1),
+          (2, 'Beta Lake', -37.80, 144.95, 'AU-VIC', 'Melbourne', 1);
         INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
           ('sp1', 'Species One', 'S1', 1, 'S1', 'fam1'),
           ('sp2', 'Species Two', 'S2', 2, 'S2', 'fam1');

@@ -79,6 +79,8 @@ export function observationsToGeoJSON(observations: Observation[]): any {
     type: "FeatureCollection",
     features: Object.entries(grouped).map(([locationId, os]) => {
       const obs = os[0];
+      // Extract unique species IDs for this location
+      const speciesIds = [...new Set(os.map(o => o.speciesId))];
       return {
         type: "Feature",
         geometry: {
@@ -89,6 +91,7 @@ export function observationsToGeoJSON(observations: Observation[]): any {
           locationId: locationId,
           name: formatLocationName(obs.location.name),
           count: os.length,
+          speciesIds: speciesIds,
         },
       };
     }),

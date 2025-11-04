@@ -248,3 +248,9 @@ h2 {
 .mapboxgl-popup {
   max-width: 200px;
 }
+
+.locations-list td:nth-child(3),
+.locations-list th:nth-child(3) {
+  text-align: center;
+  white-space: nowrap;
+}
