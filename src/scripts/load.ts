@@ -45,7 +45,8 @@ const taxonomyMap = new Map(
 );
 
 // Create sets to store unique location and species records
-const uniqueLocations: Map<number, [number, string, number, number, string, string]> = new Map();
+// Add 'hotspot' boolean to the tuple
+const uniqueLocations: Map<number, [number, string, number, number, string, string, number]> = new Map();
 const uniqueSpecies: Map<string, [string, string, string, number, string, string]> = new Map();
 const observationSQLStatements : any[] = [];
 
@@ -79,7 +80,11 @@ const observationSQLStatements : any[] = [];
       : '00:00:00';
     const seenAt = `${date}T${timeParsed}`;
     const submissionId = parseInt(submissionIdRaw.replace(/^S/, ''));
-    const locationId = parseInt(locationIdRaw.replace(/^L/, ''));
+    let locationId = parseInt(locationIdRaw.replace(/^L/, ''));
+    // Merge location 39704816 into 919153
+    if (locationId === 39704816) {
+      locationId = 919153;
+    }
     const taxonomyEntry : any = taxonomyMap.get(key.toLowerCase());
 
     if (!taxonomyEntry) {
@@ -112,7 +117,12 @@ const observationSQLStatements : any[] = [];
 
     // Add unique location
     if (!uniqueLocations.has(locationId)) {
-      uniqueLocations.set(locationId, [locationId, locationName, parseFloat(lat), parseFloat(lng), state, county]);
+      // Determine if this is a hotspot: if the name contains GPS coordinates, it's NOT a hotspot
+      // eBird GPS locations are like "40.1234,-75.1234" or similar
+      const gpsPattern = /\s*\(\s*-?\d+(\.\d+)?(\s*,\s*-?\d+(\.\d+)?)+\s*\)\s*$/;
+      //const gpsPattern = /^-?\d{1,3}\.\d+,-?\d{1,3}\.\d+$/;
+      const isHotspot = gpsPattern.test(locationName.trim()) ? 0 : 1;
+      uniqueLocations.set(locationId, [locationId, locationName, parseFloat(lat), parseFloat(lng), state, county, isHotspot]);
     }
 
     // Add unique species
@@ -137,18 +147,19 @@ const observationSQLStatements : any[] = [];
   // Prepare bulk insert SQL for unique locations
   if (uniqueLocations.size > 0) {
     const locationValues = Array.from(uniqueLocations.values())
-      .map(() => '(?, ?, ?, ?, ?, ?)')
+      .map(() => '(?, ?, ?, ?, ?, ?, ?)')
       .join(",\n");
     const locationParams = Array.from(uniqueLocations.values()).flat();
     console.log(generateSQL(
-      `INSERT INTO location (id, name, lat, lng, state, county) VALUES
+      `INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
       ${locationValues}
        ON CONFLICT(id) DO UPDATE SET
        name = excluded.name,
        lat = excluded.lat,
        lng = excluded.lng,
        state = excluded.state,
-       county = excluded.county;`,
+       county = excluded.county,
+       hotspot = excluded.hotspot;`,
       locationParams
     ));
   }

@@ -34,12 +34,13 @@ CREATE TABLE species (
 
 DROP TABLE IF EXISTS location;
 CREATE TABLE location (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    lat REAL NOT NULL,
-    lng REAL NOT NULL,
-    state TEXT NOT NULL,
-    county TEXT NOT NULL
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  lat REAL NOT NULL,
+  lng REAL NOT NULL,
+  state TEXT NOT NULL,
+  county TEXT NOT NULL,
+  hotspot INTEGER NOT NULL
 ) STRICT;
 
 DROP TABLE IF EXISTS photo;
@@ -64,11 +65,12 @@ CREATE VIEW observation_wide AS
   SELECT DISTINCT observation.*,
     species.common_name,
     -- family.common_name as family_name,
-    location.name as location_name,
-    location.lat,
-    location.lng,
-    location.state,
-    location.county,
+  location.name as location_name,
+  location.lat,
+  location.lng,
+  location.state,
+  location.county,
+  location.hotspot,
     strftime("%Y", seen_at) as year,
     photo.file_name IS NOT NULL as has_photo
   FROM

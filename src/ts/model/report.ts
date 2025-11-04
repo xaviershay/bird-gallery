@@ -64,6 +64,7 @@ export async function fetchLocationsSummary(env: Env): Promise<LocationSummary[]
       MAX(o.seen_at) AS lastSeenAt
     FROM observation o
     INNER JOIN location l ON l.id = o.location_id
+    WHERE l.hotspot = 1
     GROUP BY l.id
     ORDER BY speciesCount DESC, lastSeenAt DESC
   `;
