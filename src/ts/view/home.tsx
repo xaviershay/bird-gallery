@@ -73,6 +73,9 @@ export const HomeView = (props: HomeViewProps) => {
         </h2>
         <ul>
           <li>
+            <a href="/firsts">Life List</a>
+          </li>
+          <li>
             <a href="/report/nophotos">Missing Photos Report</a>
           </li>
           <li>

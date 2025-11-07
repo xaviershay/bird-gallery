@@ -96,7 +96,7 @@ tr:nth-child(even) {
 
 a {
   color: #3b7d57;
-  text-decoration: none;
+  text-decoration: underline;
   font-weight: bold;
 }
 
