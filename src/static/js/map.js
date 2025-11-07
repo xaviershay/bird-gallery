@@ -12,7 +12,13 @@ const map = new mapboxgl.Map({
   //zoom: 9, // starting zoom
 });
 
-function initMap(sourceJson, urlF) {
+function initMap(sourceJson, urlF, options = {}) {
+  // Options:
+  // - computeUniqueSpecies: if true, compute unique species counts on client side
+  //   by aggregating speciesIds arrays from cluster leaves. If false (default),
+  //   use the built-in sum cluster property for better performance.
+  const computeUniqueSpecies = options.computeUniqueSpecies || false;
+
   // Add markers to the map
   map.on("load", async () => {
     map.addSource("birds", {
@@ -53,103 +59,17 @@ function initMap(sourceJson, urlF) {
       source: "birds",
       filter: ["has", "point_count"],
       layout: {
-        // Hide the built-in cluster sum label to avoid confusion –
-        // we render our own computed unique-species labels in a separate layer.
-        "visibility": "none",
+        // When not computing unique species, show the built-in cluster sum label.
+        // Otherwise hide it since we render custom labels in a separate layer.
+        "visibility": computeUniqueSpecies ? "none" : "visible",
+        "text-field": ["get", "sum"],
         "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
         "text-size": 12,
       },
     });
 
-    // Function to compute unique species count for visible clusters
-    async function updateClusterSpeciesCounts() {
-      const features = map.querySourceFeatures("birds", {
-        filter: ["has", "point_count"],
-      });
-
-      for (const feature of features) {
-        const clusterId = feature.properties.cluster_id;
-        if (clusterId === undefined) continue;
-
-        try {
-          // Get all leaves in this cluster
-          const leaves = await new Promise((resolve, reject) => {
-            const allLeaves = [];
-            const pageSize = 100;
-            
-            function getPage(offset) {
-              map.getSource("birds").getClusterLeaves(
-                clusterId,
-                pageSize,
-                offset,
-                (err, page) => {
-                  if (err) {
-                    reject(err);
-                    return;
-                  }
-                  allLeaves.push(...page);
-                  if (page.length === pageSize) {
-                    // Might be more pages
-                    getPage(offset + pageSize);
-                  } else {
-                    resolve(allLeaves);
-                  }
-                }
-              );
-            }
-            getPage(0);
-          });
-
-          // Collect all unique species from all leaves
-          const allSpeciesIds = new Set();
-          for (const leaf of leaves) {
-            const speciesIds = leaf.properties.speciesIds;
-            if (Array.isArray(speciesIds)) {
-              speciesIds.forEach(id => allSpeciesIds.add(id));
-            }
-          }
-
-          // Update feature state with the unique count
-          map.setFeatureState(
-            { source: "birds", id: clusterId },
-            { uniqueSpecies: allSpeciesIds.size }
-          );
-        } catch (err) {
-          console.error("Error computing cluster species count:", err);
-        }
-      }
-    }
-
-    // Update on initial load and whenever the map moves
-    updateClusterSpeciesCounts();
-    map.on("moveend", updateClusterSpeciesCounts);
-    map.on("zoom", updateClusterSpeciesCounts);
-
-    const markerRadius = 15;
-    map.addLayer({
-      id: "unclustered-point",
-      type: "circle",
-      source: "birds",
-      filter: ["!", ["has", "point_count"]],
-      paint: {
-        "circle-color": "#c7e466",
-        "circle-radius": markerRadius,
-        "circle-stroke-width": 0,
-        "circle-stroke-color": "grey",
-      },
-    });
-    map.addLayer({
-      id: "unclustered-point-label",
-      type: "symbol",
-      source: "birds",
-      filter: ["!", ["has", "point_count"]],
-      layout: {
-        "text-field": ["get", "count"],
-        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-        "text-size": 12,
-      },
-    });
-
+    // Only compute unique species counts on the client side if requested
+    if (computeUniqueSpecies) {
       // A separate GeoJSON source + symbol layer will hold computed cluster labels
       // (the true unique species count). We compute these on the client by
       // unioning the `speciesIds` arrays from each leaf (location) inside the
@@ -312,6 +232,32 @@ function initMap(sourceJson, urlF) {
           setTimeout(run, 0);
         }
       })();
+    }
+
+    const markerRadius = 15;
+    map.addLayer({
+      id: "unclustered-point",
+      type: "circle",
+      source: "birds",
+      filter: ["!", ["has", "point_count"]],
+      paint: {
+        "circle-color": "#c7e466",
+        "circle-radius": markerRadius,
+        "circle-stroke-width": 0,
+        "circle-stroke-color": "grey",
+      },
+    });
+    map.addLayer({
+      id: "unclustered-point-label",
+      type: "symbol",
+      source: "birds",
+      filter: ["!", ["has", "point_count"]],
+      layout: {
+        "text-field": ["get", "count"],
+        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+        "text-size": 12,
+      },
+    });
     // inspect a cluster on click
     map.on("click", "clusters", (e) => {
       const features = map.queryRenderedFeatures(e.point, {

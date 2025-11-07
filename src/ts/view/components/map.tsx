@@ -30,6 +30,14 @@ interface MapViewProps {
    * If not specified, CSS will determine the height
    */
   height?: string;
+
+  /**
+   * Whether to compute unique species counts on the client side.
+   * If true, the map will aggregate speciesIds arrays from cluster leaves
+   * to show unique species count. If false (default), uses the built-in
+   * sum cluster property for better performance.
+   */
+  computeUniqueSpecies?: boolean;
 }
 
 /**
@@ -43,10 +51,10 @@ interface MapViewProps {
  * @param props - MapView configuration
  * @returns JSX elements for map rendering
  */
-export const MapView = ({ dataUrl, urlBuilder, height }: MapViewProps) => {
+export const MapView = ({ dataUrl, urlBuilder, height, computeUniqueSpecies }: MapViewProps) => {
   const scriptContent = `
     urlF = ${urlBuilder};
-    initMap("${dataUrl}", urlF);
+    initMap("${dataUrl}", urlF, { computeUniqueSpecies: ${computeUniqueSpecies || false} });
   `;
 
   const mapStyle = height ? { height } : undefined;

@@ -26,6 +26,7 @@ export const LocationsView = ({ locations }: LocationsViewProps) => {
         <MapView
           dataUrl="/report/locations.geojson"
           urlBuilder="(id) => ('/location/' + id)"
+          computeUniqueSpecies={true}
         />
         <table className="locations-list">
           <thead>
