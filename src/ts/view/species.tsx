@@ -26,7 +26,7 @@ export const SpeciesView = (data: SpeciesViewProps) => {
           dataUrl={speciesUrl(species.id, { format: "geojson" })}
           urlBuilder="(id) => ('/location/' + id)"
         />
-        <table className="bird-list">
+        <table className="species-list">
           <thead>
             <tr>
               <th>#</th>

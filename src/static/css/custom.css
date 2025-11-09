@@ -258,3 +258,9 @@ h2 {
   text-align: center;
   white-space: nowrap;
 }
+
+.species-list td:nth-child(3),
+.species-list th:nth-child(3) {
+  text-align: center;
+  white-space: nowrap;
+}
