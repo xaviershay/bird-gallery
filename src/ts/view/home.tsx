@@ -82,6 +82,9 @@ export const HomeView = (props: HomeViewProps) => {
             <a href="/report/locations">Locations Report</a>
           </li>
           <li>
+            <a href="/report/opportunities">Birding Opportunities Report</a>
+          </li>
+          <li>
             <a href="https://blog.xaviershay.com">My blog</a>
           </li>
           <li>

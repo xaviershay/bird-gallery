@@ -115,3 +115,73 @@ export async function fetchUniqueSpeciesByLocationObservations(env: Env): Promis
     hasPhoto: false,
   }));
 }
+
+/**
+ * Fetch species to exclude from birding opportunities report
+ * @param env - Cloudflare environment
+ * @param mode - Exclude mode: 'photos' (species with photos anywhere) or 'all' (all species seen in region)
+ * @param region - Region filter (e.g., 'au-vic') - only used for 'all' mode
+ * @param county - County filter (e.g., 'melbourne') - only used for 'all' mode
+ * @returns List of species IDs to exclude
+ */
+export async function fetchBirdingOpportunitiesExcludeList(
+  env: Env,
+  mode: 'photos' | 'all',
+  region: string | null,
+  county: string | null
+): Promise<Species[]> {
+  const regionCondition = region
+    ? `AND LOWER(state) LIKE LOWER(?) || '%'`
+    : "";
+  const countyCondition = county
+    ? `AND LOWER(county) = LOWER(?)`
+    : "";
+
+  let query: string;
+  
+  if (mode === 'photos') {
+    // Exclude species with photos anywhere (ignore region/county)
+    query = `
+      SELECT DISTINCT
+        species.id,
+        species.common_name as name
+      FROM species
+      INNER JOIN observation ON species.id = observation.species_id
+      INNER JOIN photo ON observation.id = photo.observation_id
+      ORDER BY name
+    `;
+  } else {
+    // Exclude all species seen in the specified region/county
+    query = `
+      SELECT DISTINCT
+        species.id,
+        species.common_name as name
+      FROM species
+      INNER JOIN observation_wide ON species.id = observation_wide.species_id
+      WHERE 1=1
+      ${regionCondition}
+      ${countyCondition}
+      ORDER BY name
+    `;
+  }
+
+  let statement = env.DB.prepare(query);
+  const bindings: string[] = [];
+  
+  // Only apply bindings for 'all' mode where region/county filtering is used
+  if (mode === 'all') {
+    if (region) {
+      bindings.push(region);
+    }
+    if (county) {
+      bindings.push(county);
+    }
+  }
+  
+  if (bindings.length > 0) {
+    statement = statement.bind(...bindings);
+  }
+  
+  const result = await statement.all<Species>();
+  return result.results;
+}

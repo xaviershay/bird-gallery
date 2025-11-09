@@ -264,3 +264,14 @@ h2 {
   text-align: center;
   white-space: nowrap;
 }
+
+.opportunities-list td:nth-child(2),
+.opportunities-list th:nth-child(2) {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.group-row td {
+  font-weight: bold;
+  background-color: #e6d3a8;
+}

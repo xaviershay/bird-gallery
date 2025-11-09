@@ -1,8 +1,9 @@
 import { respondWith, corsHeaders } from "./base";
-import { fetchSpeciesMissingPhotos, fetchLocationsSummary, fetchUniqueSpeciesByLocationObservations } from "../model/report";
+import { fetchSpeciesMissingPhotos, fetchLocationsSummary, fetchUniqueSpeciesByLocationObservations, fetchBirdingOpportunitiesExcludeList } from "../model/report";
 import { MissingPhotosView } from "../view/missing_photos";
 import { LocationsView } from "../view/locations";
-import { renderPageWithLayout, parseStringPathId, geoJsonResponse } from "./helpers";
+import { BirdingOpportunitiesView } from "../view/birding_opportunities";
+import { renderPageWithLayout, parseStringPathId, geoJsonResponse, jsonResponse } from "./helpers";
 
 export async function handleReport(
   request: Request,
@@ -51,6 +52,27 @@ export async function handleReport(
       return renderPageWithLayout(
         LocationsView({ locations }),
         "Locations - Xavier's Bird Lists",
+        env
+      );
+    case "opportunities":
+      // JSON endpoint for exclude list
+      if (url.pathname.endsWith('.json')) {
+        const excludeMode = (url.searchParams.get('exclude') || 'photos') as 'photos' | 'all';
+        // Hard-coded to Melbourne region for now
+        const excludeList = await fetchBirdingOpportunitiesExcludeList(
+          env,
+          excludeMode,
+          'au-vic',
+          'melbourne'
+        );
+        return jsonResponse(excludeList);
+      }
+
+      // HTML page
+      const excludeMode = (url.searchParams.get('exclude') || 'photos') as 'photos' | 'all';
+      return renderPageWithLayout(
+        BirdingOpportunitiesView({ excludeMode }),
+        "Birding Opportunities - Xavier's Bird Lists",
         env
       );
   }
