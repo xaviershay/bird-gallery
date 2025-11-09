@@ -32,6 +32,8 @@ export async function fetchSpecies(
       INNER JOIN observation_wide ON observation_id = observation_wide.id
       WHERE
         species_id = ?
+      ORDER BY
+        taken_at DESC
     `
     statement = env.DB.prepare(query);
     const photos = await statement.bind(speciesId).all<Photo>();
