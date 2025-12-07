@@ -62,6 +62,11 @@ onto a larger canvas. See `bin/generate-background`.
 Responses are stored in Cloudflare's Cache API so they only need to be generated
 once. A cache-busting version key is updated every deployment or data change.
 
+## Development
+
+    bin/setup           # One-time setup
+    bin/load-data-local # Generate local database
+    bin/dev             # Run local server
 ## Deploy
 
 Site is available at https://birds.xaviershay.com
