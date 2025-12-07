@@ -8,6 +8,7 @@ export interface Observation {
   lat: number;
   lng: number;
   hasPhoto: boolean;
+  comment?: string;
 }
 
 export interface Photo {

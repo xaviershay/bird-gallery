@@ -149,6 +149,7 @@ export const FirstsView = (data: FirstsViewProps) => {
               <th>#</th>
               <th>Name</th>
               <th>First {filter.type === ObsType.Photo ? "Photo" : "Seen"}</th>
+              {!filter.region && !filter.period && <th>Comment</th>}
             </tr>
           </thead>
           <tbody>
@@ -157,6 +158,7 @@ export const FirstsView = (data: FirstsViewProps) => {
                 <td>{data.observations.length - index}</td>
                 <td>{speciesLink(o)}</td>
                 <td>{formatDate(o.seenAt)}</td>
+                {!filter.region && !filter.period && <td>{o.comment}</td>}
               </tr>
             ))}
           </tbody>

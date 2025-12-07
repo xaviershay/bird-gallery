@@ -12,7 +12,8 @@ CREATE TABLE observation (
   location_id INTEGER NOT NULL,
   count INTEGER NULL,
   seen_at TEXT NOT NULL,
-  ml_catalog_numbers TEXT
+  ml_catalog_numbers TEXT,
+  comment TEXT
 ) STRICT;
 
 -- TODO: Load this

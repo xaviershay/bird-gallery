@@ -27,7 +27,8 @@ export async function handleFirsts(
         speciesId: obs.speciesId,
         locationId: obs.locationId,
         hasPhoto: obs.hasPhoto,
-        seenAt: obs.seenAt
+        seenAt: obs.seenAt,
+        comment: obs.comment
       }))
     });
   }

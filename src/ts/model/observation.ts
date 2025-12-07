@@ -20,7 +20,8 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
         lat,
         lng,
         seen_at as seenAt,
-        has_photo as hasPhoto
+        has_photo as hasPhoto,
+        comment
       FROM (
         SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
         FROM observation_wide

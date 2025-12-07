@@ -70,9 +70,9 @@ describe('', () => {
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO observation VALUES
-				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null);
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null, null);
 				INSERT INTO observation VALUES
-				    ('219171570-railor6', 219171569, 'railor6', 2552179, 2, '2024-03-18T17:11:00', null);
+				    ('219171570-railor6', 219171569, 'railor6', 2552179, 2, '2024-03-18T17:11:00', null, null);
 			`,)
     })
 
@@ -95,9 +95,9 @@ describe('', () => {
       // Add multiple observations of the same species at the same location
       await execSql(`
         INSERT INTO observation VALUES
-            ('219171571-railor5', 219171571, 'railor5', 2552179, 2, '2025-04-01T10:00:00', null);
+            ('219171571-railor5', 219171571, 'railor5', 2552179, 2, '2025-04-01T10:00:00', null, null);
         INSERT INTO observation VALUES
-            ('219171572-railor5', 219171572, 'railor5', 2552179, 2, '2025-05-01T10:00:00', null);
+            ('219171572-railor5', 219171572, 'railor5', 2552179, 2, '2025-05-01T10:00:00', null, null);
       `);
 
       const response = await SELF.fetch('https://localhost/location/2552179');
@@ -142,7 +142,7 @@ describe('', () => {
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO observation VALUES
-				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null);
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null, null);
 				INSERT INTO photo VALUES
           ('dscn5570.jpg', '219171569-railor5', '2025-05-03T01:53:50.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
 			`,)
@@ -169,7 +169,7 @@ describe('', () => {
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO observation VALUES
-				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null);
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null, null);
 			`,)
     })
     it('renders species data', async () => {
@@ -187,7 +187,7 @@ describe('', () => {
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO observation VALUES
-				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null);
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null, null);
 				INSERT INTO photo VALUES
           ('dscn5570.jpg', '219171569-railor5', '2025-05-03T01:53:50.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
 			`,)
@@ -212,9 +212,9 @@ describe('', () => {
 				INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
 					('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
 				INSERT INTO observation VALUES
-				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null);
+				    ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null, null);
 				INSERT INTO observation VALUES
-				    ('219171570-railor6', 219171569, 'railor6', 2552179, 2, '2024-03-18T17:11:00', null);
+				    ('219171570-railor6', 219171569, 'railor6', 2552179, 2, '2024-03-18T17:11:00', null, null);
 				INSERT INTO photo VALUES
           ('dscn5570.jpg', '219171569-railor5', '2025-05-03T01:53:50.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
 			`,)
@@ -254,14 +254,14 @@ describe('', () => {
           ('sp1', 'Species One', 'S1', 1, 'S1', 'fam1'),
           ('sp2', 'Species Two', 'S2', 2, 'S2', 'fam1');
         INSERT INTO observation VALUES
-          ('o1-sp1', 1, 'sp1', 1, 1, '2025-01-10T10:00:00', NULL);
+          ('o1-sp1', 1, 'sp1', 1, 1, '2025-01-10T10:00:00', NULL, NULL);
         INSERT INTO observation VALUES
-          ('o2-sp2', 2, 'sp2', 1, 1, '2025-02-15T12:00:00', NULL);
+          ('o2-sp2', 2, 'sp2', 1, 1, '2025-02-15T12:00:00', NULL, NULL);
         INSERT INTO observation VALUES
-          ('o3-sp1', 3, 'sp1', 2, 1, '2025-03-20T09:00:00', NULL);
+          ('o3-sp1', 3, 'sp1', 2, 1, '2025-03-20T09:00:00', NULL, NULL);
         -- Duplicate species at Alpha Park to ensure unique species counting
         INSERT INTO observation VALUES
-          ('o4-sp1b', 4, 'sp1', 1, 1, '2025-04-01T09:00:00', NULL);
+          ('o4-sp1b', 4, 'sp1', 1, 1, '2025-04-01T09:00:00', NULL, NULL);
       `);
     });
 
@@ -301,11 +301,11 @@ describe('', () => {
           ('magpie1', 'Australian Magpie', 'Gymnorhina tibicen', 2, 'AM', 'fam1'),
           ('cockat1', 'Sulphur-crested Cockatoo', 'Cacatua galerita', 3, 'SC', 'fam1');
         INSERT INTO observation VALUES
-          ('obs1', 1, 'railor5', 919153, 1, '2025-01-10T10:00:00', NULL);
+          ('obs1', 1, 'railor5', 919153, 1, '2025-01-10T10:00:00', NULL, NULL);
         INSERT INTO observation VALUES
-          ('obs2', 2, 'magpie1', 919153, 1, '2025-01-11T10:00:00', NULL);
+          ('obs2', 2, 'magpie1', 919153, 1, '2025-01-11T10:00:00', NULL, NULL);
         INSERT INTO observation VALUES
-          ('obs3', 3, 'cockat1', 999999, 1, '2025-01-12T10:00:00', NULL);
+          ('obs3', 3, 'cockat1', 999999, 1, '2025-01-12T10:00:00', NULL, NULL);
         INSERT INTO photo (file_name, observation_id, taken_at, rating, height, width, iso, fnumber, exposure, zoom, tags, camera, lens) VALUES
           ('railor5.jpg', 'obs1', '2025-01-10T10:00:00', 3, 1000, 1500, '200', 'f/5.6', 0.001, '300mm', 'bird', 'Canon', NULL);
         INSERT INTO photo (file_name, observation_id, taken_at, rating, height, width, iso, fnumber, exposure, zoom, tags, camera, lens) VALUES

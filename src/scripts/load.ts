@@ -65,7 +65,8 @@ const observationSQLStatements : any[] = [];
       Longitude: lng,
       Date: date,
       Time: time,
-      'ML Catalog Numbers': mlCatalogNumbers
+      'ML Catalog Numbers': mlCatalogNumbers,
+      'Observation Details': observationDetails
     } = record;
 
     // The 2025 taxonomy update broke something: https://www.aba.org/the-2025-e-bird-clements-taxonomy-update/
@@ -139,7 +140,8 @@ const observationSQLStatements : any[] = [];
         locationId,
         count === 'X' ? null : parseInt(count),
         seenAt,
-        mlCatalogNumbers || null
+        mlCatalogNumbers || null,
+        observationDetails || null
       ]
     );
   }
@@ -190,11 +192,11 @@ const observationSQLStatements : any[] = [];
     for (let i = 0; i < observationSQLStatements.length; i += chunkSize) {
       const chunk = observationSQLStatements.slice(i, i + chunkSize);
       const observationValues = chunk
-        .map(() => '(?, ?, ?, ?, ?, ?, ?)')
+        .map(() => '(?, ?, ?, ?, ?, ?, ?, ?)')
         .join(",\n");
       const observationParams = chunk.flat();
       console.log(generateSQL(
-        `INSERT INTO observation (id, checklist_id, species_id, location_id, count, seen_at, ml_catalog_numbers) VALUES
+        `INSERT INTO observation (id, checklist_id, species_id, location_id, count, seen_at, ml_catalog_numbers, comment) VALUES
        ${observationValues}
        ON CONFLICT(id) DO UPDATE SET
        species_id = excluded.species_id,
