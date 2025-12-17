@@ -1,5 +1,6 @@
 export interface Observation {
   id: string;
+  checklistId: number;
   speciesId: string;
   name: string;
   locationId: string;

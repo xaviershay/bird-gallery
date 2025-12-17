@@ -7,7 +7,7 @@ describe('formatDate', () => {
     const date = new Date('2025-03-01');
     const result = renderToString(formatDate(date) as React.ReactElement);
     expect(result).toContain('1<sup>st</sup>');
-    expect(result).toContain('March');
+    expect(result).toContain('Mar');
     expect(result).toContain('2025');
   });
 
@@ -15,14 +15,14 @@ describe('formatDate', () => {
     const date = new Date('2025-03-02');
     const result = renderToString(formatDate(date) as React.ReactElement);
     expect(result).toContain('2<sup>nd</sup>');
-    expect(result).toContain('March');
+    expect(result).toContain('Mar');
   });
 
   it('formats 3rd with correct suffix', () => {
     const date = new Date('2025-03-03');
     const result = renderToString(formatDate(date) as React.ReactElement);
     expect(result).toContain('3<sup>rd</sup>');
-    expect(result).toContain('March');
+    expect(result).toContain('Mar');
   });
 
   it('formats 4th-20th with "th" suffix', () => {
@@ -40,7 +40,7 @@ describe('formatDate', () => {
     const date = new Date('2025-03-21');
     const result = renderToString(formatDate(date) as React.ReactElement);
     expect(result).toContain('21<sup>st</sup>');
-    expect(result).toContain('March');
+    expect(result).toContain('Mar');
   });
 
   it('formats 22nd with correct suffix', () => {
@@ -71,10 +71,10 @@ describe('formatDate', () => {
 
   it('formats different months correctly', () => {
     const january = new Date('2025-01-15');
-    expect(renderToString(formatDate(january) as React.ReactElement)).toContain('January');
-    
+    expect(renderToString(formatDate(january) as React.ReactElement)).toContain('Jan');
+
     const december = new Date('2025-12-25');
-    expect(renderToString(formatDate(december) as React.ReactElement)).toContain('December');
+    expect(renderToString(formatDate(december) as React.ReactElement)).toContain('Dec');
   });
 
   it('formats different years correctly', () => {

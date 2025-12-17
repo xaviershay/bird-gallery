@@ -122,7 +122,11 @@ export const LocationView = (data: LocationViewProps) => {
               <tr key={o.id}>
                 <td>{observationCount - index}</td>
                 <td>{speciesLink(o)}</td>
-                <td>{formatDate(o.seenAt)}</td>
+                <td>
+                  <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
+                    {formatDate(o.seenAt)}
+                  </a>
+                </td>
               </tr>
             ))}
           </tbody>

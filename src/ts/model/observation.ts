@@ -13,6 +13,7 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
   const query = `
       SELECT
         id,
+        checklist_id as checklistId,
         species_id as speciesId,
         common_name as name,
         location_id as locationId,

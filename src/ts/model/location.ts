@@ -54,6 +54,7 @@ export async function fetchLocationObservations(
     query = `
       SELECT
         id,
+        checklist_id as checklistId,
         species_id as speciesId,
         common_name as name,
         location_id as locationId,
@@ -81,6 +82,7 @@ export async function fetchLocationObservations(
     query = `
       SELECT
         o1.id,
+        o1.checklist_id as checklistId,
         o1.species_id as speciesId,
         o1.common_name as name,
         o1.location_id as locationId,

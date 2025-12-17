@@ -222,6 +222,7 @@ h2 {
 .bird-list td:nth-child(3),
 .bird-list th:nth-child(3) {
   text-align: center;
+  white-space: nowrap;
 }
 
 .photo-criteria {

@@ -43,7 +43,11 @@ export const SpeciesView = (data: SpeciesViewProps) => {
                     {formatLocationName(o.location.name)}
                   </a>
                 </td>
-                <td>{formatDate(o.seenAt)}</td>
+                <td>
+                  <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
+                    {formatDate(o.seenAt)}
+                  </a>
+                </td>
               </tr>
             ))}
           </tbody>

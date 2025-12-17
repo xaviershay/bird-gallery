@@ -149,7 +149,7 @@ export const FirstsView = (data: FirstsViewProps) => {
               <th>#</th>
               <th>Name</th>
               <th>First {filter.type === ObsType.Photo ? "Photo" : "Seen"}</th>
-              {!filter.region && !filter.period && <th>Comment</th>}
+              {!filter.region && !filter.period && filter.type == ObsType.Sighting && <th>Comment</th>}
             </tr>
           </thead>
           <tbody>
@@ -157,8 +157,12 @@ export const FirstsView = (data: FirstsViewProps) => {
               <tr key={o.id}>
                 <td>{data.observations.length - index}</td>
                 <td>{speciesLink(o)}</td>
-                <td>{formatDate(o.seenAt)}</td>
-                {!filter.region && !filter.period && <td>{o.comment}</td>}
+                <td>
+                  <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
+                    {formatDate(o.seenAt)}
+                  </a>
+                </td>
+                {!filter.region && !filter.period && filter.type == ObsType.Sighting && <td>{o.comment}</td>}
               </tr>
             ))}
           </tbody>
