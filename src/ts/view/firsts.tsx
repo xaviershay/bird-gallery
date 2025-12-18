@@ -20,6 +20,9 @@ export const FirstsView = (data: FirstsViewProps) => {
   const { filter, filterCounts, photos } = data;
   const navLink = navLinkBuilder(data.filter, filterCounts);
 
+  // Show comment column only for sightings with no region, county, or period filters
+  const showComment = !filter.region && !filter.county && !filter.period && filter.type === ObsType.Sighting;
+
   // Group observations by location
   const observationsByLocation = new Map<string, Observation[]>();
   for (const obs of data.observations) {
@@ -167,7 +170,7 @@ export const FirstsView = (data: FirstsViewProps) => {
               <th>#</th>
               <th>Name</th>
               <th>First {filter.type === ObsType.Photo ? "Photo" : "Seen"}</th>
-              {!filter.region && !filter.period && filter.type == ObsType.Sighting && <th>Comment</th>}
+              {showComment && <th>Comment</th>}
             </tr>
           </thead>
           <tbody>
@@ -178,7 +181,7 @@ export const FirstsView = (data: FirstsViewProps) => {
               // Add location header row
               rows.push(
                 <tr key={`location-${locationId}`} className="group-row">
-                  <td colSpan={!filter.region && !filter.period && filter.type == ObsType.Sighting ? 4 : 3}>
+                  <td colSpan={showComment ? 4 : 3}>
                     <a href={`/location/${location.id}`}>
                       {formatLocationName(location.name)}
                     </a>
@@ -197,7 +200,7 @@ export const FirstsView = (data: FirstsViewProps) => {
                         {formatDate(o.seenAt)}
                       </a>
                     </td>
-                    {!filter.region && !filter.period && filter.type == ObsType.Sighting && <td>{o.comment}</td>}
+                    {showComment && <td>{o.comment}</td>}
                   </tr>
                 );
               });
