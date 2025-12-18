@@ -3,6 +3,7 @@ import { Observation, Photo } from "../types";
 import { ObsType } from "../types";
 import speciesLink from "../helpers/species_link";
 import { formatDate } from "../helpers/format_date";
+import formatLocationName from "../helpers/format_location_name";
 import { ThumbnailStrip } from "./thumbnail_strip";
 import { navLinkBuilder } from "../helpers/nav_link_builder";
 import { MapView } from "./components/map";
@@ -18,6 +19,23 @@ interface FirstsViewProps {
 export const FirstsView = (data: FirstsViewProps) => {
   const { filter, filterCounts, photos } = data;
   const navLink = navLinkBuilder(data.filter, filterCounts);
+
+  // Group observations by location
+  const observationsByLocation = new Map<string, Observation[]>();
+  for (const obs of data.observations) {
+    const locationKey = `${obs.location.id}`;
+    if (!observationsByLocation.has(locationKey)) {
+      observationsByLocation.set(locationKey, []);
+    }
+    observationsByLocation.get(locationKey)!.push(obs);
+  }
+
+  // Sort locations by the earliest observation date at each location
+  const sortedLocations = Array.from(observationsByLocation.entries()).sort((a, b) => {
+    const earliestA = Math.min(...a[1].map(o => o.seenAt.getTime()));
+    const earliestB = Math.min(...b[1].map(o => o.seenAt.getTime()));
+    return earliestB - earliestA; // Most recent first
+  });
 
   return (
     <>
@@ -153,18 +171,39 @@ export const FirstsView = (data: FirstsViewProps) => {
             </tr>
           </thead>
           <tbody>
-            {data.observations.map((o, index) => (
-              <tr key={o.id}>
-                <td>{data.observations.length - index}</td>
-                <td>{speciesLink(o)}</td>
-                <td>
-                  <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
-                    {formatDate(o.seenAt)}
-                  </a>
-                </td>
-                {!filter.region && !filter.period && filter.type == ObsType.Sighting && <td>{o.comment}</td>}
-              </tr>
-            ))}
+            {sortedLocations.flatMap(([locationId, observations]) => {
+              const location = observations[0].location;
+              const rows = [];
+
+              // Add location header row
+              rows.push(
+                <tr key={`location-${locationId}`} className="group-row">
+                  <td colSpan={!filter.region && !filter.period && filter.type == ObsType.Sighting ? 4 : 3}>
+                    <a href={`/location/${location.id}`}>
+                      {formatLocationName(location.name)}
+                    </a>
+                  </td>
+                </tr>
+              );
+
+              // Add observation rows
+              observations.forEach((o) => {
+                rows.push(
+                  <tr key={o.id}>
+                    <td>{data.observations.length - data.observations.indexOf(o)}</td>
+                    <td>{speciesLink(o)}</td>
+                    <td>
+                      <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
+                        {formatDate(o.seenAt)}
+                      </a>
+                    </td>
+                    {!filter.region && !filter.period && filter.type == ObsType.Sighting && <td>{o.comment}</td>}
+                  </tr>
+                );
+              });
+
+              return rows;
+            })}
           </tbody>
         </table>
       </section>

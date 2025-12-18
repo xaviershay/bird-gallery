@@ -272,7 +272,10 @@ h2 {
   white-space: nowrap;
 }
 
-.group-row td {
+.group-row td:nth-child(1) {
   font-weight: bold;
-  background-color: #e6d3a8;
+  background-color: #f8eed3;
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
