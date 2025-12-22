@@ -283,3 +283,51 @@ h2 {
 td a {
   text-decoration: none
 }
+
+/* Trip report styling */
+.trip-report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.trip-report-item {
+  padding: 1rem;
+  border: 1px solid #ddd190;
+  border-radius: var(--standard-border-radius);
+  background-color: var(--bg);
+}
+
+.trip-report-item h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.trip-dates {
+  font-style: italic;
+  color: #6b8e6b;
+  margin: 0.5rem 0;
+}
+
+.trip-description {
+  margin: 1rem 0;
+}
+
+.trip-stats {
+  font-size: 0.9rem;
+  color: #6b8e6b;
+  margin-top: 0.5rem;
+}
+
+.trip-stats-summary {
+  margin: 1.5rem 0;
+}
+
+.trip-stats-summary h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.trip-stats-summary ul {
+  margin-top: 0.5rem;
+}

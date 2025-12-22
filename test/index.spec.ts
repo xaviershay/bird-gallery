@@ -394,4 +394,92 @@ describe('', () => {
       expect(response.headers.get('Cf-Cache-Status')).toBe('MISS');
     });
   });
+
+  describe('/trip-report', () => {
+    beforeEach(async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+          (1, 'Alpha Park', -37.70, 144.90, 'AU-VIC', 'Melbourne', 1),
+          (2, 'Beta Lake', -37.80, 144.95, 'AU-VIC', 'Melbourne', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+          ('sp1', 'Species One', 'S1', 1, 'S1', 'fam1'),
+          ('sp2', 'Species Two', 'S2', 2, 'S2', 'fam1');
+        INSERT INTO observation VALUES
+          ('o1-sp1', 1, 'sp1', 1, 1, '2025-04-02T10:00:00', NULL, NULL);
+        INSERT INTO observation VALUES
+          ('o2-sp2', 2, 'sp2', 2, 1, '2025-04-03T12:00:00', NULL, NULL);
+        INSERT INTO photo VALUES
+          ('sp1.jpg', 'o1-sp1', '2025-04-02T10:00:00', 3, 1000, 1500, '200', 'f/5.6', 0.001, '300mm', '', 'Canon', NULL);
+        INSERT INTO trip_report (id, title, description, start_date, end_date, created_at) VALUES
+          ('test-trip', 'Test Trip', 'A test trip description', '2025-04-01', '2025-04-07', '2025-01-01T00:00:00');
+        INSERT INTO trip_report_checklist (trip_report_id, checklist_id) VALUES
+          ('test-trip', 1),
+          ('test-trip', 2);
+      `);
+    });
+
+    it('renders trip report index', async () => {
+      const response = await SELF.fetch('https://localhost/trip-report');
+      const content = await response.text();
+      expect(content).toContain('Trip Reports');
+      expect(content).toContain('Test Trip');
+      expect(content).toContain('A test trip description');
+    });
+
+    it('shows trip report statistics on index page', async () => {
+      const response = await SELF.fetch('https://localhost/trip-report');
+      const content = await response.text();
+      expect(content).toContain('<strong>2</strong> species');
+      expect(content).toContain('<strong>2</strong> checklists');
+    });
+
+    it('renders individual trip report', async () => {
+      const response = await SELF.fetch('https://localhost/trip-report/test-trip');
+      const content = await response.text();
+      expect(content).toContain('Test Trip');
+      expect(content).toContain('A test trip description');
+      expect(content).toContain('Species One');
+      expect(content).toContain('Species Two');
+    });
+
+    it('returns trip report GeoJSON', async () => {
+      const response = await SELF.fetch('https://localhost/trip-report/test-trip.geojson');
+      const json: any = await response.json();
+      expect(json.type).toBe('FeatureCollection');
+      expect(json.features.length).toBe(2);
+    });
+
+    it('returns trip report JSON', async () => {
+      const response = await SELF.fetch('https://localhost/trip-report/test-trip.json');
+      const json: any = await response.json();
+      expect(json.tripReport.id).toBe('test-trip');
+      expect(json.tripReport.title).toBe('Test Trip');
+      expect(json.observations.length).toBe(2);
+    });
+
+    it('calculates firsts seen correctly', async () => {
+      // Add an observation before the trip to establish first sightings
+      await execSql(`
+        INSERT INTO observation VALUES
+          ('o3-sp1', 3, 'sp1', 1, 1, '2024-01-01T10:00:00', NULL, NULL);
+      `);
+
+      const response = await SELF.fetch('https://localhost/trip-report/test-trip');
+      const content = await response.text();
+      // Species One was seen before, so only Species Two is a life first
+      expect(content).toContain('<strong>1</strong> life firsts seen');
+    });
+
+    it('calculates firsts photographed correctly', async () => {
+      const response = await SELF.fetch('https://localhost/trip-report/test-trip');
+      const content = await response.text();
+      // Species One was first photographed on this trip
+      expect(content).toContain('<strong>1</strong> life firsts photographed');
+    });
+
+    it('returns 404 for non-existent trip report', async () => {
+      const response = await SELF.fetch('https://localhost/trip-report/does-not-exist');
+      expect(response.status).toBe(404);
+    });
+  });
 });

@@ -2,6 +2,7 @@ import { readFileSync, readdirSync } from 'fs';
 import path from 'path';
 import { parse } from 'csv-parse/sync';
 import { format, parse as parseDate } from 'date-fns';
+import * as yaml from 'js-yaml';
 
 // Helper function to generate SQL statements
 function generateSQL(query: string, params: any[]) {
@@ -335,6 +336,54 @@ const observationSQLStatements : any[] = [];
        lens = excluded.lens;`,
       photoParams
     ));
+  }
+
+  // Load trip reports from YAML files
+  const tripReportsDir = 'data/trip-reports';
+  const tripReportFiles = readdirSync(tripReportsDir).filter(f => f.endsWith('.yaml'));
+  const tripReports = [];
+
+  for (const file of tripReportFiles) {
+    const filePath = path.join(tripReportsDir, file);
+    const tripReportYaml = readFileSync(filePath, 'utf-8');
+    const report = yaml.load(tripReportYaml) as any;
+    tripReports.push(report);
+  }
+
+  // Delete existing trip report data
+  console.log("DELETE FROM trip_report_checklist;");
+  console.log("DELETE FROM trip_report;");
+
+  // Insert trip reports and their checklists
+  for (const report of tripReports) {
+    // Ensure dates are strings (YAML may parse them as Date objects)
+    const startDate = typeof report.start_date === 'string' ? report.start_date : report.start_date.toISOString().split('T')[0];
+    const endDate = typeof report.end_date === 'string' ? report.end_date : report.end_date.toISOString().split('T')[0];
+
+    // Insert trip report
+    console.log(generateSQL(
+      `INSERT INTO trip_report (id, title, description, start_date, end_date, created_at)
+       VALUES (?, ?, ?, ?, ?, ?);`,
+      [report.id, report.title, report.description, startDate, endDate, new Date().toISOString()]
+    ));
+
+    // Find all checklist IDs for observations within the trip date range
+    const checklistIds = new Set<number>();
+    for (const [, checklistId, , , , seenAt] of observationSQLStatements) {
+      const obsDate = seenAt.split('T')[0]; // Extract date portion
+      if (obsDate >= startDate && obsDate <= endDate) {
+        checklistIds.add(checklistId);
+      }
+    }
+
+    // Insert checklist associations
+    for (const checklistId of checklistIds) {
+      console.log(generateSQL(
+        `INSERT INTO trip_report_checklist (trip_report_id, checklist_id)
+         VALUES (?, ?);`,
+        [report.id, checklistId]
+      ));
+    }
   }
 })();
 

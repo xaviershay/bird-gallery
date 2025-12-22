@@ -41,6 +41,24 @@ export interface Location {
   lng: number;
 }
 
+export interface TripReport {
+  id: string;
+  title: string;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  createdAt: Date;
+}
+
+export interface TripReportStats {
+  totalSpecies: number;
+  totalObservations: number;
+  totalChecklists: number;
+  totalLocations: number;
+  firstsSeen: number;
+  firstsPhotographed: number;
+}
+
 export const enum ObsType {
   Sighting,
   Photo,

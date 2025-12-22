@@ -5,6 +5,7 @@ import { respondWith, corsHeaders } from "./controller/base";
 import { handleHome } from "./controller/home";
 import { handlePhoto } from "./controller/photo";
 import { handleReport } from "./controller/report";
+import { handleTripReportIndex, handleTripReportShow } from "./controller/trip_report";
 
 // Responses are cached using the current version, which is bumped on every deploy.
 // Cache headers are needed for storing in the cache (and in theory could be
@@ -126,6 +127,12 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
       return handleReport(request, env);
     case "photo":
       return handlePhoto(request, env);
+    case "trip-report":
+      if (path.length === 1) {
+        return handleTripReportIndex(request, env);
+      } else {
+        return handleTripReportShow(request, env);
+      }
     default:
       return respondWith(404, { error: "Not found" }, corsHeaders);
   }

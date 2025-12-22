@@ -61,6 +61,24 @@ CREATE TABLE photo (
   lens TEXT
 );
 
+DROP TABLE IF EXISTS trip_report;
+CREATE TABLE trip_report (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  start_date TEXT NOT NULL,
+  end_date TEXT NOT NULL,
+  created_at TEXT NOT NULL
+) STRICT;
+
+DROP TABLE IF EXISTS trip_report_checklist;
+CREATE TABLE trip_report_checklist (
+  trip_report_id TEXT NOT NULL,
+  checklist_id INTEGER NOT NULL,
+  PRIMARY KEY (trip_report_id, checklist_id),
+  FOREIGN KEY (trip_report_id) REFERENCES trip_report(id)
+) STRICT;
+
 DROP VIEW IF EXISTS observation_wide;
 CREATE VIEW observation_wide AS
   SELECT DISTINCT observation.*,
@@ -81,3 +99,24 @@ CREATE VIEW observation_wide AS
       LEFT JOIN photo ON observation.id = photo.observation_id
       -- INNER JOIN family ON family_id = family.id
     ;
+
+DROP VIEW IF EXISTS trip_report_observation;
+CREATE VIEW trip_report_observation AS
+  SELECT DISTINCT
+    trc.trip_report_id,
+    observation.*,
+    species.common_name,
+    location.name as location_name,
+    location.lat,
+    location.lng,
+    location.state,
+    location.county,
+    location.hotspot,
+    strftime("%Y", seen_at) as year,
+    photo.file_name IS NOT NULL as has_photo
+  FROM trip_report_checklist trc
+  INNER JOIN observation ON trc.checklist_id = observation.checklist_id
+  INNER JOIN location ON observation.location_id = location.id
+  INNER JOIN species ON observation.species_id = species.id
+  LEFT JOIN photo ON observation.id = photo.observation_id
+  ;
