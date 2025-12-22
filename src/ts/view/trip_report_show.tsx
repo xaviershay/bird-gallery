@@ -28,11 +28,38 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
     <>
       <section>
         <h2>
-          <i className="fa-solid fa-plane-departure"></i> {tripReport.title}
+          {tripReport.title}
         </h2>
-        <p className="trip-dates">
-          {formatDate(tripReport.startDate)} - {formatDate(tripReport.endDate)}
-        </p>
+        <div className="trip-stats-summary">
+          <p className="trip-dates">
+            {formatDate(tripReport.startDate)} - {formatDate(tripReport.endDate)}
+          </p>
+          <div className="trip-stats">
+            <span><strong>{stats.totalSpecies}</strong> species</span>
+            {' • '}
+            <span><strong>{stats.totalChecklists}</strong> checklists</span>
+            {' • '}
+            <span><strong>{stats.totalLocations}</strong> locations</span>
+            {stats.firstsSeen > 0 && (
+              <>
+                {' • '}
+                <span><strong>{stats.firstsSeen}</strong> lifers</span>
+              </>
+            )}
+            {stats.firstsPhotographed > 0 && (
+              <>
+                {' • '}
+                <span><strong>{stats.firstsPhotographed}</strong> photo firsts</span>
+              </>
+            )}
+          </div>
+        </div>
+
+
+        <MapView
+          dataUrl={`/trip-report/${tripReport.id}.geojson`}
+          urlBuilder={`(id) => ("/location/" + id)`}
+        />
 
         <div className="trip-description">
           {tripReport.description.split('\n\n').map((paragraph, i) => (
@@ -40,35 +67,15 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
           ))}
         </div>
 
-        <div className="trip-stats-summary">
-          <h3>Summary Statistics</h3>
-          <ul>
-            <li><strong>{stats.totalSpecies}</strong> species observed</li>
-            <li><strong>{stats.totalObservations}</strong> total observations</li>
-            <li><strong>{stats.totalChecklists}</strong> checklists submitted</li>
-            <li><strong>{stats.totalLocations}</strong> unique locations visited</li>
-            {stats.firstsSeen > 0 && (
-              <li><strong>{stats.firstsSeen}</strong> life firsts seen</li>
-            )}
-            {stats.firstsPhotographed > 0 && (
-              <li><strong>{stats.firstsPhotographed}</strong> life firsts photographed</li>
-            )}
-          </ul>
-        </div>
 
-        <MapView
-          dataUrl={`/trip-report/${tripReport.id}.geojson`}
-          urlBuilder={`(id) => ("/location/" + id)`}
-        />
-
-        <h3>Species List ({uniqueSpecies.length})</h3>
+        <h3>Species List</h3>
         <table className="bird-list">
           <thead>
             <tr>
               <th>#</th>
               <th>Name</th>
               <th>Location</th>
-              <th>Date</th>
+              <th className="date">Date</th>
             </tr>
           </thead>
           <tbody>
@@ -81,7 +88,7 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
                     {formatLocationName(obs.location.name)}
                   </a>
                 </td>
-                <td>
+                <td className="date">
                   <a href={`https://ebird.org/checklist/S${obs.checklistId}`}>
                     {formatDate(obs.seenAt)}
                   </a>

@@ -61,6 +61,7 @@ CREATE TABLE photo (
   lens TEXT
 );
 
+DROP TABLE IF EXISTS trip_report_checklist;
 DROP TABLE IF EXISTS trip_report;
 CREATE TABLE trip_report (
   id TEXT PRIMARY KEY,
@@ -71,7 +72,6 @@ CREATE TABLE trip_report (
   created_at TEXT NOT NULL
 ) STRICT;
 
-DROP TABLE IF EXISTS trip_report_checklist;
 CREATE TABLE trip_report_checklist (
   trip_report_id TEXT NOT NULL,
   checklist_id INTEGER NOT NULL,

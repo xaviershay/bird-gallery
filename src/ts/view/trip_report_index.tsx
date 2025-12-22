@@ -15,7 +15,7 @@ export const TripReportIndexView = (props: TripReportIndexViewProps) => {
     <>
       <section>
         <h2>
-          <i className="fa-solid fa-plane-departure"></i> Trip Reports
+          <i className="fa-solid fa-compass"></i> Trip Reports
         </h2>
         {tripReports.length === 0 ? (
           <p>No trip reports yet.</p>
@@ -39,13 +39,13 @@ export const TripReportIndexView = (props: TripReportIndexViewProps) => {
                   {stats.firstsSeen > 0 && (
                     <>
                       {' • '}
-                      <span><strong>{stats.firstsSeen}</strong> life firsts</span>
+                      <span><strong>{stats.firstsSeen}</strong> lifers</span>
                     </>
                   )}
                   {stats.firstsPhotographed > 0 && (
                     <>
                       {' • '}
-                      <span><strong>{stats.firstsPhotographed}</strong> first photos</span>
+                      <span><strong>{stats.firstsPhotographed}</strong> photo firsts</span>
                     </>
                   )}
                 </div>
@@ -53,6 +53,7 @@ export const TripReportIndexView = (props: TripReportIndexViewProps) => {
             ))}
           </div>
         )}
+        <p />
       </section>
     </>
   );

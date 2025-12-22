@@ -250,6 +250,11 @@ h2 {
   max-width: 200px;
 }
 
+td.date, th.date {
+  text-align: center;
+  white-space: nowrap;
+}
+
 .locations-list td:nth-child(1),
 .locations-list th:nth-child(1),
 .locations-list td:nth-child(3),
@@ -321,6 +326,7 @@ td a {
 
 .trip-stats-summary {
   margin: 1.5rem 0;
+  margin-top: -0.6rem;
 }
 
 .trip-stats-summary h3 {

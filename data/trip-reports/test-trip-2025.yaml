@@ -1,8 +1,0 @@
-id: test-trip-2025
-title: Test Trip Report
-start_date: 2025-04-01
-end_date: 2025-04-07
-description: |
-  A test trip to verify the trip report feature works correctly.
-
-  This is a multi-line description demonstrating YAML's block scalar format.

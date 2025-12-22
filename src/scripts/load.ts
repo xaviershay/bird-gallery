@@ -340,7 +340,7 @@ const observationSQLStatements : any[] = [];
 
   // Load trip reports from YAML files
   const tripReportsDir = 'data/trip-reports';
-  const tripReportFiles = readdirSync(tripReportsDir).filter(f => f.endsWith('.yaml'));
+  const tripReportFiles = readdirSync(tripReportsDir).filter(f => f.endsWith('.yml'));
   const tripReports = [];
 
   for (const file of tripReportFiles) {
