@@ -31,7 +31,7 @@ export const SpeciesView = (data: SpeciesViewProps) => {
             <tr>
               <th>#</th>
               <th>Location</th>
-              <th>Seen</th>
+              <th className="date">Seen</th>
             </tr>
           </thead>
           <tbody>
@@ -43,7 +43,7 @@ export const SpeciesView = (data: SpeciesViewProps) => {
                     {formatLocationName(o.location.name)}
                   </a>
                 </td>
-                <td>
+                <td className="date">
                   <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
                     {formatDate(o.seenAt)}
                   </a>

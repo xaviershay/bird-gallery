@@ -34,7 +34,7 @@ export const LocationsView = ({ locations }: LocationsViewProps) => {
               <th>#</th>
               <th>Location</th>
               <th>Species</th>
-              <th>Last Vist</th>
+              <th className="date">Last Vist</th>
             </tr>
           </thead>
           <tbody>
@@ -45,7 +45,7 @@ export const LocationsView = ({ locations }: LocationsViewProps) => {
                   <a href={`/location/${loc.id}`}>{formatLocationName(loc.name)}</a>
                 </td>
                 <td>{loc.speciesCount}</td>
-                <td>{formatDate(loc.lastSeenAt)}</td>
+                <td className="date">{formatDate(loc.lastSeenAt)}</td>
               </tr>
             ))}
           </tbody>

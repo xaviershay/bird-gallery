@@ -114,7 +114,7 @@ export const LocationView = (data: LocationViewProps) => {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>First {filter.type === ObsType.Photo ? "Photo" : "Seen"}</th>
+              <th className="date">First {filter.type === ObsType.Photo ? "Photo" : "Seen"}</th>
             </tr>
           </thead>
           <tbody>
@@ -122,7 +122,7 @@ export const LocationView = (data: LocationViewProps) => {
               <tr key={o.id}>
                 <td>{observationCount - index}</td>
                 <td>{speciesLink(o)}</td>
-                <td>
+                <td className="date">
                   <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
                     {formatDate(o.seenAt)}
                   </a>

@@ -169,7 +169,7 @@ export const FirstsView = (data: FirstsViewProps) => {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>First {filter.type === ObsType.Photo ? "Photo" : "Seen"}</th>
+              <th className="date">First {filter.type === ObsType.Photo ? "Photo" : "Seen"}</th>
               {showComment && <th>Comment</th>}
             </tr>
           </thead>
@@ -195,7 +195,7 @@ export const FirstsView = (data: FirstsViewProps) => {
                   <tr key={o.id}>
                     <td>{data.observations.length - data.observations.indexOf(o)}</td>
                     <td>{speciesLink(o)}</td>
-                    <td>
+                    <td className='date'>
                       <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
                         {formatDate(o.seenAt)}
                       </a>

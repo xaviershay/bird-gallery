@@ -1,4 +1,4 @@
-import { TripReport, TripReportStats, Observation } from "../types";
+import { TripReport, TripReportStats, Observation, Photo } from "../types";
 import { parseDbDate } from "../helpers/date_utils";
 
 export async function fetchAllTripReports(env: Env): Promise<TripReport[]> {
@@ -129,5 +129,33 @@ export async function fetchTripReportObservations(env: Env, id: string): Promise
     },
     hasPhoto: record.hasPhoto == 1,
     seenAt: parseDbDate(record.seenAt),
+  }));
+}
+
+export async function fetchTripReportPhotos(env: Env, id: string): Promise<Photo[]> {
+  const query = `
+    SELECT
+      photo.file_name as fileName,
+      tro.common_name as commonName,
+      photo.taken_at as takenAt,
+      photo.height,
+      photo.width,
+      photo.rating,
+      photo.iso,
+      photo.fnumber as fNumber,
+      photo.exposure,
+      photo.zoom,
+      photo.tags,
+      photo.camera,
+      photo.lens
+    FROM trip_report_observation tro
+    INNER JOIN photo ON tro.id = photo.observation_id
+    WHERE tro.trip_report_id = ?
+    ORDER BY photo.rating DESC, photo.taken_at DESC;
+  `;
+  const result = await env.DB.prepare(query).bind(id).all<any>();
+  return result.results.map((record) => ({
+    ...record,
+    takenAt: parseDbDate(record.takenAt),
   }));
 }

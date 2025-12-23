@@ -1,17 +1,19 @@
-import { TripReport, TripReportStats, Observation } from "../types";
+import { TripReport, TripReportStats, Observation, Photo } from "../types";
 import { formatDate } from "../helpers/format_date";
 import speciesLink from "../helpers/species_link";
 import formatLocationName from "../helpers/format_location_name";
 import { MapView } from "./components/map";
+import photoUrl from "../helpers/photo_url";
 
 interface TripReportShowViewProps {
   tripReport: TripReport;
   stats: TripReportStats;
   observations: Observation[];
+  photos: Photo[];
 }
 
 export const TripReportShowView = (props: TripReportShowViewProps) => {
-  const { tripReport, stats, observations } = props;
+  const { tripReport, stats, observations, photos } = props;
 
   // Get unique species sorted by name
   const speciesMap = new Map<string, Observation>();
@@ -23,6 +25,14 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
   const uniqueSpecies = Array.from(speciesMap.values()).sort((a, b) =>
     a.name.localeCompare(b.name)
   );
+
+  // Group photos by species
+  const photosBySpecies = new Map<string, Photo[]>();
+  for (const photo of photos) {
+    const speciesPhotos = photosBySpecies.get(photo.commonName) || [];
+    speciesPhotos.push(photo);
+    photosBySpecies.set(photo.commonName, speciesPhotos);
+  }
 
   return (
     <>
@@ -69,7 +79,7 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
 
 
         <h3>Species List</h3>
-        <table className="bird-list">
+        <table className="bird-list trip-report-species-list">
           <thead>
             <tr>
               <th>#</th>
@@ -79,22 +89,40 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
             </tr>
           </thead>
           <tbody>
-            {uniqueSpecies.map((obs, index) => (
-              <tr key={obs.speciesId}>
-                <td>{index + 1}</td>
-                <td>{speciesLink(obs)}</td>
-                <td>
-                  <a href={`/location/${obs.locationId}`}>
-                    {formatLocationName(obs.location.name)}
-                  </a>
-                </td>
-                <td className="date">
-                  <a href={`https://ebird.org/checklist/S${obs.checklistId}`}>
-                    {formatDate(obs.seenAt)}
-                  </a>
-                </td>
-              </tr>
-            ))}
+            {uniqueSpecies.map((obs, index) => {
+              const speciesPhotos = photosBySpecies.get(obs.name) || [];
+              return (
+                <tr key={obs.speciesId}>
+                  <td>{index + 1}</td>
+                  <td className="name-with-photos">
+                    {speciesLink(obs)}
+                    {speciesPhotos.length > 0 && (
+                      <div className="trip-report-photos">
+                        {speciesPhotos.map((photo) => (
+                          <a key={photo.fileName} href={`/photo/${photo.fileName.replace(/\.[^/.]+$/, '')}`}>
+                            <img
+                              src={photoUrl(photo.fileName, { thumbnail: true })}
+                              alt={photo.commonName}
+                              className="trip-report-thumbnail"
+                            />
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </td>
+                  <td>
+                    <a href={`/location/${obs.locationId}`}>
+                      {formatLocationName(obs.location.name)}
+                    </a>
+                  </td>
+                  <td className="date">
+                    <a href={`https://ebird.org/checklist/S${obs.checklistId}`}>
+                      {formatDate(obs.seenAt)}
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </section>

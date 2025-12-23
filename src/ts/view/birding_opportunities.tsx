@@ -44,12 +44,12 @@ export const BirdingOpportunitiesView = ({ excludeMode }: BirdingOpportunitiesVi
           <thead>
             <tr>
               <th>Species</th>
-              <th>Seen At</th>
+              <th className="date">Seen At</th>
             </tr>
           </thead>
           <tbody id="results-tbody">
             <tr>
-              <td colSpan={4} style={{ textAlign: 'center', color: '#666' }}>
+              <td colSpan={2} style={{ textAlign: 'center', color: '#666' }}>
                 Loading...
               </td>
             </tr>

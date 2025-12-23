@@ -90,6 +90,10 @@ th {
   font-weight: bold;
 }
 
+tr:nth-child(odd) {
+  background-color: #fefae9;
+}
+
 tr:nth-child(even) {
   background-color: var(--bg);
 }
@@ -219,12 +223,6 @@ h2 {
   text-align: center;
 }
 
-.bird-list td:nth-child(3),
-.bird-list th:nth-child(3) {
-  text-align: center;
-  white-space: nowrap;
-}
-
 .photo-criteria {
   margin-top: 0;
 }
@@ -336,4 +334,27 @@ td a {
 
 .trip-stats-summary ul {
   margin-top: 0.5rem;
+}
+
+/* Trip report species list with photos */
+.trip-report-species-list .name-with-photos {
+  padding: 0.75rem;
+}
+
+.trip-report-photos {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.trip-report-thumbnail {
+  height: 60px;
+  width: auto;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.trip-report-thumbnail:hover {
+  transform: scale(1.1);
 }

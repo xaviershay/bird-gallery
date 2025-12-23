@@ -5,7 +5,8 @@ import {
   fetchAllTripReports,
   fetchTripReportById,
   fetchTripReportStats,
-  fetchTripReportObservations
+  fetchTripReportObservations,
+  fetchTripReportPhotos
 } from "../model/trip_report";
 import {
   renderPageWithLayout,
@@ -73,10 +74,12 @@ export async function handleTripReportShow(
   }
 
   const stats = await fetchTripReportStats(env, id);
+  const photos = await fetchTripReportPhotos(env, id);
   const content = TripReportShowView({
     tripReport,
     observations,
     stats,
+    photos,
   });
 
   return renderPageWithLayout(content, `${tripReport.title} - Xavier's Bird Lists`, env);
