@@ -79,9 +79,22 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
         />
 
         <div className="trip-description">
-          {tripReport.description.split('\n\n').map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
+          {tripReport.description.split('\n\n').map((paragraph, i) => {
+            // Check if paragraph is a list (starts with * or -)
+            if (paragraph.trimStart().match(/^[*-]\s/)) {
+              const items = paragraph.split('\n').filter(line => line.trim());
+              return (
+                <ul key={i}>
+                  {items.map((item, j) => {
+                    // Remove the leading * or - and trim
+                    const text = item.replace(/^\s*[*-]\s+/, '');
+                    return <li key={j}>{text}</li>;
+                  })}
+                </ul>
+              );
+            }
+            return <p key={i}>{paragraph}</p>;
+          })}
         </div>
 
 
