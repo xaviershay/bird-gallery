@@ -75,6 +75,7 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
         <MapView
           dataUrl={`/trip-report/${tripReport.id}.geojson`}
           urlBuilder={`(id) => ("/location/" + id)`}
+          fitToDataBounds={true}
         />
 
         <div className="trip-description">

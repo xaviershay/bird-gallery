@@ -18,6 +18,7 @@ function initMap(sourceJson, urlF, options = {}) {
   //   by aggregating speciesIds arrays from cluster leaves. If false (default),
   //   use the built-in sum cluster property for better performance.
   const computeUniqueSpecies = options.computeUniqueSpecies || false;
+  const fitToDataBounds = options.fitToDataBounds || false;
 
   // Add markers to the map
   map.on("load", async () => {
@@ -258,6 +259,39 @@ function initMap(sourceJson, urlF, options = {}) {
         "text-size": 12,
       },
     });
+
+    if (fitToDataBounds) {
+      try {
+        const geojsonData =
+          typeof sourceJson === "string"
+            ? await fetch(sourceJson).then((resp) => resp.json())
+            : sourceJson;
+
+        const features = (geojsonData && geojsonData.features) || [];
+        const bounds = new mapboxgl.LngLatBounds();
+
+        features.forEach((feature) => {
+          const coords = feature && feature.geometry && feature.geometry.coordinates;
+          if (Array.isArray(coords) && coords.length >= 2) {
+            bounds.extend([coords[0], coords[1]]);
+          }
+        });
+
+        if (!bounds.isEmpty()) {
+          const ne = bounds.getNorthEast();
+          const sw = bounds.getSouthWest();
+
+          if (ne.lng === sw.lng && ne.lat === sw.lat) {
+            map.setCenter([ne.lng, ne.lat]);
+            map.setZoom(Math.min(map.getMaxZoom(), 10));
+          } else {
+            map.fitBounds(bounds, { padding: 40, duration: 0 });
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fit map to data bounds", err);
+      }
+    }
     // inspect a cluster on click
     map.on("click", "clusters", (e) => {
       const features = map.queryRenderedFeatures(e.point, {

@@ -38,6 +38,12 @@ interface MapViewProps {
    * sum cluster property for better performance.
    */
   computeUniqueSpecies?: boolean;
+
+  /**
+   * Whether to fit the initial view to the GeoJSON data bounds.
+   * Defaults to false.
+   */
+  fitToDataBounds?: boolean;
 }
 
 /**
@@ -51,10 +57,13 @@ interface MapViewProps {
  * @param props - MapView configuration
  * @returns JSX elements for map rendering
  */
-export const MapView = ({ dataUrl, urlBuilder, height, computeUniqueSpecies }: MapViewProps) => {
+export const MapView = ({ dataUrl, urlBuilder, height, computeUniqueSpecies, fitToDataBounds }: MapViewProps) => {
   const scriptContent = `
     urlF = ${urlBuilder};
-    initMap("${dataUrl}", urlF, { computeUniqueSpecies: ${computeUniqueSpecies || false} });
+    initMap("${dataUrl}", urlF, {
+      computeUniqueSpecies: ${computeUniqueSpecies || false},
+      fitToDataBounds: ${fitToDataBounds || false},
+    });
   `;
 
   const mapStyle = height ? { height } : undefined;
