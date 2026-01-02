@@ -1,30 +1,54 @@
-import { Photo } from "../types";
+import { Observation, Photo, TripReport, TripReportStats } from "../types";
 import { ThumbnailStrip } from "./thumbnail_strip";
+import { FirstsTable } from "./components/firsts_table";
+import { TripReportItem } from "./components/trip_report_item";
 
 interface HomeViewProps {
-  photos: Photo[]
+  photos: Photo[];
+  ticks: Observation[];
+  ticksTotal: number;
+  recentTrips: Array<{ tripReport: TripReport; stats: TripReportStats }>;
 }
 
 export const HomeView = (props: HomeViewProps) => {
-  const { photos } = props;
+  const { photos, ticks, ticksTotal, recentTrips } = props;
 
   return (
     <>
       <section>
         <h2>
-          <i className="fa-solid fa-leaf"></i>
-          {"  "}Rules
+          <i className="fa-solid fa-binoculars"></i> Recent Ticks
         </h2>
-        <ul>
-          <li>
-            Distinctive features must be personally sighted. Others may help
-            with identification.
-          </li>
-          <li>Only hearing a bird doesn't count.</li>
-          <li>
-            <a href="https://ebird.org">eBird</a> taxonomy is canon.
-          </li>
-        </ul>
+        {ticks.length === 0 ? (
+          <p>No life list birds yet.</p>
+        ) : (
+          <FirstsTable
+            observations={ticks}
+            showComment={true}
+            totalCount={ticksTotal}
+            firstDateLabel="First Seen"
+          />
+        )}
+        <p className='more-link'>
+          <a href="/firsts">Full Life List</a>
+        </p>
+      </section>
+      <section>
+        <h2>
+          <i className="fa-solid fa-compass"></i> Recent Trips
+        </h2>
+        {recentTrips.length === 0 ? (
+          <p>No trip reports yet.</p>
+        ) : (
+          <div className="trip-report-list">
+            {recentTrips.map(({ tripReport, stats }) => (
+              <TripReportItem key={tripReport.id} tripReport={tripReport} stats={stats} />
+            ))}
+          </div>
+        )}
+        <p className='more-link'>
+          <a href="/trip-report">All Trip Reports</a>
+        </p>
       </section>
       <section>
         <h2>
@@ -66,6 +90,22 @@ export const HomeView = (props: HomeViewProps) => {
             <td>Competition worthy.</td>
           </tr>
         </table>
+      </section>
+      <section>
+        <h2>
+          <i className="fa-solid fa-leaf"></i>
+          {"  "}Rules
+        </h2>
+        <ul>
+          <li>
+            Distinctive features must be personally sighted. Others may help
+            with identification.
+          </li>
+          <li>Only hearing a bird doesn't count.</li>
+          <li>
+            <a href="https://ebird.org">eBird</a> taxonomy is canon.
+          </li>
+        </ul>
       </section>
       <section>
         <h2>

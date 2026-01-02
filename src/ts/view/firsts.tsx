@@ -1,13 +1,11 @@
 import { Filter } from "../model/filter";
 import { Observation, Photo } from "../types";
 import { ObsType } from "../types";
-import speciesLink from "../helpers/species_link";
-import { formatDate } from "../helpers/format_date";
-import formatLocationName from "../helpers/format_location_name";
 import { ThumbnailStrip } from "./thumbnail_strip";
 import { navLinkBuilder } from "../helpers/nav_link_builder";
 import { MapView } from "./components/map";
 import { REGIONS } from "../config/constants";
+import { FirstsTable } from "./components/firsts_table";
 
 interface FirstsViewProps {
   filter: Filter; // TODO: should probably be "data source" or something better
@@ -147,52 +145,12 @@ export const FirstsView = (data: FirstsViewProps) => {
           dataUrl={`/firsts.geojson?${data.filter.toQueryString()}`}
           urlBuilder={`(id) => ("/location/" + id + "?view=firsts&${data.filter.toQueryString()}")`}
         />
-        <table className="bird-list">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th className="date">First {filter.type === ObsType.Photo ? "Photo" : "Seen"}</th>
-              {showComment && <th>Comment</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {data.observations.flatMap((o, index) => {
-              const location = o.location;
-              const rows = [];
-              
-              // Add location header row if this is a new location (or first observation)
-              const prevLocation = index > 0 ? data.observations[index - 1].location : null;
-              if (!prevLocation || prevLocation.id !== location.id) {
-                rows.push(
-                  <tr key={`location-${location.id}-${index}`} className="group-row">
-                    <td colSpan={showComment ? 4 : 3}>
-                      <a href={`/location/${location.id}`}>
-                        {formatLocationName(location.name)}
-                      </a>
-                    </td>
-                  </tr>
-                );
-              }
-              
-              // Add observation row
-              rows.push(
-                <tr key={o.id}>
-                  <td>{data.observations.length - index}</td>
-                  <td>{speciesLink(o)}</td>
-                  <td className='date'>
-                    <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
-                      {formatDate(o.seenAt)}
-                    </a>
-                  </td>
-                  {showComment && <td>{o.comment}</td>}
-                </tr>
-              );
-              
-              return rows;
-            })}
-          </tbody>
-        </table>
+        <FirstsTable
+          observations={data.observations}
+          showComment={showComment}
+          totalCount={data.observations.length}
+          firstDateLabel={`First ${filter.type === ObsType.Photo ? "Photo" : "Seen"}`}
+        />
       </section>
     </>
   );

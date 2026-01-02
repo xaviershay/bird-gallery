@@ -48,6 +48,10 @@ section {
   border: none;
 }
 
+section {
+  padding-bottom: 0rem;
+}
+
 body > header {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -301,9 +305,10 @@ td a {
   background-color: var(--bg);
 }
 
-.trip-report-item h3 {
+.trip-report-list .trip-report-item h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
+  font-size: 140%;
 }
 
 .trip-dates {
@@ -357,4 +362,8 @@ td a {
 
 .trip-report-thumbnail:hover {
   transform: scale(1.1);
+}
+
+.more-link {
+  text-align: center;
 }
