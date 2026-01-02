@@ -26,6 +26,13 @@ export const REGIONS = {
 export const TRACKING_START_DATE = "26th January 2025";
 
 /**
+ * Years to display in period navigation (in descending order). This is constant
+ * because I don't want to keep adding years after I die, and the only way
+ * data is updated is if I manually do it.
+ */
+export const YEARS = [2026, 2025] as const;
+
+/**
  * Application title and branding
  */
 export const APP_TITLE = "Xavier's Bird Lists";

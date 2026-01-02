@@ -4,7 +4,7 @@ import { ObsType } from "../types";
 import { ThumbnailStrip } from "./thumbnail_strip";
 import { navLinkBuilder } from "../helpers/nav_link_builder";
 import { MapView } from "./components/map";
-import { REGIONS } from "../config/constants";
+import { REGIONS, YEARS } from "../config/constants";
 import { FirstsTable } from "./components/firsts_table";
 
 interface FirstsViewProps {
@@ -20,10 +20,6 @@ export const FirstsView = (data: FirstsViewProps) => {
 
   // Show comment column only for sightings with no region, county, or period filters
   const showComment = !filter.region && !filter.county && !filter.period && filter.type === ObsType.Sighting;
-
-  // Extract unique years from observations and sort in descending order
-  const years = [...new Set(data.observations.map(obs => new Date(obs.seenAt).getFullYear()))]
-    .sort((a, b) => b - a);
 
   return (
     <>
@@ -95,7 +91,7 @@ export const FirstsView = (data: FirstsViewProps) => {
                 })}
               </td>
             </tr>
-            {years.map(year => (
+            {YEARS.map(year => (
               <tr key={year}>
                 <th className="period">{year}</th>
                 <td>
