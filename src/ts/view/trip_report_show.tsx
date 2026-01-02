@@ -5,6 +5,7 @@ import formatLocationName from "../helpers/format_location_name";
 import { MapView } from "./components/map";
 import photoUrl from "../helpers/photo_url";
 import { ThumbnailStrip } from "./thumbnail_strip";
+import { parseMarkdownLinks } from "../helpers/parse_markdown_links";
 
 interface TripReportShowViewProps {
   tripReport: TripReport;
@@ -88,12 +89,12 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
                   {items.map((item, j) => {
                     // Remove the leading * or - and trim
                     const text = item.replace(/^\s*[*-]\s+/, '');
-                    return <li key={j}>{text}</li>;
+                    return <li key={j}>{parseMarkdownLinks(text)}</li>;
                   })}
                 </ul>
               );
             }
-            return <p key={i}>{paragraph}</p>;
+            return <p key={i}>{parseMarkdownLinks(paragraph)}</p>;
           })}
         </div>
 
@@ -145,6 +146,9 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
             })}
           </tbody>
         </table>
+        <p className="more-link">
+          <a href='/trip-report'>Back to Trip Reports</a>
+        </p>
       </section>
     </>
   );

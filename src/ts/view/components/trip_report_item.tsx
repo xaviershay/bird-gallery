@@ -1,5 +1,6 @@
 import { TripReport, TripReportStats } from "../../types";
 import { formatDate } from "../../helpers/format_date";
+import { parseMarkdownLinks } from "../../helpers/parse_markdown_links";
 
 interface TripReportItemProps {
   tripReport: TripReport;
@@ -15,7 +16,7 @@ export const TripReportItem = ({ tripReport, stats }: TripReportItemProps) => {
       <p className="trip-dates">
         {formatDate(tripReport.startDate)} - {formatDate(tripReport.endDate)}
       </p>
-      <p className="trip-description">{tripReport.description.split("\n\n")[0]}</p>
+      <p className="trip-description">{parseMarkdownLinks(tripReport.description.split("\n\n")[0])}</p>
       <div className="trip-stats">
         <span><strong>{stats.totalSpecies}</strong> species</span>
         {" • "}
