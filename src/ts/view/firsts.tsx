@@ -23,23 +23,6 @@ export const FirstsView = (data: FirstsViewProps) => {
   // Show comment column only for sightings with no region, county, or period filters
   const showComment = !filter.region && !filter.county && !filter.period && filter.type === ObsType.Sighting;
 
-  // Group observations by location
-  const observationsByLocation = new Map<string, Observation[]>();
-  for (const obs of data.observations) {
-    const locationKey = `${obs.location.id}`;
-    if (!observationsByLocation.has(locationKey)) {
-      observationsByLocation.set(locationKey, []);
-    }
-    observationsByLocation.get(locationKey)!.push(obs);
-  }
-
-  // Sort locations by the earliest observation date at each location
-  const sortedLocations = Array.from(observationsByLocation.entries()).sort((a, b) => {
-    const earliestA = Math.min(...a[1].map(o => o.seenAt.getTime()));
-    const earliestB = Math.min(...b[1].map(o => o.seenAt.getTime()));
-    return earliestB - earliestA; // Most recent first
-  });
-
   return (
     <>
       <section>
@@ -174,37 +157,38 @@ export const FirstsView = (data: FirstsViewProps) => {
             </tr>
           </thead>
           <tbody>
-            {sortedLocations.flatMap(([locationId, observations]) => {
-              const location = observations[0].location;
+            {data.observations.flatMap((o, index) => {
+              const location = o.location;
               const rows = [];
-
-              // Add location header row
-              rows.push(
-                <tr key={`location-${locationId}`} className="group-row">
-                  <td colSpan={showComment ? 4 : 3}>
-                    <a href={`/location/${location.id}`}>
-                      {formatLocationName(location.name)}
-                    </a>
-                  </td>
-                </tr>
-              );
-
-              // Add observation rows
-              observations.forEach((o) => {
+              
+              // Add location header row if this is a new location (or first observation)
+              const prevLocation = index > 0 ? data.observations[index - 1].location : null;
+              if (!prevLocation || prevLocation.id !== location.id) {
                 rows.push(
-                  <tr key={o.id}>
-                    <td>{data.observations.length - data.observations.indexOf(o)}</td>
-                    <td>{speciesLink(o)}</td>
-                    <td className='date'>
-                      <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
-                        {formatDate(o.seenAt)}
+                  <tr key={`location-${location.id}-${index}`} className="group-row">
+                    <td colSpan={showComment ? 4 : 3}>
+                      <a href={`/location/${location.id}`}>
+                        {formatLocationName(location.name)}
                       </a>
                     </td>
-                    {showComment && <td>{o.comment}</td>}
                   </tr>
                 );
-              });
-
+              }
+              
+              // Add observation row
+              rows.push(
+                <tr key={o.id}>
+                  <td>{data.observations.length - index}</td>
+                  <td>{speciesLink(o)}</td>
+                  <td className='date'>
+                    <a href={`https://ebird.org/checklist/S${o.checklistId}`}>
+                      {formatDate(o.seenAt)}
+                    </a>
+                  </td>
+                  {showComment && <td>{o.comment}</td>}
+                </tr>
+              );
+              
               return rows;
             })}
           </tbody>
