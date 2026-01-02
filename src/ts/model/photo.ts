@@ -158,7 +158,7 @@ export async function fetchRecentGoodPhotos(env: Env): Promise<Photo[]> {
         common_name as commonName
       FROM photo
       INNER JOIN observation_wide ON observation_id = observation_wide.id
-      WHERE rating >= 4
+      WHERE rating >= 3
       ORDER BY taken_at DESC
       LIMIT 20
     `;
