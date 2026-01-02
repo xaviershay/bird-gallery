@@ -25,7 +25,7 @@ export const FirstsView = (data: FirstsViewProps) => {
     <>
       <section>
         <h2>
-          <i className="fa-solid fa-trophy"></i> Firsts
+          <i className="fa-solid fa-trophy"></i> Ticks
         </h2>
         <nav>
           <table>
