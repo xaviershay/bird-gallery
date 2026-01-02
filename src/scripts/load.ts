@@ -347,6 +347,8 @@ const observationSQLStatements : any[] = [];
     const filePath = path.join(tripReportsDir, file);
     const tripReportYaml = readFileSync(filePath, 'utf-8');
     const report = yaml.load(tripReportYaml) as any;
+    // Derive id from filename (remove .yml extension)
+    report.id = file.replace(/\.yml$/, '');
     tripReports.push(report);
   }
 
