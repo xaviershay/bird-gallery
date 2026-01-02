@@ -4,6 +4,7 @@ import speciesLink from "../helpers/species_link";
 import formatLocationName from "../helpers/format_location_name";
 import { MapView } from "./components/map";
 import photoUrl from "../helpers/photo_url";
+import { ThumbnailStrip } from "./thumbnail_strip";
 
 interface TripReportShowViewProps {
   tripReport: TripReport;
@@ -65,6 +66,11 @@ export const TripReportShowView = (props: TripReportShowViewProps) => {
           </div>
         </div>
 
+        {photos.length > 0 && (
+          <div className="trip-photos-strip">
+            <ThumbnailStrip photos={photos} />
+          </div>
+        )}
 
         <MapView
           dataUrl={`/trip-report/${tripReport.id}.geojson`}
