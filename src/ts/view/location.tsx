@@ -18,6 +18,10 @@ export const LocationView = (data: LocationViewProps) => {
   const navLink = navLinkBuilder(data.filter, filterCounts);
 
   const observationCount = observations.length;
+  
+  // Extract unique years from observations and sort in descending order
+  const years = [...new Set(observations.map(obs => new Date(obs.seenAt).getFullYear()))]
+    .sort((a, b) => b - a);
   const locationName = location.name
     .replace(/\(\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\)/g, "")
     .replace(/--/g, ": ")
@@ -75,37 +79,39 @@ export const LocationView = (data: LocationViewProps) => {
                 })}
               </td>
             </tr>
-            <tr>
-              <th className="period">2025</th>
-              <td>
-                {navLink({
-                  type: ObsType.Photo,
-                  view: "firsts",
-                  period: "2025",
-                })}
-              </td>
-              <td>
-                {navLink({
-                  type: ObsType.Sighting,
-                  view: "firsts",
-                  period: "2025",
-                })}
-              </td>
-              <td>
-                {navLink({
-                  type: ObsType.Photo,
-                  view: null,
-                  period: "2025",
-                })}
-              </td>
-              <td>
-                {navLink({
-                  type: ObsType.Sighting,
-                  view: null,
-                  period: "2025",
-                })}
-              </td>
-            </tr>
+            {years.map(year => (
+              <tr key={year}>
+                <th className="period">{year}</th>
+                <td>
+                  {navLink({
+                    type: ObsType.Photo,
+                    view: "firsts",
+                    period: String(year),
+                  })}
+                </td>
+                <td>
+                  {navLink({
+                    type: ObsType.Sighting,
+                    view: "firsts",
+                    period: String(year),
+                  })}
+                </td>
+                <td>
+                  {navLink({
+                    type: ObsType.Photo,
+                    view: null,
+                    period: String(year),
+                  })}
+                </td>
+                <td>
+                  {navLink({
+                    type: ObsType.Sighting,
+                    view: null,
+                    period: String(year),
+                  })}
+                </td>
+              </tr>
+            ))}
           </table>
         </nav>
         <ThumbnailStrip photos={photos} />

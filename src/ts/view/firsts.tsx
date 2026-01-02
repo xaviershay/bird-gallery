@@ -21,6 +21,10 @@ export const FirstsView = (data: FirstsViewProps) => {
   // Show comment column only for sightings with no region, county, or period filters
   const showComment = !filter.region && !filter.county && !filter.period && filter.type === ObsType.Sighting;
 
+  // Extract unique years from observations and sort in descending order
+  const years = [...new Set(data.observations.map(obs => new Date(obs.seenAt).getFullYear()))]
+    .sort((a, b) => b - a);
+
   return (
     <>
       <section>
@@ -91,53 +95,55 @@ export const FirstsView = (data: FirstsViewProps) => {
                 })}
               </td>
             </tr>
-            <tr>
-              <th className="period">2025</th>
-              <td>
-                {navLink({
-                  type: ObsType.Photo,
-                  county: REGIONS.COUNTY.id,
-                  region: null,
-                  period: "2025",
-                })}
-              </td>
-              <td>
-                {navLink({
-                  type: ObsType.Sighting,
-                  county: REGIONS.COUNTY.id,
-                  region: null,
-                  period: "2025",
-                })}
-              </td>
-              <td>
-                {navLink({
-                  type: ObsType.Photo,
-                  region: REGIONS.STATE.id,
-                  period: "2025",
-                })}
-              </td>
-              <td>
-                {navLink({
-                  type: ObsType.Sighting,
-                  region: REGIONS.STATE.id,
-                  period: "2025",
-                })}
-              </td>
-              <td>
-                {navLink({
-                  type: ObsType.Photo,
-                  region: null,
-                  period: "2025",
-                })}
-              </td>
-              <td>
-                {navLink({
-                  type: ObsType.Sighting,
-                  region: null,
-                  period: "2025",
-                })}
-              </td>
-            </tr>
+            {years.map(year => (
+              <tr key={year}>
+                <th className="period">{year}</th>
+                <td>
+                  {navLink({
+                    type: ObsType.Photo,
+                    county: REGIONS.COUNTY.id,
+                    region: null,
+                    period: String(year),
+                  })}
+                </td>
+                <td>
+                  {navLink({
+                    type: ObsType.Sighting,
+                    county: REGIONS.COUNTY.id,
+                    region: null,
+                    period: String(year),
+                  })}
+                </td>
+                <td>
+                  {navLink({
+                    type: ObsType.Photo,
+                    region: REGIONS.STATE.id,
+                    period: String(year),
+                  })}
+                </td>
+                <td>
+                  {navLink({
+                    type: ObsType.Sighting,
+                    region: REGIONS.STATE.id,
+                    period: String(year),
+                  })}
+                </td>
+                <td>
+                  {navLink({
+                    type: ObsType.Photo,
+                    region: null,
+                    period: String(year),
+                  })}
+                </td>
+                <td>
+                  {navLink({
+                    type: ObsType.Sighting,
+                    region: null,
+                    period: String(year),
+                  })}
+                </td>
+              </tr>
+            ))}
           </table>
         </nav>
         <ThumbnailStrip photos={photos} />
