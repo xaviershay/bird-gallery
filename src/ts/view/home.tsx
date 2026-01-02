@@ -17,7 +17,13 @@ export const HomeView = (props: HomeViewProps) => {
     <>
       <section>
         <h2>
-          <i className="fa-solid fa-binoculars"></i> Recent Ticks
+          <i className="fa-solid fa-camera-retro"></i> Photos
+        </h2>
+        <ThumbnailStrip photos={photos} />
+      </section>
+      <section>
+        <h2>
+          <i className="fa-solid fa-binoculars"></i> Ticks
         </h2>
         {ticks.length === 0 ? (
           <p>No life list birds yet.</p>
@@ -35,7 +41,7 @@ export const HomeView = (props: HomeViewProps) => {
       </section>
       <section>
         <h2>
-          <i className="fa-solid fa-compass"></i> Recent Trips
+          <i className="fa-solid fa-compass"></i> Trips
         </h2>
         {recentTrips.length === 0 ? (
           <p>No trip reports yet.</p>
@@ -52,72 +58,9 @@ export const HomeView = (props: HomeViewProps) => {
       </section>
       <section>
         <h2>
-          <i className="fa-solid fa-camera-retro"></i> Photos
-        </h2>
-        <ThumbnailStrip photos={photos} />
-        <p>
-          On 9<sup>th</sup> March 2025 I started shooting with a{" "} 
-          <a href="https://www.nikonusa.com/p/coolpix-p950/26532/overview">
-            Nikon P950
-          </a> then switched to an <a href="https://explore.omsystem.com/au/en/om-1-mark-ii">OM-1</a>{" "}
-          in November 2025.  I use <a href="https://www.digikam.org/">Digikam</a> for management
-          and <a href="https://www.darktable.org/">Darktable</a> for processing.
-        </p>
-
-        <table className="photo-criteria">
-          <tr>
-            <th>Rating</th>
-            <th>Criteria</th>
-          </tr>
-          <tr>
-            <td>★</td>
-            <td>Identifiable but obstructed, blurry, or poorly lit.</td>
-          </tr>
-          <tr>
-            <td>★★</td>
-            <td>Unobstructed and passable quality.</td>
-          </tr>
-          <tr>
-            <td>★★★</td>
-            <td>Clear, sharp and technically proficient.</td>
-          </tr>
-          <tr>
-            <td>★★★★</td>
-            <td>Interesting pose, framing, or setting.</td>
-          </tr>
-          <tr>
-            <td>★★★★★</td>
-            <td>Competition worthy.</td>
-          </tr>
-        </table>
-      </section>
-      <section>
-        <h2>
-          <i className="fa-solid fa-leaf"></i>
-          {"  "}Rules
-        </h2>
-        <ul>
-          <li>
-            Distinctive features must be personally sighted. Others may help
-            with identification.
-          </li>
-          <li>Only hearing a bird doesn't count.</li>
-          <li>
-            <a href="https://ebird.org">eBird</a> taxonomy is canon.
-          </li>
-        </ul>
-      </section>
-      <section>
-        <h2>
           <i className="fa-solid fa-link"></i> Links
         </h2>
         <ul>
-          <li>
-            <a href="/firsts">Life List</a>
-          </li>
-          <li>
-            <a href="/trip-report">Trip Reports</a>
-          </li>
           <li>
             <a href="/report/nophotos">Missing Photos Report</a>
           </li>
@@ -126,6 +69,9 @@ export const HomeView = (props: HomeViewProps) => {
           </li>
           <li>
             <a href="/report/opportunities">Birding Opportunities Report</a>
+          </li>
+          <li>
+            <a href="/report/technical">Technical Details</a>
           </li>
           <li>
             <a href="https://blog.xaviershay.com">My blog</a>

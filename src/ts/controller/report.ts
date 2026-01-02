@@ -3,6 +3,7 @@ import { fetchSpeciesMissingPhotos, fetchLocationsSummary, fetchUniqueSpeciesByL
 import { MissingPhotosView } from "../view/missing_photos";
 import { LocationsView } from "../view/locations";
 import { BirdingOpportunitiesView } from "../view/birding_opportunities";
+import { TechnicalDetailsView } from "../view/technical_details";
 import { renderPageWithLayout, parseStringPathId, geoJsonResponse, jsonResponse } from "./helpers";
 
 export async function handleReport(
@@ -73,6 +74,12 @@ export async function handleReport(
       return renderPageWithLayout(
         BirdingOpportunitiesView({ excludeMode }),
         "Birding Opportunities - Xavier's Bird Lists",
+        env
+      );
+    case "technical":
+      return renderPageWithLayout(
+        TechnicalDetailsView(),
+        "Technical Details - Xavier's Bird Lists",
         env
       );
   }
