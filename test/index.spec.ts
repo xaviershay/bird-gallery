@@ -321,6 +321,34 @@ describe('', () => {
       expect(content).toContain('birding-opportunities.js');
     });
 
+    it('renders the species sightings page', async () => {
+      const response = await SELF.fetch('https://localhost/report/sightings?location=L123456&species=railor5&distance=25');
+      const content = await response.text();
+      expect(content).toContain('Recent Sightings');
+      expect(content).toContain('ebird-service.js');
+      expect(content).toContain('species-sightings.js');
+      expect(content).toContain('L123456');
+      expect(content).toContain('railor5');
+      expect(content).toContain('25');
+    });
+
+    it('returns 400 when sightings page missing location parameter', async () => {
+      const response = await SELF.fetch('https://localhost/report/sightings?species=railor5');
+      expect(response.status).toBe(400);
+      const json: any = await response.json();
+      expect(json.error).toContain('Missing required parameter');
+    });
+
+    it('renders species sightings page without species parameter', async () => {
+      const response = await SELF.fetch('https://localhost/report/sightings?location=L123456&distance=25');
+      const content = await response.text();
+      expect(content).toContain('Recent Sightings');
+      expect(content).toContain('ebird-service.js');
+      expect(content).toContain('species-sightings.js');
+      expect(content).toContain('L123456');
+      expect(content).toContain('25');
+    });
+
     it('returns JSON exclude list for photos mode - excludes birds photographed anywhere', async () => {
       const response = await SELF.fetch('https://localhost/report/opportunities.json?exclude=photos');
       const json: any = await response.json();

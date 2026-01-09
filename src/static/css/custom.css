@@ -76,6 +76,14 @@ ul {
   padding-left: 1rem;
 }
 
+/* Action links (bulletless) */
+ul.actions {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.5em 0 1em 0;
+  gap: 1em;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

@@ -21,6 +21,18 @@ export const SpeciesView = (data: SpeciesViewProps) => {
           <i className="fa-solid fa-feather"></i>
           {species.name}
         </h2>
+        <ul className="actions">
+          <li>
+            <a
+              id="copy-species-id"
+              href="#"
+              data-copy={species.id}
+              title="Copy species ID to clipboard"
+            >
+              <i className="fa-solid fa-copy"></i> Copy species ID to clipboard
+            </a>
+          </li>
+        </ul>
         <ThumbnailStrip photos={species.photos} />
         <MapView
           dataUrl={speciesUrl(species.id, { format: "geojson" })}
@@ -53,6 +65,9 @@ export const SpeciesView = (data: SpeciesViewProps) => {
           </tbody>
         </table>
       </section>
+
+      {/* Load copy to clipboard script */}
+      <script src="/js/copy-to-clipboard.js"></script>
     </>
   );
 };

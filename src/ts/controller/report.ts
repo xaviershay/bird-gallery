@@ -3,6 +3,7 @@ import { fetchSpeciesMissingPhotos, fetchLocationsSummary, fetchUniqueSpeciesByL
 import { MissingPhotosView } from "../view/missing_photos";
 import { LocationsView } from "../view/locations";
 import { BirdingOpportunitiesView } from "../view/birding_opportunities";
+import { SpeciesSightingsView } from "../view/species_sightings";
 import { TechnicalDetailsView } from "../view/technical_details";
 import { renderPageWithLayout, parseStringPathId, geoJsonResponse, jsonResponse } from "./helpers";
 
@@ -74,6 +75,23 @@ export async function handleReport(
       return renderPageWithLayout(
         BirdingOpportunitiesView({ excludeMode }),
         "Birding Opportunities - Xavier's Bird Lists",
+        env
+      );
+    case "sightings":
+      // Get URL parameters for location, species, and distance
+      const locationId = url.searchParams.get('location');
+      const speciesId = url.searchParams.get('species') || '';
+      const distanceParam = url.searchParams.get('distance');
+      
+      if (!locationId) {
+        return respondWith(400, { error: "Missing required parameter: location" }, corsHeaders);
+      }
+      
+      const distance = distanceParam ? parseInt(distanceParam, 10) : 50; // Default 50km
+      
+      return renderPageWithLayout(
+        SpeciesSightingsView({ locationId, speciesId, distance }),
+        "Recent Sightings - Xavier's Bird Lists",
         env
       );
     case "technical":

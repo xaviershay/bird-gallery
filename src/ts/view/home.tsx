@@ -60,6 +60,7 @@ export const HomeView = (props: HomeViewProps) => {
         <h2>
           <i className="fa-solid fa-link"></i> Links
         </h2>
+        <p>Many of these reports require you to have an <a href="https://ebird.org/api/keygen">eBird API Key.</a></p>
         <ul>
           <li>
             <a href="/report/nophotos">Missing Photos Report</a>
@@ -68,7 +69,10 @@ export const HomeView = (props: HomeViewProps) => {
             <a href="/report/locations">Locations Report</a>
           </li>
           <li>
-            <a href="/report/opportunities">Birding Opportunities Report</a>
+            <a href="/report/opportunities">Melbourne Opportunities Report</a>
+          </li>
+          <li>
+            <a href="/report/sightings?location=919153">Recent Sightings Report</a>
           </li>
           <li>
             <a href="/report/technical">Technical Details</a>

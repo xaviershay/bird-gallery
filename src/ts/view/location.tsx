@@ -32,6 +32,23 @@ export const LocationView = (data: LocationViewProps) => {
           <i className="fa-solid fa-location-dot"></i>
           {locationName}
         </h2>
+        <ul className="actions">
+          <li>
+            <a
+              id="copy-location-id"
+              href="#"
+              data-copy={String(location.id)}
+              title="Copy location ID to clipboard"
+            >
+              <i className="fa-solid fa-copy"></i> Copy location ID to clipboard
+            </a>
+          </li>
+          <li>
+            <a href={`/report/sightings?location=${location.id}`}>
+              <i className="fa-solid fa-binoculars"></i> Recent sightings nearby
+            </a>
+          </li>
+        </ul>
         <nav>
           <table>
             <tr>
@@ -136,6 +153,8 @@ export const LocationView = (data: LocationViewProps) => {
           </tbody>
         </table>
       </section>
+      {/* Load copy to clipboard script */}
+      <script src="/js/copy-to-clipboard.js"></script>
     </>
   );
 };
