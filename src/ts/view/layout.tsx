@@ -29,6 +29,7 @@ export const LayoutView = (props: LayoutViewProps) => {
         <script src={EXTERNAL_SERVICES.MAPBOX_JS}></script>
         <link href={EXTERNAL_SERVICES.GOOGLE_FONTS} rel="stylesheet" />
         <link rel="stylesheet" href="/css/custom.css" />
+        <link rel="me" href="https://mas.to/@xshay" />
         <title>{props.title}</title>
       </head>
       <body>

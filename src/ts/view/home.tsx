@@ -78,10 +78,10 @@ export const HomeView = (props: HomeViewProps) => {
             <a href="/report/technical">Technical Details</a>
           </li>
           <li>
-            <a href="https://blog.xaviershay.com">My blog</a>
+            <a href="https://blog.xaviershay.com" rel="me">My blog</a>
           </li>
           <li>
-            <a href="https://ebird.org/profile/NjY3NjU0MQ/world">
+            <a href="https://ebird.org/profile/NjY3NjU0MQ/world" rel="me">
               eBird Profile
             </a>
           </li>
