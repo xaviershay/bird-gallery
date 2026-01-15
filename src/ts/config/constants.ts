@@ -39,11 +39,18 @@ export const APP_TITLE = "Xavier's Bird Lists";
 
 /**
  * External service URLs
+ * NOTE: These services are now hosted locally in src/static/external/
+ * The following are the original external URLs these files came from:
  */
 export const EXTERNAL_SERVICES = {
-  SIMPLE_CSS: "https://cdn.simplecss.org/simple.min.css",
-  FONT_AWESOME: "https://kit.fontawesome.com/c9d2c1b382.js",
-  GOOGLE_FONTS: "https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter&display=swap",
-  MAPBOX_CSS: "https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css",
-  MAPBOX_JS: "https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js",
+  SIMPLE_CSS: "/external/css/simple.min.css",
+  // Originally: https://cdn.simplecss.org/simple.min.css
+  FONT_AWESOME: "/external/css/fontawesome.min.css",
+  // Originally: https://kit.fontawesome.com/c9d2c1b382.js (v7.1.0 free version)
+  GOOGLE_FONTS: "/external/fonts/google-fonts.css",
+  // Originally: https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter&display=swap
+  MAPBOX_CSS: "/external/css/mapbox-gl.css",
+  // Originally: https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css
+  MAPBOX_JS: "/external/js/mapbox-gl.js",
+  // Originally: https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js
 } as const;

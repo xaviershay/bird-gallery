@@ -17,7 +17,10 @@ export const LayoutView = (props: LayoutViewProps) => {
           rel="stylesheet"
           href={EXTERNAL_SERVICES.SIMPLE_CSS}
         />
-        <script src={EXTERNAL_SERVICES.FONT_AWESOME} crossOrigin="anonymous"></script>
+        <link
+          rel="stylesheet"
+          href={EXTERNAL_SERVICES.FONT_AWESOME}
+        />
         <meta
           name="viewport"
           content="initial-scale=1,maximum-scale=1,user-scalable=no"
