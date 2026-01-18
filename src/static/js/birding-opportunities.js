@@ -1,25 +1,47 @@
 /**
  * Birding Opportunities Report (Client-Side)
  * 
- * Finds birds recently seen in AU-VIC-MEL that you haven't photographed/seen yet.
+ * Finds birds recently seen in a region/location that would be lifers or photo lifers.
  * 
  * Flow:
  * 1. Check for eBird API key in localStorage, prompt if missing
- * 2. Fetch exclude list from server (species already seen/photographed)
+ * 2. Fetch species tags from server (lifer status for each species)
  * 3. Fetch recent observations from eBird API
- * 4. Filter to find "target" species (not in exclude list)
+ * 4. Filter to find "target" species (ones with at least one lifer tag)
  * 5. For each target species, fetch detailed location observations
- * 6. Display results on map and in table
+ * 6. Display results on map and in table with tags
  */
 
-const REGION_CODE = "AU-VIC-MEL";
 const DAYS_BACK = 7;
+const DEFAULT_REGION = "AU-VIC-MEL";
+const DEFAULT_MAP_CENTER = [144.9631, -37.8136]; // Melbourne
+const DEFAULT_ZOOM = 9;
 
 // State
-let excludeList = [];
+let speciesTags = {};  // Map of speciesCode -> tag info
 let targetSpecies = [];
 let allObservations = [];
-let isLoading = false;
+
+/**
+ * Get region and location from URL parameters
+ */
+function getLocationParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    region: params.get('region') || DEFAULT_REGION,
+    location: params.get('location') || null
+  };
+}
+
+/**
+ * Get the region code or location to use for eBird API
+ */
+function getEBirdRegionOrLocation() {
+  const { region, location } = getLocationParams();
+  // If location is provided, use it (for hotspot-specific queries)
+  // Otherwise use the region
+  return location || region;
+}
 
 /**
  * Format a date string with ordinal suffix and time in AM/PM format
@@ -54,11 +76,52 @@ function formatDateTime(dateStr) {
 }
 
 /**
+ * Get the display tags for a species.
+ * When a tag implies others, we only show the most significant one:
+ * - "Lifer" implies all others
+ * - "Year Lifer" implies "Location Lifer"
+ */
+function getDisplayTags(tags) {
+  if (!tags) return [];
+  
+  const result = [];
+  
+  if (tags.isLifer) {
+    // Lifer implies everything else, so just show Lifer
+    result.push({ class: 'tag-lifer', label: '🏆 Lifer' });
+  } else {
+    // Not a lifer, so check photo lifer
+    if (tags.isPhotoLifer) {
+      result.push({ class: 'tag-photo-lifer', label: '📸 Photo Lifer' });
+    }
+    
+    // Year lifer implies location lifer, so only show year lifer if true
+    if (tags.isYearLifer) {
+      result.push({ class: 'tag-year-lifer', label: '🎉 Year Lifer' });
+    } else if (tags.isLocationLifer) {
+      // Only show location lifer if not a year lifer
+      result.push({ class: 'tag-location-lifer', label: '📍 Location Lifer' });
+    }
+  }
+  
+  return result;
+}
+
+/**
+ * Check if a species has at least one relevant tag
+ */
+function hasAnyTag(tags) {
+  if (!tags) return false;
+  return tags.isLifer || tags.isPhotoLifer || tags.isYearLifer || tags.isLocationLifer;
+}
+
+/**
  * Initialize the report
  */
 async function initBirdingOpportunities() {
-  const excludeMode = getExcludeMode();
-  console.log('[Birding Opportunities] Initializing with exclude mode:', excludeMode);
+  const { region, location } = getLocationParams();
+  const regionOrLocation = location || region;
+  console.log('[Birding Opportunities] Initializing with region/location:', regionOrLocation);
   
   try {
     showStatus("Loading...");
@@ -79,41 +142,49 @@ async function initBirdingOpportunities() {
       console.log('[Birding Opportunities] Using existing API key from localStorage');
     }
     
-    // Fetch exclude list from server
+    // Fetch species tags from server
     showStatus("Loading your bird list...");
-    console.log('[Birding Opportunities] Fetching exclude list from server...');
-    excludeList = await fetchExcludeList(excludeMode);
-    console.log(`[Birding Opportunities] Exclude list loaded: ${excludeList.length} species`, excludeList);
+    console.log('[Birding Opportunities] Fetching species tags from server...');
+    const tagsArray = await fetchSpeciesTags(region, location);
+    
+    // Convert to map for quick lookup
+    speciesTags = {};
+    tagsArray.forEach(s => {
+      speciesTags[s.id] = s;
+    });
+    console.log(`[Birding Opportunities] Species tags loaded: ${tagsArray.length} species`);
     
     // Fetch recent observations from eBird
-    showStatus(`Fetching recent observations in ${REGION_CODE}...`);
-    console.log(`[Birding Opportunities] Fetching recent observations from eBird API for ${REGION_CODE}, last ${DAYS_BACK} days...`);
-    const recentObs = await getRecentObservations(REGION_CODE, apiKey, DAYS_BACK);
+    showStatus(`Fetching recent observations in ${regionOrLocation}...`);
+    console.log(`[Birding Opportunities] Fetching recent observations from eBird API for ${regionOrLocation}, last ${DAYS_BACK} days...`);
+    const recentObs = await getRecentObservations(regionOrLocation, apiKey, DAYS_BACK);
     console.log(`[Birding Opportunities] Received ${recentObs.length} recent observations from eBird`, recentObs);
     
-    // Find target species (not in exclude list)
-    const excludeCodes = new Set(excludeList.map(s => s.id));
-    console.log('[Birding Opportunities] Exclude codes set:', Array.from(excludeCodes));
+    // Find target species (ones with at least one tag)
     const uniqueSpecies = new Map();
     
     recentObs.forEach(obs => {
       const speciesCode = obs.speciesCode;
-        if (!excludeCodes.has(speciesCode) && speciesCode !== 'rocpig' && !uniqueSpecies.has(speciesCode)) {
+      const tags = speciesTags[speciesCode];
+      
+      // Only include if it has at least one tag and isn't Rock Pigeon
+      if (hasAnyTag(tags) && speciesCode !== 'rocpig' && !uniqueSpecies.has(speciesCode)) {
         uniqueSpecies.set(speciesCode, {
           code: speciesCode,
           name: obs.comName,
-          scientificName: obs.sciName
+          scientificName: obs.sciName,
+          tags: tags
         });
       }
     });
     
     targetSpecies = Array.from(uniqueSpecies.values());
-    console.log(`[Birding Opportunities] Found ${targetSpecies.length} target species (not in exclude list):`, targetSpecies);
+    console.log(`[Birding Opportunities] Found ${targetSpecies.length} target species with tags:`, targetSpecies);
     
     if (targetSpecies.length === 0) {
-      console.log('[Birding Opportunities] No new birds to chase!');
-      showStatus("No new birds found! You've seen everything recently reported in this region.");
-      renderResults([], excludeMode);
+      console.log('[Birding Opportunities] No target birds found!');
+      showStatus("No target birds found! Nothing recently reported matches your lifer criteria.");
+      renderResults([]);
       return;
     }
     
@@ -124,7 +195,7 @@ async function initBirdingOpportunities() {
     const observationPromises = targetSpecies.map(async (species, index) => {
       try {
         // Check if data is cached before adding delay
-        const isCached = isSpeciesObservationsCached(REGION_CODE, species.code, DAYS_BACK);
+        const isCached = isSpeciesObservationsCached(regionOrLocation, species.code, DAYS_BACK);
         
         // Only add delay for uncached requests to avoid rate limiting
         if (!isCached) {
@@ -132,13 +203,14 @@ async function initBirdingOpportunities() {
         }
         
         console.log(`[Birding Opportunities] Fetching observations for ${species.name} (${species.code})...`);
-        const obs = await getSpeciesObservations(REGION_CODE, species.code, apiKey, DAYS_BACK);
+        const obs = await getSpeciesObservations(regionOrLocation, species.code, apiKey, DAYS_BACK);
         console.log(`[Birding Opportunities] Received ${obs.length} observations for ${species.name}`);
         return obs.map(o => ({
           ...o,
           commonName: species.name,
           scientificName: species.scientificName,
-          speciesCode: species.code
+          speciesCode: species.code,
+          tags: species.tags
         }));
       } catch (error) {
         console.error(`[Birding Opportunities] Failed to fetch observations for ${species.name}:`, error);
@@ -154,7 +226,7 @@ async function initBirdingOpportunities() {
     
     // Render results
     console.log('[Birding Opportunities] Rendering results...');
-    renderResults(allObservations, excludeMode);
+    renderResults(allObservations);
     console.log('[Birding Opportunities] Rendering map...');
     renderMap(allObservations);
     console.log('[Birding Opportunities] Initialization complete!');
@@ -166,26 +238,21 @@ async function initBirdingOpportunities() {
 }
 
 /**
- * Get the exclude mode from URL parameter
+ * Fetch the species tags from the server
  */
-function getExcludeMode() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('exclude') || 'photos';
-}
-
-/**
- * Fetch the exclude list from the server
- */
-async function fetchExcludeList(mode) {
-  const url = `/report/opportunities.json?exclude=${mode}`;
-  console.log('[Birding Opportunities] Fetching exclude list from:', url);
+async function fetchSpeciesTags(region, location) {
+  let url = `/report/opportunities.json?region=${encodeURIComponent(region)}`;
+  if (location) {
+    url += `&location=${encodeURIComponent(location)}`;
+  }
+  console.log('[Birding Opportunities] Fetching species tags from:', url);
   const response = await fetch(url);
   if (!response.ok) {
-    console.error('[Birding Opportunities] Failed to fetch exclude list:', response.status, response.statusText);
-    throw new Error('Failed to fetch exclude list from server');
+    console.error('[Birding Opportunities] Failed to fetch species tags:', response.status, response.statusText);
+    throw new Error('Failed to fetch species tags from server');
   }
   const data = await response.json();
-  console.log('[Birding Opportunities] Exclude list fetched successfully:', data);
+  console.log('[Birding Opportunities] Species tags fetched successfully:', data.length, 'species');
   return data;
 }
 
@@ -213,9 +280,9 @@ function showError(message) {
 }
 
 /**
- * Render results table
+ * Render results table with tags
  */
-function renderResults(observations, excludeMode) {
+function renderResults(observations) {
   console.log(`[Birding Opportunities] Rendering results table with ${observations.length} observations`);
   const tbody = document.getElementById('results-tbody');
   if (!tbody) return;
@@ -244,8 +311,8 @@ function renderResults(observations, excludeMode) {
     // Group header row for the location
     const locHeader = document.createElement('tr');
     locHeader.className = 'group-row';
-  const headerCell = document.createElement('td');
-  headerCell.colSpan = 2; // Two columns: species, date (linked)
+    const headerCell = document.createElement('td');
+    headerCell.colSpan = 2;
     // Location name links to eBird location page if locId exists
     if (loc.id) {
       const locLink = document.createElement('a');
@@ -259,33 +326,43 @@ function renderResults(observations, excludeMode) {
     locHeader.appendChild(headerCell);
     tbody.appendChild(locHeader);
 
-
-
-
-
-
-
-
-      // Instead of aggregating, output one row per sighting
-      loc.observations.forEach(obs => {
-    const sightingRow = document.createElement('tr');
-    const speciesCell = document.createElement('td');
-    // Species name links to eBird species page
-    const speciesLink = document.createElement('a');
-    speciesLink.href = `https://ebird.org/species/${obs.speciesCode}`;
-    speciesLink.textContent = obs.commonName || obs.comName;
-    speciesLink.target = '_blank';
-    speciesCell.appendChild(speciesLink);
-    sightingRow.appendChild(speciesCell);
-    const dateCell = document.createElement('td');
-    const checklistLink = document.createElement('a');
-    checklistLink.href = `https://ebird.org/checklist/${obs.subId}`;
-    checklistLink.innerHTML = formatDateTime(obs.obsDt);
-    checklistLink.target = '_blank';
-    dateCell.appendChild(checklistLink);
-    sightingRow.appendChild(dateCell);
-    tbody.appendChild(sightingRow);
-      });
+    // Output one row per sighting with tags
+    loc.observations.forEach(obs => {
+      const sightingRow = document.createElement('tr');
+      const speciesCell = document.createElement('td');
+      
+      // Species name links to eBird species page
+      const speciesLink = document.createElement('a');
+      speciesLink.href = `https://ebird.org/species/${obs.speciesCode}`;
+      speciesLink.textContent = obs.commonName || obs.comName;
+      speciesLink.target = '_blank';
+      speciesCell.appendChild(speciesLink);
+      
+      // Add tags
+      const displayTags = getDisplayTags(obs.tags);
+      if (displayTags.length > 0) {
+        const tagsContainer = document.createElement('div');
+        tagsContainer.className = 'species-tags';
+        displayTags.forEach(tag => {
+          const tagSpan = document.createElement('span');
+          tagSpan.className = `tag ${tag.class}`;
+          tagSpan.textContent = tag.label;
+          tagsContainer.appendChild(tagSpan);
+        });
+        speciesCell.appendChild(tagsContainer);
+      }
+      
+      sightingRow.appendChild(speciesCell);
+      
+      const dateCell = document.createElement('td');
+      const checklistLink = document.createElement('a');
+      checklistLink.href = `https://ebird.org/checklist/${obs.subId}`;
+      checklistLink.innerHTML = formatDateTime(obs.obsDt);
+      checklistLink.target = '_blank';
+      dateCell.appendChild(checklistLink);
+      sightingRow.appendChild(dateCell);
+      tbody.appendChild(sightingRow);
+    });
   });
 
   // Update species count (unique across all observations)
@@ -329,15 +406,26 @@ function renderMap(observations) {
   
   console.log('[Birding Opportunities] GeoJSON created with', features.length, 'features');
   
+  // Determine map center from observations, fall back to Melbourne
+  let center = DEFAULT_MAP_CENTER;
+  if (features.length > 0) {
+    const lngs = features.map(f => f.geometry.coordinates[0]);
+    const lats = features.map(f => f.geometry.coordinates[1]);
+    center = [
+      (Math.min(...lngs) + Math.max(...lngs)) / 2,
+      (Math.min(...lats) + Math.max(...lats)) / 2
+    ];
+  }
+  
   // Initialize map
   mapboxgl.accessToken = "pk.eyJ1IjoieGF2aWVyc2hheSIsImEiOiJjbWE3c2w3NzIxNmRsMmpxNDkybHp1YmdmIn0.1sPPFdMJ0-6DrZN5B9-0Dg";
   
-  console.log('[Birding Opportunities] Initializing Mapbox map...');
+  console.log('[Birding Opportunities] Initializing Mapbox map centered at', center);
   const map = new mapboxgl.Map({
     container: "map",
-    center: [144.9631, -37.8136], // Melbourne
+    center: center,
     style: "mapbox://styles/xaviershay/cm9pb3a92004h01spbg7442q3",
-    zoom: 9
+    zoom: DEFAULT_ZOOM
   });
   
   map.on("load", () => {
@@ -444,17 +532,15 @@ function renderMap(observations) {
       map.getCanvas().style.cursor = "";
     });
     
+    // Fit bounds if we have observations
+    if (features.length > 1) {
+      const bounds = new mapboxgl.LngLatBounds();
+      features.forEach(f => bounds.extend(f.geometry.coordinates));
+      map.fitBounds(bounds, { padding: 50 });
+    }
+    
     console.log('[Birding Opportunities] Map setup complete with all layers and event handlers');
   });
-}
-
-/**
- * Handle exclude mode change
- */
-function changeExcludeMode(mode) {
-  const url = new URL(window.location);
-  url.searchParams.set('exclude', mode);
-  window.location = url.toString();
 }
 
 /**
@@ -469,13 +555,6 @@ function changeApiKey() {
  * Wire up event handlers
  */
 function setupEventHandlers() {
-  const excludeSelect = document.getElementById('exclude-mode');
-  if (excludeSelect) {
-    excludeSelect.addEventListener('change', (e) => {
-      changeExcludeMode(e.target.value);
-    });
-  }
-  
   const apiKeyButton = document.getElementById('api-key-button');
   if (apiKeyButton) {
     apiKeyButton.addEventListener('click', changeApiKey);

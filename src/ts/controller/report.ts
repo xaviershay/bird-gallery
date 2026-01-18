@@ -1,5 +1,5 @@
 import { respondWith, corsHeaders } from "./base";
-import { fetchSpeciesMissingPhotos, fetchLocationsSummary, fetchUniqueSpeciesByLocationObservations, fetchBirdingOpportunitiesExcludeList } from "../model/report";
+import { fetchSpeciesMissingPhotos, fetchLocationsSummary, fetchUniqueSpeciesByLocationObservations, fetchBirdingOpportunitiesTags } from "../model/report";
 import { MissingPhotosView } from "../view/missing_photos";
 import { LocationsView } from "../view/locations";
 import { BirdingOpportunitiesView } from "../view/birding_opportunities";
@@ -57,23 +57,19 @@ export async function handleReport(
         env
       );
     case "opportunities":
-      // JSON endpoint for exclude list
+      // Get region/location from URL params
+      const oppRegion = url.searchParams.get('region') || 'AU-VIC-MEL';
+      const oppLocation = url.searchParams.get('location') || null;
+      
+      // JSON endpoint for bird tags (lifer status)
       if (url.pathname.endsWith('.json')) {
-        const excludeMode = (url.searchParams.get('exclude') || 'photos') as 'photos' | 'all';
-        // Hard-coded to Melbourne region for now
-        const excludeList = await fetchBirdingOpportunitiesExcludeList(
-          env,
-          excludeMode,
-          'au-vic',
-          'melbourne'
-        );
-        return jsonResponse(excludeList);
+        const birdTags = await fetchBirdingOpportunitiesTags(env, oppRegion, oppLocation);
+        return jsonResponse(birdTags);
       }
 
       // HTML page
-      const excludeMode = (url.searchParams.get('exclude') || 'photos') as 'photos' | 'all';
       return renderPageWithLayout(
-        BirdingOpportunitiesView({ excludeMode }),
+        BirdingOpportunitiesView({ region: oppRegion, location: oppLocation }),
         "Birding Opportunities - Xavier's Bird Lists",
         env
       );

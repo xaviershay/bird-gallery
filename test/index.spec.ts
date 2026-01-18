@@ -349,38 +349,58 @@ describe('', () => {
       expect(content).toContain('25');
     });
 
-    it('returns JSON exclude list for photos mode - excludes birds photographed anywhere', async () => {
-      const response = await SELF.fetch('https://localhost/report/opportunities.json?exclude=photos');
+    it('returns JSON with lifer tags for all species', async () => {
+      const response = await SELF.fetch('https://localhost/report/opportunities.json?region=AU-VIC-MEL');
       const json: any = await response.json();
       expect(Array.isArray(json)).toBe(true);
-      // Rainbow Lorikeet has a photo in Melbourne, so should be excluded
-      expect(json.some((s: any) => s.id === 'railor5')).toBe(true);
-      // Cockatoo has a photo in Sydney, so should also be excluded (photos mode = anywhere)
-      expect(json.some((s: any) => s.id === 'cockat1')).toBe(true);
-      // Magpie doesn't have a photo anywhere, so should NOT be in exclude list
-      expect(json.some((s: any) => s.id === 'magpie1')).toBe(false);
+      
+      // Find each species in the response
+      const railor = json.find((s: any) => s.id === 'railor5');
+      const magpie = json.find((s: any) => s.id === 'magpie1');
+      const cockat = json.find((s: any) => s.id === 'cockat1');
+      
+      // Rainbow Lorikeet has a photo and is seen in Melbourne
+      expect(railor).toBeDefined();
+      expect(railor.isLifer).toBe(false);         // Has observations
+      expect(railor.isPhotoLifer).toBe(false);    // Has photos
+      expect(railor.isLocationLifer).toBe(false); // Seen in Melbourne
+      
+      // Magpie is seen in Melbourne but has no photos
+      expect(magpie).toBeDefined();
+      expect(magpie.isLifer).toBe(false);         // Has observations
+      expect(magpie.isPhotoLifer).toBe(true);     // No photos - IS a photo lifer
+      expect(magpie.isLocationLifer).toBe(false); // Seen in Melbourne
+      
+      // Cockatoo is seen in Sydney (not Melbourne) and has a photo
+      expect(cockat).toBeDefined();
+      expect(cockat.isLifer).toBe(false);         // Has observations
+      expect(cockat.isPhotoLifer).toBe(false);    // Has photos
+      expect(cockat.isLocationLifer).toBe(true);  // NOT seen in Melbourne - IS a location lifer
     });
 
-    it('returns JSON exclude list for all mode - excludes birds seen in Melbourne', async () => {
-      const response = await SELF.fetch('https://localhost/report/opportunities.json?exclude=all');
+    it('returns location lifer status based on region parameter', async () => {
+      // When querying for Sydney region (AU-NSW), Cockatoo should NOT be location lifer
+      const response = await SELF.fetch('https://localhost/report/opportunities.json?region=AU-NSW');
       const json: any = await response.json();
-      expect(Array.isArray(json)).toBe(true);
-      // Rainbow Lorikeet seen in Melbourne, so should be excluded
-      expect(json.some((s: any) => s.id === 'railor5')).toBe(true);
-      // Magpie seen in Melbourne, so should be excluded
-      expect(json.some((s: any) => s.id === 'magpie1')).toBe(true);
-      // Cockatoo only seen in Sydney, so should NOT be in exclude list
-      expect(json.some((s: any) => s.id === 'cockat1')).toBe(false);
+      
+      const cockat = json.find((s: any) => s.id === 'cockat1');
+      expect(cockat).toBeDefined();
+      expect(cockat.isLocationLifer).toBe(false);  // Seen in Sydney (AU-NSW)
+      
+      // Rainbow Lorikeet should be a location lifer in Sydney
+      const railor = json.find((s: any) => s.id === 'railor5');
+      expect(railor).toBeDefined();
+      expect(railor.isLocationLifer).toBe(true);   // NOT seen in Sydney
     });
 
-    it('defaults to photos mode when no exclude param provided', async () => {
+    it('defaults to AU-VIC-MEL region when no region param provided', async () => {
       const response = await SELF.fetch('https://localhost/report/opportunities.json');
       const json: any = await response.json();
       expect(Array.isArray(json)).toBe(true);
-      // Should work the same as ?exclude=photos (anywhere)
-      expect(json.some((s: any) => s.id === 'railor5')).toBe(true);
-      expect(json.some((s: any) => s.id === 'cockat1')).toBe(true);
-      expect(json.some((s: any) => s.id === 'magpie1')).toBe(false);
+      
+      // Should work the same as ?region=AU-VIC-MEL
+      const cockat = json.find((s: any) => s.id === 'cockat1');
+      expect(cockat.isLocationLifer).toBe(true);  // NOT seen in Melbourne
     });
   });
 

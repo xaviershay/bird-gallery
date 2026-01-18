@@ -117,71 +117,97 @@ export async function fetchUniqueSpeciesByLocationObservations(env: Env): Promis
 }
 
 /**
- * Fetch species to exclude from birding opportunities report
- * @param env - Cloudflare environment
- * @param mode - Exclude mode: 'photos' (species with photos anywhere) or 'all' (all species seen in region)
- * @param region - Region filter (e.g., 'au-vic') - only used for 'all' mode
- * @param county - County filter (e.g., 'melbourne') - only used for 'all' mode
- * @returns List of species IDs to exclude
+ * Result type for birding opportunities with lifer tags
  */
-export async function fetchBirdingOpportunitiesExcludeList(
+export interface SpeciesWithTags {
+  id: string;
+  name: string;
+  isLifer: boolean;        // Never seen anywhere
+  isPhotoLifer: boolean;   // Seen but not photographed
+  isYearLifer: boolean;    // Not seen this year
+  isLocationLifer: boolean; // Not seen at this region/location
+}
+
+/**
+ * Fetch species with lifer tags for birding opportunities report.
+ * Returns all species in the database with their lifer status tags.
+ * The client will filter to only show species with at least one tag.
+ * 
+ * @param env - Cloudflare environment
+ * @param region - Region filter (e.g., 'AU-VIC-MEL') - used to determine location lifers
+ * @param location - Hotspot ID (e.g., 'L919153') - if provided, takes precedence over region
+ * @returns List of species with their lifer tags
+ */
+export async function fetchBirdingOpportunitiesTags(
   env: Env,
-  mode: 'photos' | 'all',
-  region: string | null,
-  county: string | null
-): Promise<Species[]> {
-  const regionCondition = region
-    ? `AND LOWER(state) LIKE LOWER(?) || '%'`
-    : "";
-  const countyCondition = county
-    ? `AND LOWER(county) = LOWER(?)`
-    : "";
+  region: string,
+  location: string | null
+): Promise<SpeciesWithTags[]> {
+  // Parse region into state/county for location matching
+  // Region format: "AU-VIC" or "AU-VIC-MEL" (country-state or country-state-county)
+  const regionParts = region.toUpperCase().split('-');
+  const stateCode = regionParts.length >= 2 ? `${regionParts[0]}-${regionParts[1]}` : region;
+  const countyName = regionParts.length >= 3 ? regionParts.slice(2).join('-') : null;
 
-  let query: string;
+  // Build the location condition for "location lifer" check
+  // If a specific hotspot location is provided, match by location ID
+  // Otherwise, match by region (state and optionally county)
+  let locationCondition: string;
+  const bindings: (string | number)[] = [];
   
-  if (mode === 'photos') {
-    // Exclude species with photos anywhere (ignore region/county)
-    query = `
-      SELECT DISTINCT
-        species.id,
-        species.common_name as name
-      FROM species
-      INNER JOIN observation ON species.id = observation.species_id
-      INNER JOIN photo ON observation.id = photo.observation_id
-      ORDER BY name
-    `;
+  if (location) {
+    // Match by hotspot ID (location ID in our DB is numeric, but eBird uses L-prefixed)
+    // We need to strip the 'L' prefix if present
+    const locationId = location.startsWith('L') ? location.substring(1) : location;
+    locationCondition = `o.location_id = ?`;
+    bindings.push(parseInt(locationId, 10));
+  } else if (countyName) {
+    // Match by state and county (use LIKE for county since eBird uses abbreviations like "MEL" for "Melbourne")
+    locationCondition = `UPPER(l.state) = ? AND UPPER(l.county) LIKE ? || '%'`;
+    bindings.push(stateCode, countyName);
   } else {
-    // Exclude all species seen in the specified region/county
-    query = `
-      SELECT DISTINCT
-        species.id,
-        species.common_name as name
-      FROM species
-      INNER JOIN observation_wide ON species.id = observation_wide.species_id
-      WHERE 1=1
-      ${regionCondition}
-      ${countyCondition}
-      ORDER BY name
-    `;
+    // Match by state only
+    locationCondition = `UPPER(l.state) LIKE ? || '%'`;
+    bindings.push(stateCode);
   }
+  
+  const currentYear = new Date().getFullYear().toString();
 
-  let statement = env.DB.prepare(query);
-  const bindings: string[] = [];
+  // Query all species with their lifer status
+  // We compute the tags directly in SQL for efficiency
+  const query = `
+    SELECT 
+      s.id,
+      s.common_name as name,
+      -- isLifer: no observations anywhere
+      (SELECT COUNT(*) FROM observation WHERE species_id = s.id) = 0 as isLifer,
+      -- isPhotoLifer: has observations but no photos
+      (SELECT COUNT(*) FROM observation WHERE species_id = s.id) > 0 
+        AND (SELECT COUNT(*) FROM observation o2 
+             INNER JOIN photo ON o2.id = photo.observation_id 
+             WHERE o2.species_id = s.id) = 0 as isPhotoLifer,
+      -- isYearLifer: no observations this year
+      (SELECT COUNT(*) FROM observation 
+       WHERE species_id = s.id 
+       AND strftime('%Y', seen_at) = ?) = 0 as isYearLifer,
+      -- isLocationLifer: no observations at this location/region
+      (SELECT COUNT(*) FROM observation o
+       INNER JOIN location l ON o.location_id = l.id
+       WHERE o.species_id = s.id 
+       AND ${locationCondition}) = 0 as isLocationLifer
+    FROM species s
+    ORDER BY s.common_name
+  `;
+
+  const statement = env.DB.prepare(query).bind(currentYear, ...bindings);
+  const result = await statement.all<any>();
   
-  // Only apply bindings for 'all' mode where region/county filtering is used
-  if (mode === 'all') {
-    if (region) {
-      bindings.push(region);
-    }
-    if (county) {
-      bindings.push(county);
-    }
-  }
-  
-  if (bindings.length > 0) {
-    statement = statement.bind(...bindings);
-  }
-  
-  const result = await statement.all<Species>();
-  return result.results;
+  return result.results.map((r: any) => ({
+    id: r.id,
+    name: r.name,
+    isLifer: Boolean(r.isLifer),
+    isPhotoLifer: Boolean(r.isPhotoLifer),
+    isYearLifer: Boolean(r.isYearLifer),
+    isLocationLifer: Boolean(r.isLocationLifer),
+  }));
 }

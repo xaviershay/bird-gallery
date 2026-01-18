@@ -1,15 +1,18 @@
 /**
  * Birding Opportunities View
  * 
- * Displays birds recently seen in AU-VIC-MEL that you haven't photographed/seen yet.
+ * Displays birds recently seen in a region/location that match lifer criteria.
  * Uses client-side JavaScript to fetch eBird API data and render results.
  */
 
 interface BirdingOpportunitiesViewProps {
-  excludeMode: 'photos' | 'all';
+  region: string;      // eBird region code (e.g., "AU-VIC-MEL")
+  location: string | null;  // eBird hotspot ID (e.g., "L919153") - takes precedence over region
 }
 
-export const BirdingOpportunitiesView = ({ excludeMode }: BirdingOpportunitiesViewProps) => {
+export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunitiesViewProps) => {
+  const displayLocation = location || region;
+  
   return (
     <>
       <section>
@@ -17,18 +20,17 @@ export const BirdingOpportunitiesView = ({ excludeMode }: BirdingOpportunitiesVi
           <i className="fa-solid fa-binoculars"></i> Opportunities
         </h2>
         <p>
-          Birds seen recently (last 7 days) in Melbourne (AU-VIC-MEL) that I haven't {excludeMode === 'photos' ? 'photographed (anywhere)' : 'seen in Melbourne'} yet.
+          Birds seen recently (last 7 days) in <strong id="location-display">{displayLocation}</strong> that would be lifers or photo lifers.
         </p>
         
+        <div className="tag-legend">
+          <span className="tag tag-lifer">🏆 Lifer</span> New species for my life list
+          <span className="tag tag-photo-lifer">📸 Photo Lifer</span> Seen but not photographed
+          <span className="tag tag-year-lifer">🎉 Year Lifer</span> Not seen yet this year
+          <span className="tag tag-location-lifer">📍 Location Lifer</span> Not seen at this location
+        </div>
+        
         <div className="controls">
-          <div className="control-group">
-            <label>Exclude:</label>
-            <select id="exclude-mode">
-              <option value="photos" selected={excludeMode === 'photos'}>Birds I've photographed (anywhere)</option>
-              <option value="all" selected={excludeMode === 'all'}>Birds I've seen in Melbourne</option>
-            </select>
-          </div>
-          
           <div className="control-group">
             <button id="api-key-button" className="secondary">
               <i className="fa-solid fa-key"></i> Change eBird API Key
@@ -58,6 +60,51 @@ export const BirdingOpportunitiesView = ({ excludeMode }: BirdingOpportunitiesVi
       </section>
       
       <style dangerouslySetInnerHTML={{ __html: `
+        .tag-legend {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5em 1.5em;
+          padding: 1em;
+          background: #f8f9fa;
+          border-radius: 4px;
+          margin: 1em 0;
+          font-size: 0.9em;
+          color: #666;
+        }
+        
+        .tag {
+          display: inline-block;
+          padding: 0.2em 0.5em;
+          border-radius: 3px;
+          font-size: 0.85em;
+          font-weight: 500;
+          margin-right: 0.3em;
+        }
+        
+        .tag-lifer {
+          background: #fff3cd;
+          color: #856404;
+        }
+        
+        .tag-photo-lifer {
+          background: #d4edda;
+          color: #155724;
+        }
+        
+        .tag-year-lifer {
+          background: #cce5ff;
+          color: #004085;
+        }
+        
+        .tag-location-lifer {
+          background: #e2d5f1;
+          color: #5a3d7a;
+        }
+        
+        .species-tags {
+          margin-top: 0.3em;
+        }
+        
         .controls {
           display: flex;
           gap: 1em;
