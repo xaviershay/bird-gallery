@@ -32,11 +32,11 @@ let isSnapshotData = false;  // True if displaying shared snapshot data
 
 /**
  * Encode observations into a compact snapshot for URL sharing
- * Uses bitmask for tags and groups by location to minimize size
+ * Uses bitmask for tags, groups by location, and gzips the result
  * @param {Array} observations - The filtered observations to encode
- * @returns {string} Base64-encoded snapshot data
+ * @returns {Promise<string>} Promise resolving to base64-encoded gzipped snapshot data
  */
-function encodeSnapshot(observations) {
+async function encodeSnapshot(observations) {
   // Tag bitmask: bit 0=lifer, 1=photoLifer, 2=yearLifer, 3=locationLifer
   const tagsToBitmask = (tags) => {
     let mask = 0;
@@ -71,17 +71,66 @@ function encodeSnapshot(observations) {
     d: new Date().toISOString().split('T')[0],  // date
     l: Array.from(byLocation.values())
   };
-  return btoa(JSON.stringify(snapshot));
+  
+  const jsonStr = JSON.stringify(snapshot);
+  const jsonSize = new Blob([jsonStr]).size;
+  
+  // Gzip using native Compression Streams API
+  const encoder = new TextEncoder();
+  const inputData = encoder.encode(jsonStr);
+  
+  // Create readable stream from the input data
+  const readableStream = new ReadableStream({
+    start(controller) {
+      controller.enqueue(inputData);
+      controller.close();
+    }
+  });
+  
+  const compressedStream = readableStream.pipeThrough(new CompressionStream('gzip'));
+  const compressedArray = await new Response(compressedStream).arrayBuffer();
+  const compressedSize = compressedArray.byteLength;
+  const ratio = ((1 - compressedSize / jsonSize) * 100).toFixed(1);
+  
+  console.log(`[Snapshot] JSON: ${jsonSize} bytes → Gzipped: ${compressedSize} bytes (${ratio}% reduction)`);
+  
+  // Convert to base64 for URL-safe string
+  const binaryStr = String.fromCharCode.apply(null, new Uint8Array(compressedArray));
+  const encoded = btoa(binaryStr);
+  const urlSize = encoded.length;
+  
+  console.log(`[Snapshot] Base64: ${urlSize} characters`);
+  
+  return encoded;
 }
 
 /**
  * Decode snapshot data from URL
- * @param {string} encoded - Base64-encoded snapshot
- * @returns {object|null} Decoded snapshot object or null if invalid
+ * @param {string} encoded - Base64-encoded gzipped snapshot
+ * @returns {Promise<object|null>} Promise resolving to decoded snapshot object or null if invalid
  */
-function decodeSnapshot(encoded) {
+async function decodeSnapshot(encoded) {
   try {
-    const decoded = JSON.parse(atob(encoded));
+    // Decode base64
+    const binaryStr = atob(encoded);
+    const bytes = new Uint8Array(binaryStr.length);
+    for (let i = 0; i < binaryStr.length; i++) {
+      bytes[i] = binaryStr.charCodeAt(i);
+    }
+    
+    // Ungzip using native Decompression Streams API
+    const readableStream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(bytes);
+        controller.close();
+      }
+    });
+    
+    const decompressed = await new Response(
+      readableStream.pipeThrough(new DecompressionStream('gzip'))
+    ).text();
+    
+    const decoded = JSON.parse(decompressed);
     
     // Convert bitmask back to tags object
     const bitmaskToTags = (mask) => ({
@@ -231,7 +280,7 @@ async function initBirdingOpportunities() {
   
   if (snapshotData) {
     console.log('[Birding Opportunities] Loading from snapshot data');
-    const snapshot = decodeSnapshot(snapshotData);
+    const snapshot = await decodeSnapshot(snapshotData);
     if (snapshot) {
       isSnapshotData = true;
       allObservations = snapshot.observations;
@@ -719,7 +768,7 @@ async function copyShareLink() {
       return false;
     });
     
-    const snapshotData = encodeSnapshot(filtered);
+    const snapshotData = await encodeSnapshot(filtered);
     const url = new URL(window.location.href);
     // Clear existing params and add snapshot
     url.search = '';
