@@ -69,7 +69,7 @@ export const HomeView = (props: HomeViewProps) => {
             <a href="/report/locations">Locations Report</a>
           </li>
           <li>
-            <a href="/report/opportunities">Melbourne Opportunities Report</a>
+            <a href="/report/opportunities">Opportunities Report</a>
           </li>
           <li>
             <a href="/report/sightings?location=919153">Recent Sightings Report</a>
