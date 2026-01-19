@@ -12,6 +12,7 @@ interface BirdingOpportunitiesViewProps {
 
 export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunitiesViewProps) => {
   const displayLocation = location || region;
+  const preposition = location ? 'at' : 'in';
   
   return (
     <>
@@ -20,7 +21,7 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
           <i className="fa-solid fa-binoculars"></i> Opportunities
         </h2>
         <p>
-          Interesting birds seen recently (last 7 days) in <strong id="location-display">{displayLocation}</strong>.
+          Interesting birds seen recently (last 7 days) {preposition} <strong id="location-display">{displayLocation}</strong>.
         </p>
         
         <div className="tag-legend" id="tag-legend">

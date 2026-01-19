@@ -44,8 +44,8 @@ export const LocationView = (data: LocationViewProps) => {
             </a>
           </li>
           <li>
-            <a href={`/report/sightings?location=${location.id}`}>
-              <i className="fa-solid fa-binoculars"></i> Recent sightings nearby
+            <a href={`/report/opportunities?location=${location.id}`}>
+              <i className="fa-solid fa-binoculars"></i> Recent opportunities nearby
             </a>
           </li>
         </ul>

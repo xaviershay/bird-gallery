@@ -34,9 +34,16 @@ let mapInstance = null;  // Persistent map instance
  */
 function getLocationParams() {
   const params = new URLSearchParams(window.location.search);
+  let location = params.get('location') || null;
+  
+  // Prepend "L" to location if missing (eBird hotspot IDs start with L)
+  if (location && !location.startsWith('L')) {
+    location = 'L' + location;
+  }
+  
   return {
     region: params.get('region') || DEFAULT_REGION,
-    location: params.get('location') || null
+    location: location
   };
 }
 
@@ -230,11 +237,32 @@ async function initBirdingOpportunities() {
     
     showStatus(`Found ${allObservations.length} observations of ${targetSpecies.length} species`);
     
+    // Update location display with actual name if we have a location
+    if (location && allObservations.length > 0) {
+      const locationName = allObservations[0].locName;
+      const locationDisplay = document.getElementById('location-display');
+      if (locationDisplay && locationName) {
+        locationDisplay.textContent = locationName;
+      }
+    }
+    
+    // Hide map when viewing a specific location
+    if (location) {
+      const mapElement = document.getElementById('map');
+      if (mapElement) {
+        mapElement.style.display = 'none';
+      }
+    }
+    
     // Render results
     console.log('[Birding Opportunities] Rendering results...');
     renderResults(allObservations);
-    console.log('[Birding Opportunities] Rendering map...');
-    renderMap(allObservations);
+    
+    // Only render map for region view
+    if (!location) {
+      console.log('[Birding Opportunities] Rendering map...');
+      renderMap(allObservations);
+    }
     console.log('[Birding Opportunities] Initialization complete!');
     
   } catch (error) {
@@ -539,7 +567,7 @@ function renderMap(observations) {
     if (features.length > 1) {
       const bounds = new mapboxgl.LngLatBounds();
       features.forEach(f => bounds.extend(f.geometry.coordinates));
-      mapInstance.fitBounds(bounds, { padding: 50 });
+      mapInstance.fitBounds(bounds, { padding: 50, animate: false });
     }
     
     console.log('[Birding Opportunities] Map setup complete with all layers and event handlers');
