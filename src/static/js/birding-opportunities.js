@@ -28,6 +28,95 @@ let tagFilters = {
   'location-lifer': true
 };
 let mapInstance = null;  // Persistent map instance
+let isSnapshotData = false;  // True if displaying shared snapshot data
+
+/**
+ * Encode observations into a compact snapshot for URL sharing
+ * Uses bitmask for tags and groups by location to minimize size
+ * @param {Array} observations - The filtered observations to encode
+ * @returns {string} Base64-encoded snapshot data
+ */
+function encodeSnapshot(observations) {
+  // Tag bitmask: bit 0=lifer, 1=photoLifer, 2=yearLifer, 3=locationLifer
+  const tagsToBitmask = (tags) => {
+    let mask = 0;
+    if (tags?.isLifer) mask |= 1;
+    if (tags?.isPhotoLifer) mask |= 2;
+    if (tags?.isYearLifer) mask |= 4;
+    if (tags?.isLocationLifer) mask |= 8;
+    return mask;
+  };
+  
+  // Group observations by location to reduce duplication
+  const byLocation = new Map();
+  observations.forEach(obs => {
+    const key = obs.locId || obs.locName;
+    if (!byLocation.has(key)) {
+      byLocation.set(key, {
+        n: obs.locName,  // name
+        i: obs.locId,     // id
+        s: []             // species
+      });
+    }
+    byLocation.get(key).s.push([
+      obs.commonName || obs.comName,
+      obs.speciesCode,
+      obs.obsDt,
+      obs.subId,
+      tagsToBitmask(obs.tags)
+    ]);
+  });
+  
+  const snapshot = {
+    d: new Date().toISOString().split('T')[0],  // date
+    l: Array.from(byLocation.values())
+  };
+  return btoa(JSON.stringify(snapshot));
+}
+
+/**
+ * Decode snapshot data from URL
+ * @param {string} encoded - Base64-encoded snapshot
+ * @returns {object|null} Decoded snapshot object or null if invalid
+ */
+function decodeSnapshot(encoded) {
+  try {
+    const decoded = JSON.parse(atob(encoded));
+    
+    // Convert bitmask back to tags object
+    const bitmaskToTags = (mask) => ({
+      isLifer: !!(mask & 1),
+      isPhotoLifer: !!(mask & 2),
+      isYearLifer: !!(mask & 4),
+      isLocationLifer: !!(mask & 8)
+    });
+    
+    // Reconstruct observations from grouped format
+    const observations = [];
+    (decoded.l || []).forEach(loc => {
+      (loc.s || []).forEach(([comName, speciesCode, obsDt, subId, tagMask]) => {
+        observations.push({
+          locName: loc.n,
+          locId: loc.i,
+          commonName: comName,
+          comName,
+          speciesCode,
+          obsDt,
+          subId,
+          tags: bitmaskToTags(tagMask)
+        });
+      });
+    });
+    
+    return {
+      date: decoded.d,
+      observations
+    };
+  } catch (error) {
+    console.error('[Birding Opportunities] Failed to decode snapshot:', error);
+    return null;
+  }
+}
 
 /**
  * Get region and location from URL parameters
@@ -135,6 +224,30 @@ async function initBirdingOpportunities() {
   const { region, location } = getLocationParams();
   const regionOrLocation = location || region;
   console.log('[Birding Opportunities] Initializing with region/location:', regionOrLocation);
+  
+  // Check for snapshot data in URL
+  const params = new URLSearchParams(window.location.search);
+  const snapshotData = params.get('snapshot');
+  
+  if (snapshotData) {
+    console.log('[Birding Opportunities] Loading from snapshot data');
+    const snapshot = decodeSnapshot(snapshotData);
+    if (snapshot) {
+      isSnapshotData = true;
+      allObservations = snapshot.observations;
+      showStatus(`Showing snapshot from ${snapshot.date} (${allObservations.length} observations)`);
+      renderResults(allObservations);
+      // Hide map for snapshot data
+      const mapElement = document.getElementById('map');
+      if (mapElement) {
+        mapElement.style.display = 'none';
+      }
+      return;
+    } else {
+      showError('Invalid snapshot data in URL');
+      return;
+    }
+  }
   
   try {
     showStatus("Loading...");
@@ -263,6 +376,10 @@ async function initBirdingOpportunities() {
       console.log('[Birding Opportunities] Rendering map...');
       renderMap(allObservations);
     }
+    
+    // Show share button after successful load
+    showShareButton();
+    
     console.log('[Birding Opportunities] Initialization complete!');
     
   } catch (error) {
@@ -575,6 +692,59 @@ function renderMap(observations) {
 }
 
 /**
+ * Show the share button
+ */
+function showShareButton() {
+  const shareButtonContainer = document.getElementById('share-button-container');
+  if (shareButtonContainer && !isSnapshotData) {
+    shareButtonContainer.style.display = 'block';
+  }
+}
+
+/**
+ * Generate and copy share link to clipboard
+ */
+async function copyShareLink() {
+  try {
+    // Get currently filtered observations (apply current tag filters)
+    const filtered = allObservations.filter(obs => {
+      const tags = obs.tags;
+      if (!tags) return false;
+      
+      if (tags.isLifer && tagFilters['lifer']) return true;
+      if (tags.isPhotoLifer && !tags.isLifer && tagFilters['photo-lifer']) return true;
+      if (tags.isYearLifer && !tags.isLifer && tagFilters['year-lifer']) return true;
+      if (tags.isLocationLifer && !tags.isLifer && !tags.isYearLifer && tagFilters['location-lifer']) return true;
+      
+      return false;
+    });
+    
+    const snapshotData = encodeSnapshot(filtered);
+    const url = new URL(window.location.href);
+    // Clear existing params and add snapshot
+    url.search = '';
+    url.searchParams.set('snapshot', snapshotData);
+    
+    await navigator.clipboard.writeText(url.toString());
+    
+    // Show feedback
+    const shareButton = document.getElementById('share-button');
+    if (shareButton) {
+      const originalText = shareButton.innerHTML;
+      shareButton.innerHTML = '<i class="fa-solid fa-check"></i> Link copied!';
+      setTimeout(() => {
+        shareButton.innerHTML = originalText;
+      }, 2000);
+    }
+    
+    console.log('[Birding Opportunities] Share link copied to clipboard');
+  } catch (error) {
+    console.error('[Birding Opportunities] Failed to copy share link:', error);
+    showError('Failed to copy share link');
+  }
+}
+
+/**
  * Handle API key change
  */
 function changeApiKey() {
@@ -589,6 +759,11 @@ function setupEventHandlers() {
   const apiKeyButton = document.getElementById('api-key-button');
   if (apiKeyButton) {
     apiKeyButton.addEventListener('click', changeApiKey);
+  }
+  
+  const shareButton = document.getElementById('share-button');
+  if (shareButton) {
+    shareButton.addEventListener('click', copyShareLink);
   }
   
   // Tag filter legend click handlers

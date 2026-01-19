@@ -57,6 +57,11 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
               <i className="fa-solid fa-key"></i> Change eBird API Key
             </button>
           </div>
+          <div className="control-group" id="share-button-container" style={{ display: 'none' }}>
+            <button id="share-button" className="secondary">
+              <i className="fa-solid fa-share"></i> Share Report
+            </button>
+          </div>
         </div>
         
       </section>
