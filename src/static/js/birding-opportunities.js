@@ -21,6 +21,8 @@ const DEFAULT_ZOOM = 9;
 let speciesTags = {};  // Map of speciesCode -> tag info
 let targetSpecies = [];
 let allObservations = [];
+let region = null;  // Current region code
+let locationId = null;  // Current location ID (null if region view)
 let tagFilters = {
   'lifer': true,
   'photo-lifer': true,
@@ -34,9 +36,11 @@ let isSnapshotData = false;  // True if displaying shared snapshot data
  * Encode observations into a compact snapshot for URL sharing
  * Uses bitmask for tags, groups by location, and gzips the result
  * @param {Array} observations - The filtered observations to encode
+ * @param {string} region - The region code (e.g. "AU-VIC-MEL")
+ * @param {string|null} location - The location ID if showing a specific location
  * @returns {Promise<string>} Promise resolving to base64-encoded gzipped snapshot data
  */
-async function encodeSnapshot(observations) {
+async function encodeSnapshot(observations, region, location) {
   // Tag bitmask: bit 0=lifer, 1=photoLifer, 2=yearLifer, 3=locationLifer
   const tagsToBitmask = (tags) => {
     let mask = 0;
@@ -69,6 +73,8 @@ async function encodeSnapshot(observations) {
   
   const snapshot = {
     d: new Date().toISOString().split('T')[0],  // date
+    r: region,  // region code
+    c: location,  // location ID (null if region view)
     l: Array.from(byLocation.values())
   };
   
@@ -159,6 +165,8 @@ async function decodeSnapshot(encoded) {
     
     return {
       date: decoded.d,
+      region: decoded.r,
+      location: decoded.c,
       observations
     };
   } catch (error) {
@@ -270,8 +278,10 @@ function hasAnyTag(tags) {
  * Initialize the report
  */
 async function initBirdingOpportunities() {
-  const { region, location } = getLocationParams();
-  const regionOrLocation = location || region;
+  const locationParams = getLocationParams();
+  region = locationParams.region;
+  locationId = locationParams.location;
+  const regionOrLocation = locationId || region;
   console.log('[Birding Opportunities] Initializing with region/location:', regionOrLocation);
   
   // Check for snapshot data in URL
@@ -285,6 +295,21 @@ async function initBirdingOpportunities() {
       isSnapshotData = true;
       allObservations = snapshot.observations;
       showStatus(`Showing snapshot from ${snapshot.date} (${allObservations.length} observations)`);
+      
+      // Update location display based on snapshot region/location
+      const locationDisplay = document.getElementById('location-display');
+      if (locationDisplay) {
+        if (snapshot.location) {
+          // Location-specific snapshot - use first observation's location name
+          if (allObservations.length > 0) {
+            locationDisplay.textContent = allObservations[0].locName;
+          }
+        } else if (snapshot.region) {
+          // Region snapshot - use the region name
+          locationDisplay.textContent = snapshot.region;
+        }
+      }
+      
       renderResults(allObservations);
       // Hide map for snapshot data
       const mapElement = document.getElementById('map');
@@ -320,7 +345,7 @@ async function initBirdingOpportunities() {
     // Fetch species tags from server
     showStatus("Loading your bird list...");
     console.log('[Birding Opportunities] Fetching species tags from server...');
-    const tagsArray = await fetchSpeciesTags(region, location);
+    const tagsArray = await fetchSpeciesTags(region, locationId);
     
     // Convert to map for quick lookup
     speciesTags = {};
@@ -400,7 +425,7 @@ async function initBirdingOpportunities() {
     showStatus(`Found ${allObservations.length} observations of ${targetSpecies.length} species`);
     
     // Update location display with actual name if we have a location
-    if (location && allObservations.length > 0) {
+    if (locationId && allObservations.length > 0) {
       const locationName = allObservations[0].locName;
       const locationDisplay = document.getElementById('location-display');
       if (locationDisplay && locationName) {
@@ -409,7 +434,7 @@ async function initBirdingOpportunities() {
     }
     
     // Hide map when viewing a specific location
-    if (location) {
+    if (locationId) {
       const mapElement = document.getElementById('map');
       if (mapElement) {
         mapElement.style.display = 'none';
@@ -421,7 +446,7 @@ async function initBirdingOpportunities() {
     renderResults(allObservations);
     
     // Only render map for region view
-    if (!location) {
+    if (!locationId) {
       console.log('[Birding Opportunities] Rendering map...');
       renderMap(allObservations);
     }
@@ -768,7 +793,7 @@ async function copyShareLink() {
       return false;
     });
     
-    const snapshotData = await encodeSnapshot(filtered);
+    const snapshotData = await encodeSnapshot(filtered, region, locationId);
     const url = new URL(window.location.href);
     // Clear existing params and add snapshot
     url.search = '';
