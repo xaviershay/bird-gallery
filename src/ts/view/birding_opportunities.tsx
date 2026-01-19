@@ -20,7 +20,7 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
           <i className="fa-solid fa-binoculars"></i> Opportunities
         </h2>
         <p>
-          Birds seen recently (last 7 days) in <strong id="location-display">{displayLocation}</strong> that would be lifers or photo lifers.
+          Interesting birds seen recently (last 7 days) in <strong id="location-display">{displayLocation}</strong>.
         </p>
         
         <div className="tag-legend" id="tag-legend">
@@ -29,16 +29,6 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
           <div className="tag-filter active" data-tag="year-lifer"><span className="tag tag-year-lifer">🎉</span> Not seen this year</div>
           <div className="tag-filter active" data-tag="location-lifer"><span className="tag tag-location-lifer">📍</span> Not seen at this location</div>
         </div>
-        
-        <div className="controls">
-          <div className="control-group">
-            <button id="api-key-button" className="secondary">
-              <i className="fa-solid fa-key"></i> Change eBird API Key
-            </button>
-          </div>
-        </div>
-        
-        <div id="status" className="status">Loading...</div>
         
         <div id="map" style={{ height: '300px', marginBottom: '2em' }}></div>
         
@@ -57,6 +47,17 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
             </tr>
           </tbody>
         </table>
+        
+        <div id="status" className="status">Loading...</div>
+
+        <div className="controls">
+          <div className="control-group">
+            <button id="api-key-button" className="secondary">
+              <i className="fa-solid fa-key"></i> Change eBird API Key
+            </button>
+          </div>
+        </div>
+        
       </section>
       
       <style dangerouslySetInnerHTML={{ __html: `
