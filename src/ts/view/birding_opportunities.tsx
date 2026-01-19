@@ -23,11 +23,11 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
           Birds seen recently (last 7 days) in <strong id="location-display">{displayLocation}</strong> that would be lifers or photo lifers.
         </p>
         
-        <div className="tag-legend">
-          <span className="tag tag-lifer">🏆 Lifer</span> New species for my life list
-          <span className="tag tag-photo-lifer">📸 Photo Lifer</span> Seen but not photographed
-          <span className="tag tag-year-lifer">🎉 Year Lifer</span> Not seen yet this year
-          <span className="tag tag-location-lifer">📍 Location Lifer</span> Not seen at this location
+        <div className="tag-legend" id="tag-legend">
+          <div className="tag-filter active" data-tag="lifer"><span className="tag tag-lifer">🏆</span> Never seen</div>
+          <div className="tag-filter active" data-tag="photo-lifer"><span className="tag tag-photo-lifer">📸</span> Not photographed</div>
+          <div className="tag-filter active" data-tag="year-lifer"><span className="tag tag-year-lifer">🎉</span> Not seen this year</div>
+          <div className="tag-filter active" data-tag="location-lifer"><span className="tag tag-location-lifer">📍</span> Not seen at this location</div>
         </div>
         
         <div className="controls">
@@ -62,14 +62,31 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
       <style dangerouslySetInnerHTML={{ __html: `
         .tag-legend {
           display: flex;
-          flex-wrap: wrap;
-          gap: 0.5em 1.5em;
+          flex-direction: column;
+          gap: 0.4em;
           padding: 1em;
           background: #f8f9fa;
           border-radius: 4px;
           margin: 1em 0;
           font-size: 0.9em;
           color: #666;
+        }
+        
+        .tag-filter {
+          cursor: pointer;
+          user-select: none;
+          padding: 0.2em 0.4em;
+          border-radius: 4px;
+          transition: opacity 0.2s;
+        }
+        
+        .tag-filter:hover {
+          background: #e9ecef;
+        }
+        
+        .tag-filter:not(.active) {
+          opacity: 0.4;
+          text-decoration: line-through;
         }
         
         .tag {
@@ -79,6 +96,12 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
           font-size: 0.85em;
           font-weight: 500;
           margin-right: 0.3em;
+        }
+        
+        .tag-icon {
+          padding: 0.1em 0.3em;
+          margin-left: 0.3em;
+          cursor: help;
         }
         
         .tag-lifer {

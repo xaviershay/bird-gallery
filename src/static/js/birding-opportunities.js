@@ -21,6 +21,13 @@ const DEFAULT_ZOOM = 9;
 let speciesTags = {};  // Map of speciesCode -> tag info
 let targetSpecies = [];
 let allObservations = [];
+let tagFilters = {
+  'lifer': true,
+  'photo-lifer': true,
+  'year-lifer': true,
+  'location-lifer': true
+};
+let mapInstance = null;  // Persistent map instance
 
 /**
  * Get region and location from URL parameters
@@ -88,19 +95,18 @@ function getDisplayTags(tags) {
   
   if (tags.isLifer) {
     // Lifer implies everything else, so just show Lifer
-    result.push({ class: 'tag-lifer', label: '🏆 Lifer' });
+    result.push({ class: 'tag-lifer', icon: '🏆', title: 'Lifer' });
   } else {
     // Not a lifer, so check photo lifer
     if (tags.isPhotoLifer) {
-      result.push({ class: 'tag-photo-lifer', label: '📸 Photo Lifer' });
+      result.push({ class: 'tag-photo-lifer', icon: '📸', title: 'Photo Lifer' });
     }
     
     // Year lifer implies location lifer, so only show year lifer if true
     if (tags.isYearLifer) {
-      result.push({ class: 'tag-year-lifer', label: '🎉 Year Lifer' });
+      result.push({ class: 'tag-year-lifer', icon: '🎉', title: 'Year Lifer' });
     } else if (tags.isLocationLifer) {
-      // Only show location lifer if not a year lifer
-      result.push({ class: 'tag-location-lifer', label: '📍 Location Lifer' });
+      result.push({ class: 'tag-location-lifer', icon: '📍', title: 'Location Lifer' });
     }
   }
   
@@ -338,18 +344,16 @@ function renderResults(observations) {
       speciesLink.target = '_blank';
       speciesCell.appendChild(speciesLink);
       
-      // Add tags
+      // Add tags inline after species name
       const displayTags = getDisplayTags(obs.tags);
       if (displayTags.length > 0) {
-        const tagsContainer = document.createElement('div');
-        tagsContainer.className = 'species-tags';
         displayTags.forEach(tag => {
           const tagSpan = document.createElement('span');
-          tagSpan.className = `tag ${tag.class}`;
-          tagSpan.textContent = tag.label;
-          tagsContainer.appendChild(tagSpan);
+          tagSpan.className = `tag tag-icon ${tag.class}`;
+          tagSpan.textContent = tag.icon;
+          tagSpan.title = tag.title;
+          speciesCell.appendChild(tagSpan);
         });
-        speciesCell.appendChild(tagsContainer);
       }
       
       sightingRow.appendChild(speciesCell);
@@ -406,31 +410,30 @@ function renderMap(observations) {
   
   console.log('[Birding Opportunities] GeoJSON created with', features.length, 'features');
   
-  // Determine map center from observations, fall back to Melbourne
-  let center = DEFAULT_MAP_CENTER;
-  if (features.length > 0) {
-    const lngs = features.map(f => f.geometry.coordinates[0]);
-    const lats = features.map(f => f.geometry.coordinates[1]);
-    center = [
-      (Math.min(...lngs) + Math.max(...lngs)) / 2,
-      (Math.min(...lats) + Math.max(...lats)) / 2
-    ];
+  // If map already exists, just update the data source
+  if (mapInstance) {
+    const source = mapInstance.getSource("birds");
+    if (source) {
+      source.setData(geojson);
+      console.log('[Birding Opportunities] Updated existing map data source');
+      return;
+    }
   }
   
-  // Initialize map
+  // Initialize map for the first time
   mapboxgl.accessToken = "pk.eyJ1IjoieGF2aWVyc2hheSIsImEiOiJjbWE3c2w3NzIxNmRsMmpxNDkybHp1YmdmIn0.1sPPFdMJ0-6DrZN5B9-0Dg";
   
-  console.log('[Birding Opportunities] Initializing Mapbox map centered at', center);
-  const map = new mapboxgl.Map({
+  console.log('[Birding Opportunities] Initializing Mapbox map centered at', DEFAULT_MAP_CENTER);
+  mapInstance = new mapboxgl.Map({
     container: "map",
-    center: center,
+    center: DEFAULT_MAP_CENTER,
     style: "mapbox://styles/xaviershay/cm9pb3a92004h01spbg7442q3",
     zoom: DEFAULT_ZOOM
   });
   
-  map.on("load", () => {
+  mapInstance.on("load", () => {
     console.log('[Birding Opportunities] Map loaded, adding data source and layers...');
-    map.addSource("birds", {
+    mapInstance.addSource("birds", {
       type: "geojson",
       data: geojson,
       cluster: true,
@@ -438,7 +441,7 @@ function renderMap(observations) {
     });
     
     // Clusters
-    map.addLayer({
+    mapInstance.addLayer({
       id: "clusters",
       type: "circle",
       source: "birds",
@@ -465,7 +468,7 @@ function renderMap(observations) {
       }
     });
     
-    map.addLayer({
+    mapInstance.addLayer({
       id: "cluster-count",
       type: "symbol",
       source: "birds",
@@ -478,7 +481,7 @@ function renderMap(observations) {
     });
     
     // Individual points
-    map.addLayer({
+    mapInstance.addLayer({
       id: "unclustered-point",
       type: "circle",
       source: "birds",
@@ -491,14 +494,14 @@ function renderMap(observations) {
     });
     
     // Click cluster to zoom
-    map.on("click", "clusters", (e) => {
-      const features = map.queryRenderedFeatures(e.point, {
+    mapInstance.on("click", "clusters", (e) => {
+      const features = mapInstance.queryRenderedFeatures(e.point, {
         layers: ["clusters"]
       });
       const clusterId = features[0].properties.cluster_id;
-      map.getSource("birds").getClusterExpansionZoom(clusterId, (err, zoom) => {
+      mapInstance.getSource("birds").getClusterExpansionZoom(clusterId, (err, zoom) => {
         if (err) return;
-        map.easeTo({
+        mapInstance.easeTo({
           center: features[0].geometry.coordinates,
           zoom: zoom
         });
@@ -511,32 +514,32 @@ function renderMap(observations) {
       closeOnClick: false
     });
     
-    map.on("mouseenter", "unclustered-point", (e) => {
-      map.getCanvas().style.cursor = "pointer";
+    mapInstance.on("mouseenter", "unclustered-point", (e) => {
+      mapInstance.getCanvas().style.cursor = "pointer";
       const coordinates = e.features[0].geometry.coordinates.slice();
       const props = e.features[0].properties;
       const html = `<strong>${props.commonName}</strong><br>${props.name}<br>${props.date}`;
-      popup.setLngLat(coordinates).setHTML(html).addTo(map);
+      popup.setLngLat(coordinates).setHTML(html).addTo(mapInstance);
     });
     
-    map.on("mouseleave", "unclustered-point", () => {
-      map.getCanvas().style.cursor = "";
+    mapInstance.on("mouseleave", "unclustered-point", () => {
+      mapInstance.getCanvas().style.cursor = "";
       popup.remove();
     });
     
-    map.on("mouseenter", "clusters", () => {
-      map.getCanvas().style.cursor = "pointer";
+    mapInstance.on("mouseenter", "clusters", () => {
+      mapInstance.getCanvas().style.cursor = "pointer";
     });
     
-    map.on("mouseleave", "clusters", () => {
-      map.getCanvas().style.cursor = "";
+    mapInstance.on("mouseleave", "clusters", () => {
+      mapInstance.getCanvas().style.cursor = "";
     });
     
-    // Fit bounds if we have observations
+    // Fit bounds on initial load if we have observations
     if (features.length > 1) {
       const bounds = new mapboxgl.LngLatBounds();
       features.forEach(f => bounds.extend(f.geometry.coordinates));
-      map.fitBounds(bounds, { padding: 50 });
+      mapInstance.fitBounds(bounds, { padding: 50 });
     }
     
     console.log('[Birding Opportunities] Map setup complete with all layers and event handlers');
@@ -559,6 +562,43 @@ function setupEventHandlers() {
   if (apiKeyButton) {
     apiKeyButton.addEventListener('click', changeApiKey);
   }
+  
+  // Tag filter legend click handlers
+  const tagFilterElements = document.querySelectorAll('.tag-filter');
+  tagFilterElements.forEach(el => {
+    el.addEventListener('click', () => {
+      const tag = el.dataset.tag;
+      tagFilters[tag] = !tagFilters[tag];
+      el.classList.toggle('active', tagFilters[tag]);
+      applyTagFilters();
+    });
+  });
+}
+
+/**
+ * Apply tag filters to the observations and re-render
+ */
+function applyTagFilters() {
+  // Filter observations based on active tag filters
+  const filtered = allObservations.filter(obs => {
+    const tags = obs.tags;
+    if (!tags) return false;
+    
+    // Check if observation has any enabled tag
+    if (tags.isLifer && tagFilters['lifer']) return true;
+    if (tags.isPhotoLifer && !tags.isLifer && tagFilters['photo-lifer']) return true;
+    if (tags.isYearLifer && !tags.isLifer && tagFilters['year-lifer']) return true;
+    if (tags.isLocationLifer && !tags.isLifer && !tags.isYearLifer && tagFilters['location-lifer']) return true;
+    
+    return false;
+  });
+  
+  renderResults(filtered);
+  renderMap(filtered);
+  
+  // Update status
+  const uniqueSpeciesCount = new Set(filtered.map(o => o.speciesCode)).size;
+  showStatus(`Showing ${filtered.length} observations of ${uniqueSpeciesCount} species`);
 }
 
 // Initialize when page loads
