@@ -250,15 +250,13 @@ function getDisplayTags(tags) {
     // Lifer implies everything else, so just show Lifer
     result.push({ class: 'tag-lifer', icon: '🏆', title: 'Lifer' });
   } else {
-    // Not a lifer, so check photo lifer
     if (tags.isPhotoLifer) {
       result.push({ class: 'tag-photo-lifer', icon: '📸', title: 'Photo Lifer' });
     }
-    
-    // Year lifer implies location lifer, so only show year lifer if true
     if (tags.isYearLifer) {
       result.push({ class: 'tag-year-lifer', icon: '🎉', title: 'Year Lifer' });
-    } else if (tags.isLocationLifer) {
+    }
+    if (tags.isLocationLifer) {
       result.push({ class: 'tag-location-lifer', icon: '📍', title: 'Location Lifer' });
     }
   }
