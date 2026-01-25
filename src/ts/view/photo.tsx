@@ -30,7 +30,9 @@ export const PhotoView = (data: PhotoViewProps) => {
           <i className="fa-solid fa-location-dot"></i>
           {photo.commonName}
         </h2>
-        <img src={photoUrl(photo.fileName, {thumbnail: false})} alt={photo.commonName} title={photo.commonName} />
+        <a href={photoUrl(photo.fileName, {thumbnail: false})}>
+          <img src={photoUrl(photo.fileName, {thumbnail: false}).replace('/photos/', '/cards/')} alt={photo.commonName} title={photo.commonName} />
+        </a>
       </section>
       <table>
         <tr>
