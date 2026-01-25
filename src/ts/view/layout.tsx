@@ -8,6 +8,7 @@ export interface OpenGraphMetadata {
   image?: string;
   url?: string;
   type?: string;
+  oEmbedUrl?: string;
 }
 
 interface LayoutViewProps {
@@ -54,6 +55,7 @@ export const LayoutView = (props: LayoutViewProps) => {
             {props.ogMetadata.title && <meta name="twitter:title" content={props.ogMetadata.title} />}
             {props.ogMetadata.description && <meta name="twitter:description" content={props.ogMetadata.description} />}
             {props.ogMetadata.image && <meta name="twitter:image" content={props.ogMetadata.image} />}
+            {props.ogMetadata.oEmbedUrl && <link rel="alternate" type="application/json+oembed" href={props.ogMetadata.oEmbedUrl} />}
           </>
         )}
       </head>

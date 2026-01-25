@@ -31,7 +31,8 @@ export async function handlePhoto(
     description: `A photo of ${result.photo.commonName} taken on ${format(result.photo.takenAt, 'yyyy-MM-dd')}`,
     image: getPhotoUrl(result.photo.fileName, 'card'),
     url: request.url,
-    type: "photo"
+    type: "photo",
+    oEmbedUrl: `${new URL(request.url).origin}/oembed?url=${encodeURIComponent(request.url)}&format=json`
   };
   
   return renderPageWithLayout(content, title, env, ogMetadata);
