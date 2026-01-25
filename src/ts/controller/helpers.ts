@@ -1,4 +1,4 @@
-import { LayoutView } from "../view/layout";
+import { LayoutView, OpenGraphMetadata } from "../view/layout";
 import { fetchHeaderStats } from "../model/header_stats";
 import { prerender } from "react-dom/static";
 import { respondWith, corsHeaders } from "./base";
@@ -12,15 +12,17 @@ import { Observation } from "../types";
  * @param content - The JSX content to render in the page
  * @param title - Page title
  * @param env - Cloudflare environment
+ * @param ogMetadata - Optional OpenGraph metadata for social media sharing
  * @returns Response with rendered HTML
  */
 export async function renderPageWithLayout(
   content: JSX.Element,
   title: string,
-  env: Env
+  env: Env,
+  ogMetadata?: OpenGraphMetadata
 ): Promise<Response> {
   const header = await fetchHeaderStats(env);
-  const html = LayoutView({ title, content, header });
+  const html = LayoutView({ title, content, header, ogMetadata });
   const htmlStream = await prerender(html);
   return new Response(htmlStream.prelude, {
     headers: {
