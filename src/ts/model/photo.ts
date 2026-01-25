@@ -166,3 +166,20 @@ export async function fetchRecentGoodPhotos(env: Env): Promise<Photo[]> {
     let results = await statement.all<any>();
     return results.results;
 }
+
+export async function fetchAllPhotos(env: Env): Promise<Photo[]> {
+    const query = `
+      SELECT
+        file_name as fileName,
+        width,
+        height,
+        common_name as commonName,
+        rating
+      FROM photo
+      INNER JOIN observation_wide ON observation_id = observation_wide.id
+      ORDER BY taken_at DESC
+    `;
+    let statement = env.DB.prepare(query);
+    let results = await statement.all<any>();
+    return results.results;
+}

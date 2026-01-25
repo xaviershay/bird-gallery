@@ -63,6 +63,9 @@ export const HomeView = (props: HomeViewProps) => {
         <p>Many of these reports require you to have an <a href="https://ebird.org/api/keygen">eBird API Key.</a></p>
         <ul>
           <li>
+            <a href="/gallery">All Photos</a>
+          </li>
+          <li>
             <a href="/report/nophotos">Missing Photos Report</a>
           </li>
           <li>

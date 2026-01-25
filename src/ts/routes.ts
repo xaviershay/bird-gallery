@@ -4,6 +4,7 @@ import { handleSpecies } from "./controller/species";
 import { respondWith, corsHeaders } from "./controller/base";
 import { handleHome } from "./controller/home";
 import { handlePhoto } from "./controller/photo";
+import { handleGallery } from "./controller/gallery";
 import { handleReport } from "./controller/report";
 import { handleTripReportIndex, handleTripReportShow } from "./controller/trip_report";
 import { handleOEmbed } from "./controller/oembed";
@@ -128,6 +129,8 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
       return handleReport(request, env);
     case "photo":
       return handlePhoto(request, env);
+    case "gallery":
+      return handleGallery(request, env);
     case "oembed":
       return handleOEmbed(request, env);
     case "trip-report":

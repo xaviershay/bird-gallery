@@ -153,6 +153,24 @@ section:first-child {
   margin-bottom: 1em;
 }
 
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+.gallery-item {
+  height: 150px;
+}
+
+.gallery-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  vertical-align: bottom;
+}
+
 /* Nav styling */
 h1 a {
   color: var(--text) !important;
