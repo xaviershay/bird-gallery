@@ -6,4 +6,5 @@ out
 src/load.js
 data/photos/*
 data/thumbnails/*
+data/cards/*
 src/scripts/**/*.js

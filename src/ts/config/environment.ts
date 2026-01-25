@@ -18,10 +18,17 @@ export const PHOTO_BASE_URL = "https://bird-gallery.xaviershay.com";
 /**
  * Get the full URL for a photo file
  * @param fileName - The photo filename (e.g., "bird123.jpg")
- * @param thumbnail - Whether to get thumbnail or full-size photo
+ * @param type - Photo type: 'thumbnail', 'card', or 'full'
  * @returns Full URL to the photo
  */
-export function getPhotoUrl(fileName: string, thumbnail: boolean = true): string {
-  const directory = thumbnail ? "thumbnails" : "photos";
+export function getPhotoUrl(fileName: string, type: 'thumbnail' | 'card' | 'full' = 'thumbnail'): string {
+  let directory: string;
+  if (type === 'thumbnail') {
+    directory = 'thumbnails';
+  } else if (type === 'card') {
+    directory = 'cards';
+  } else {
+    directory = 'photos';
+  }
   return `${PHOTO_BASE_URL}/${directory}/${fileName}`;
 }

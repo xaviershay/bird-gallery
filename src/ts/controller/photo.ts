@@ -29,7 +29,7 @@ export async function handlePhoto(
   const ogMetadata = {
     title: title,
     description: `A photo of ${result.photo.commonName} taken on ${format(result.photo.takenAt, 'yyyy-MM-dd')}`,
-    image: getPhotoUrl(result.photo.fileName, false),
+    image: getPhotoUrl(result.photo.fileName, 'card'),
     url: request.url,
     type: "photo"
   };

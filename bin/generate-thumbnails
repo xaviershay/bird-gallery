@@ -3,9 +3,11 @@
 # Directories
 PHOTOS_DIR="data/photos"
 THUMBNAILS_DIR="data/thumbnails"
+CARDS_DIR="data/cards"
 
-# Ensure the thumbnails directory exists
+# Ensure the directories exist
 mkdir -p "$THUMBNAILS_DIR"
+mkdir -p "$CARDS_DIR"
 
 # Iterate over each JPG file in the photos directory
 for photo in "$PHOTOS_DIR"/*.jpg; do
@@ -19,5 +21,14 @@ for photo in "$PHOTOS_DIR"/*.jpg; do
     convert "$photo" -resize x150 -auto-orient "$THUMBNAILS_DIR/$filename"
   # else
     # echo "Thumbnail already exists for $filename"
+  fi
+
+  # Check if the corresponding card image already exists
+  if [ ! -f "$CARDS_DIR/$filename" ]; then
+    echo "Creating card image for $filename"
+    # Create a resized version with max width of 1200px, preserving metadata
+    convert "$photo" -resize 1200x -auto-orient "$CARDS_DIR/$filename"
+  # else
+    # echo "Card image already exists for $filename"
   fi
 done

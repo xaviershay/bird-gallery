@@ -9,3 +9,4 @@ fi
 
 rclone sync -v $DRY_RUN data/photos/ r2:bird-gallery/photos
 rclone sync -v $DRY_RUN data/thumbnails/ r2:bird-gallery/thumbnails
+rclone sync -v $DRY_RUN data/cards/ r2:bird-gallery/cards
