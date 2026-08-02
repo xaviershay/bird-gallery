@@ -1,4 +1,22 @@
 # Ensure shell scripts always use LF line endings
 # CRLF line endings (\r\n) break shell script execution
 bin/* text eol=lf
-* text eol=lf
+
+# text=auto lets git detect binary files and skip EOL normalization.
+# A bare `text` would force normalization on everything, silently
+# corrupting binary assets (fonts, images) by collapsing CRLF to LF.
+* text=auto eol=lf
+
+# Belt and braces: never touch these, regardless of detection.
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
