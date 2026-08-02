@@ -1,5 +1,5 @@
 import { env, SELF } from 'cloudflare:test';
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import schemaSql from '../src/sql/schema.sql?raw'; // Import SQL as raw string
 
 async function execSql(sql: string) {
@@ -14,7 +14,7 @@ async function execSql(sql: string) {
 }
 
 describe('', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await execSql(schemaSql);
   })
 
