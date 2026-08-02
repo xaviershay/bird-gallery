@@ -3,3 +3,6 @@
 set -ex
 
 npm install
+sudo apt install rclone
+
+echo "Edit rclone.example.conf to taste and move to ~/.config/rclone"

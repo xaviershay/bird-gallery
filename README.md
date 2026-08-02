@@ -67,6 +67,7 @@ once. A cache-busting version key is updated every deployment or data change.
     bin/setup           # One-time setup
     bin/load-data-local # Generate local database
     bin/dev             # Run local server
+    
 ## Deploy
 
 Site is available at https://birds.xaviershay.com
