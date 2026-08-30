@@ -227,6 +227,53 @@ describe('', () => {
       expect(content).toContain('Old Lorikeet');
       expect(content).not.toContain('Musk Lorikeet');
     });
+
+    it('correctly computes year-row firsts and photo counts, isolated from other locations', async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (9999999, 'Elsewhere Park', -38.0, 145.0, 'AU-VIC', 'Geelong', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor7', 'Musk Lorikeet', 'Glossopsitta concinna', 12563, 'MULO', 'psitta4');
+        INSERT INTO photo VALUES
+            ('railor5.jpg', '219171569-railor5', '2025-04-01T08:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
+            ('219171580-railor7-a', 219171580, 'railor7', 9999999, 1, '2025-01-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor7-a.jpg', '219171580-railor7-a', '2025-01-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
+            ('219171581-railor7-b', 219171581, 'railor7', 2552179, 1, '2025-06-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor7-b.jpg', '219171581-railor7-b', '2025-06-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+      `);
+
+      const response = await SELF.fetch('https://localhost/location/2552179');
+      const content = await response.text();
+
+      // Column order per location.tsx: Firsts-Photo, Firsts-Seen, All-Photo, All-Seen
+      const lifeRowMatch = content.match(/<tr>\s*<th[^>]*>Life<\/th>[\s\S]*?<\/tr>/);
+      expect(lifeRowMatch).toBeTruthy();
+      const lifeCounts = lifeRowMatch![0].match(/href="[^"]*">(\d+)<\/a>/g)!
+        .map(c => Number(c.match(/>(\d+)</)![1]));
+
+      // All-Photo (Life): railor5 and railor7 both have photos at this location
+      expect(lifeCounts[2]).toBe(2);
+      // Firsts-Photo (Life): only railor5 — railor7's lifetime-first photo was elsewhere
+      expect(lifeCounts[0]).toBe(1);
+
+      const yearRowMatch = content.match(/<tr>\s*<th[^>]*>2025<\/th>[\s\S]*?<\/tr>/);
+      expect(yearRowMatch).toBeTruthy();
+      const yearCounts = yearRowMatch![0].match(/href="[^"]*">(\d+)<\/a>/g)!
+        .map(c => Number(c.match(/>(\d+)</)![1]));
+
+      // All-Seen (2025): railor5 and railor7 both seen here in 2025
+      expect(yearCounts[3]).toBe(2);
+      // Firsts-Seen (2025): only railor5 — railor7's 2025 year-first sighting was elsewhere
+      expect(yearCounts[1]).toBe(1);
+      // All-Photo (2025): both photographed here in 2025
+      expect(yearCounts[2]).toBe(2);
+      // Firsts-Photo (2025): only railor5 — railor7's 2025 year-first photo was elsewhere
+      expect(yearCounts[0]).toBe(1);
+    });
   })
 
   describe('/firsts', () => {
