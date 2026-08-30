@@ -86,45 +86,6 @@ export const SpeciesSightingsView = ({ locationId, speciesId, distance }: Specie
           font-size: 0.9em;
         }
         
-        .control-group input {
-          padding: 0.5em;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 0.9em;
-        }
-        
-        button.primary {
-          background: #1976d2;
-          color: white;
-          border: none;
-          padding: 0.5em 1em;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 0.9em;
-        }
-        
-        button.primary:hover {
-          background: #1565c0;
-        }
-        
-        .status {
-          padding: 1em;
-          background: #e3f2fd;
-          border-left: 4px solid #2196f3;
-          margin: 1em 0;
-          border-radius: 4px;
-        }
-        
-        .status.error {
-          background: #ffebee;
-          border-left-color: #f44336;
-        }
-        
-        #map {
-          border: 1px solid #ddd;
-          border-radius: 4px;
-        }
-        
         .sightings-list {
           width: 100%;
           border-collapse: collapse;

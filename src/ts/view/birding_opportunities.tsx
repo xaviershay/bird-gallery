@@ -23,7 +23,18 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
         <p>
           Interesting birds seen recently (last 7 days) {preposition} <strong id="location-display">{displayLocation}</strong>.
         </p>
-        
+
+        <div className="controls">
+          <div className="control-group">
+            <label htmlFor="location-input">Location ID:</label>
+            <input type="text" id="location-input" defaultValue={location || ''} placeholder="e.g. 919153 or L919153" />
+          </div>
+
+          <button id="location-search-button" className="primary">
+            <i className="fa-solid fa-magnifying-glass"></i> Search
+          </button>
+        </div>
+
         <div className="tag-legend" id="tag-legend">
           <div className="tag-filter active" data-tag="lifer"><span className="tag tag-lifer">🏆</span> Never seen</div>
           <div className="tag-filter active" data-tag="photo-lifer"><span className="tag tag-photo-lifer">📸</span> Not photographed</div>

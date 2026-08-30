@@ -989,6 +989,23 @@ function setupEventHandlers() {
         shareButton.addEventListener("click", copyShareLink);
     }
 
+    const locationSearchButton = document.getElementById(
+        "location-search-button",
+    );
+    if (locationSearchButton) {
+        locationSearchButton.addEventListener("click", () => {
+            const locationInput = document.getElementById("location-input");
+            const locationId = locationInput ? locationInput.value.trim() : "";
+
+            const url = new URL(window.location.href);
+            url.search = "";
+            if (locationId) {
+                url.searchParams.set("location", locationId);
+            }
+            window.location.href = url.toString();
+        });
+    }
+
     // Tag filter legend click handlers
     const tagFilterElements = document.querySelectorAll(".tag-filter");
     tagFilterElements.forEach((el) => {
