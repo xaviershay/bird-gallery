@@ -60,6 +60,44 @@ describe('', () => {
 
   })
 
+  describe('header stats', () => {
+    beforeEach(async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4'),
+            ('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
+        INSERT INTO observation VALUES
+            ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null, null);
+        INSERT INTO observation VALUES
+            ('219171570-railor6', 219171569, 'railor6', 2552179, 2, '2024-03-18T17:11:00', null, null);
+        INSERT INTO photo VALUES
+            ('dscn5570.jpg', '219171569-railor5', '2025-05-03T01:53:50.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+      `);
+    });
+
+    it('shows total species seen and photographed counts in the header', async () => {
+      const response = await SELF.fetch('https://localhost/');
+      const content = await response.text();
+      // 2 species seen total (railor5, railor6), only 1 photographed (railor5)
+      expect(content).toContain('seen <!-- -->2<!-- --> different species');
+      expect(content).toContain('photographed <!-- -->1<!-- -->.');
+    });
+
+    it('does not count repeat sightings of the same species twice', async () => {
+      await execSql(`
+        INSERT INTO observation VALUES
+            ('219171571-railor5', 219171571, 'railor5', 2552179, 2, '2025-04-01T10:00:00', null, null);
+      `);
+
+      const response = await SELF.fetch('https://localhost/');
+      const content = await response.text();
+      expect(content).toContain('seen <!-- -->2<!-- --> different species');
+      expect(content).toContain('photographed <!-- -->1<!-- -->.');
+    });
+  })
+
   describe('/location/1', () => {
     beforeEach(async () => {
       await execSql(`
@@ -132,6 +170,53 @@ describe('', () => {
         }
       }
     });
+
+    it('excludes a species from the firsts count when its lifetime-first sighting was elsewhere', async () => {
+      // railor7 is first seen at a different location, then seen again at Royal Park.
+      // It should count towards "All" here, but not "Firsts" here.
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (9999999, 'Elsewhere Park', -38.0, 145.0, 'AU-VIC', 'Geelong', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor7', 'Musk Lorikeet', 'Glossopsitta concinna', 12563, 'MULO', 'psitta4');
+        INSERT INTO observation VALUES
+            ('219171580-railor7-a', 219171580, 'railor7', 9999999, 1, '2025-01-01T08:00:00', null, null);
+        INSERT INTO observation VALUES
+            ('219171581-railor7-b', 219171581, 'railor7', 2552179, 1, '2025-06-01T08:00:00', null, null);
+      `);
+
+      const response = await SELF.fetch('https://localhost/location/2552179');
+      const content = await response.text();
+
+      const lifeRowMatch = content.match(/<tr>\s*<th[^>]*>Life<\/th>[\s\S]*?<\/tr>/);
+      expect(lifeRowMatch).toBeTruthy();
+      const counts = lifeRowMatch![0].match(/href="[^"]*">(\d+)<\/a>/g)!
+        .map(c => Number(c.match(/>(\d+)</)![1]));
+
+      // Column order: Firsts-Photo, Firsts-Seen, All-Photo, All-Seen
+      expect(counts[1]).toBe(2); // Firsts/Seen: railor5, railor6 only
+      expect(counts[3]).toBe(3); // All/Seen: railor5, railor6, railor7
+    });
+
+    it('only shows species first seen at this location under view=firsts', async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (9999999, 'Elsewhere Park', -38.0, 145.0, 'AU-VIC', 'Geelong', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor7', 'Musk Lorikeet', 'Glossopsitta concinna', 12563, 'MULO', 'psitta4');
+        INSERT INTO observation VALUES
+            ('219171580-railor7-a', 219171580, 'railor7', 9999999, 1, '2025-01-01T08:00:00', null, null);
+        INSERT INTO observation VALUES
+            ('219171581-railor7-b', 219171581, 'railor7', 2552179, 1, '2025-06-01T08:00:00', null, null);
+      `);
+
+      const response = await SELF.fetch('https://localhost/location/2552179?view=firsts');
+      const content = await response.text();
+
+      expect(content).toContain('Rainbow Lorikeet');
+      expect(content).toContain('Old Lorikeet');
+      expect(content).not.toContain('Musk Lorikeet');
+    });
   })
 
   describe('/firsts', () => {
@@ -158,6 +243,58 @@ describe('', () => {
       const content = await response.text();
       expect(content).toContain("Firsts");
       expect(content).toContain("thumbnails");
+    });
+  });
+
+  describe('/firsts filter counts', () => {
+    beforeEach(async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (1111111, 'Melbourne Spot', -37.80, 144.95, 'AU-VIC', 'Melbourne', 1),
+            (2222222, 'Sydney Spot', -33.87, 151.21, 'AU-NSW', 'Sydney', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('spa', 'Species A', 'Species A', 1, 'SA', 'fam1'),
+            ('spb', 'Species B', 'Species B', 2, 'SB', 'fam1'),
+            ('spc', 'Species C', 'Species C', 3, 'SC', 'fam1');
+        INSERT INTO observation VALUES
+            ('obs-a-2025', 1, 'spa', 1111111, 1, '2025-01-01T08:00:00', null, null);
+        INSERT INTO observation VALUES
+            ('obs-b-2025', 2, 'spb', 2222222, 1, '2025-02-01T08:00:00', null, null);
+        INSERT INTO observation VALUES
+            ('obs-c-2024', 3, 'spc', 1111111, 1, '2024-01-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('spa.jpg', 'obs-a-2025', '2025-01-01T08:00:00.000Z', 3, 2000, 3000, '200', 'f/5.6', 0.001, '300mm', '', 'TESTCAM', NULL);
+      `);
+    });
+
+    // Table column order per row: County-Photo, County-Seen, State-Photo, State-Seen, World-Photo, World-Seen
+    function rowCounts(content: string, label: string): number[] {
+      const rowMatch = content.match(new RegExp(`<tr>\\s*<th[^>]*>${label}</th>[\\s\\S]*?</tr>`));
+      expect(rowMatch).toBeTruthy();
+      return rowMatch![0].match(/href="[^"]*">(\d+)<\/a>/g)!
+        .map(c => Number(c.match(/>(\d+)</)![1]));
+    }
+
+    it('computes lifetime (Life) counts across regions and photo status', async () => {
+      const response = await SELF.fetch('https://localhost/firsts');
+      const content = await response.text();
+      const counts = rowCounts(content, 'Life');
+
+      expect(counts[1]).toBe(2); // County(Melbourne)/Seen: spa, spc
+      expect(counts[0]).toBe(1); // County(Melbourne)/Photo: spa only
+      expect(counts[3]).toBe(2); // State(au-vic)/Seen: spa, spc
+      expect(counts[5]).toBe(3); // World/Seen: spa, spb, spc
+      expect(counts[4]).toBe(1); // World/Photo: spa only
+    });
+
+    it('computes per-year counts isolated by region', async () => {
+      const response = await SELF.fetch('https://localhost/firsts?period=2025');
+      const content = await response.text();
+      const counts = rowCounts(content, '2025');
+
+      expect(counts[1]).toBe(1); // County(Melbourne)/Seen: spa only (spb is Sydney, spc is 2024)
+      expect(counts[3]).toBe(1); // State(au-vic)/Seen: spa only
+      expect(counts[5]).toBe(2); // World/Seen: spa, spb (spc was 2024, excluded)
     });
   });
 
