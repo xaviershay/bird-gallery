@@ -108,6 +108,56 @@ describe('', () => {
     });
   })
 
+  describe('database views', () => {
+    it('observation_wide has exactly one row per observation, even with multiple photos', async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (2552179, 'Royal Park', -37.7892413, 144.9508023, 'AU-VIC', 'Melbourne', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 12562, 'RALO', 'psitta4');
+        INSERT INTO observation VALUES
+            ('219171569-railor5', 219171569, 'railor5', 2552179, 2, '2025-03-18T17:11:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor5-a.jpg', '219171569-railor5', '2025-04-01T08:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO photo VALUES
+            ('railor5-b.jpg', '219171569-railor5', '2025-04-02T08:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+      `);
+
+      const result = await env.DB.prepare(
+        "SELECT COUNT(*) as c, MAX(has_photo) as hasPhoto FROM observation_wide WHERE id = ?"
+      ).bind('219171569-railor5').first<any>();
+
+      expect(result.c).toBe(1);
+      expect(result.hasPhoto).toBe(1);
+    });
+
+    it('trip_report_observation has exactly one row per observation, even with multiple photos', async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (1, 'Alpha Park', -37.70, 144.90, 'AU-VIC', 'Melbourne', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('sp1', 'Species One', 'S1', 1, 'S1', 'fam1');
+        INSERT INTO observation VALUES
+            ('o1-sp1', 1, 'sp1', 1, 1, '2025-04-02T10:00:00', NULL, NULL);
+        INSERT INTO photo VALUES
+            ('sp1-a.jpg', 'o1-sp1', '2025-04-02T10:00:00.000Z', 3, 1000, 1500, '200', 'f/5.6', 0.001, '300mm', '', 'Canon', NULL);
+        INSERT INTO photo VALUES
+            ('sp1-b.jpg', 'o1-sp1', '2025-04-02T11:00:00.000Z', 3, 1000, 1500, '200', 'f/5.6', 0.001, '300mm', '', 'Canon', NULL);
+        INSERT INTO trip_report (id, title, description, start_date, end_date, created_at) VALUES
+            ('test-trip', 'Test Trip', 'A test trip description', '2025-04-01', '2025-04-07', '2025-01-01T00:00:00');
+        INSERT INTO trip_report_checklist (trip_report_id, checklist_id) VALUES
+            ('test-trip', 1);
+      `);
+
+      const result = await env.DB.prepare(
+        "SELECT COUNT(*) as c, MAX(has_photo) as hasPhoto FROM trip_report_observation WHERE id = ?"
+      ).bind('o1-sp1').first<any>();
+
+      expect(result.c).toBe(1);
+      expect(result.hasPhoto).toBe(1);
+    });
+  });
+
   describe('/location/1', () => {
     beforeEach(async () => {
       await execSql(`

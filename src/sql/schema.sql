@@ -121,7 +121,7 @@ CREATE TABLE species_year_first_photo (
 
 DROP VIEW IF EXISTS observation_wide;
 CREATE VIEW observation_wide AS
-  SELECT DISTINCT observation.*,
+  SELECT observation.*,
     species.common_name,
     -- family.common_name as family_name,
   location.name as location_name,
@@ -131,18 +131,17 @@ CREATE VIEW observation_wide AS
   location.county,
   location.hotspot,
     strftime("%Y", seen_at) as year,
-    photo.file_name IS NOT NULL as has_photo
+    EXISTS(SELECT 1 FROM photo WHERE photo.observation_id = observation.id) as has_photo
   FROM
     observation
       INNER JOIN location ON location_id = location.id
       INNER JOIN species ON species_id = species.id
-      LEFT JOIN photo ON observation.id = photo.observation_id
       -- INNER JOIN family ON family_id = family.id
     ;
 
 DROP VIEW IF EXISTS trip_report_observation;
 CREATE VIEW trip_report_observation AS
-  SELECT DISTINCT
+  SELECT
     trc.trip_report_id,
     observation.*,
     species.common_name,
@@ -153,10 +152,9 @@ CREATE VIEW trip_report_observation AS
     location.county,
     location.hotspot,
     strftime("%Y", seen_at) as year,
-    photo.file_name IS NOT NULL as has_photo
+    EXISTS(SELECT 1 FROM photo WHERE photo.observation_id = observation.id) as has_photo
   FROM trip_report_checklist trc
   INNER JOIN observation ON trc.checklist_id = observation.checklist_id
   INNER JOIN location ON observation.location_id = location.id
   INNER JOIN species ON observation.species_id = species.id
-  LEFT JOIN photo ON observation.id = photo.observation_id
   ;
