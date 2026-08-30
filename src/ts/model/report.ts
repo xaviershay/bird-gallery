@@ -186,12 +186,12 @@ export async function fetchBirdingOpportunitiesTags(
         AND NOT EXISTS (SELECT 1 FROM species_first_photo WHERE species_id = s.id) as isPhotoLifer,
       -- isYearLifer: no observations this year
       (SELECT COUNT(*) FROM observation
-       WHERE species_id = s.id
+       WHERE species_id = s.id 
        AND strftime('%Y', seen_at) = ?) = 0 as isYearLifer,
       -- isLocationLifer: no observations at this location/region
       (SELECT COUNT(*) FROM observation o
        INNER JOIN location l ON o.location_id = l.id
-       WHERE o.species_id = s.id
+       WHERE o.species_id = s.id 
        AND ${locationCondition}) = 0 as isLocationLifer
     FROM species s
     ORDER BY s.common_name
