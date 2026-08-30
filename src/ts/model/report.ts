@@ -176,24 +176,22 @@ export async function fetchBirdingOpportunitiesTags(
   // Query all species with their lifer status
   // We compute the tags directly in SQL for efficiency
   const query = `
-    SELECT 
+    SELECT
       s.id,
       s.common_name as name,
       -- isLifer: no observations anywhere
-      (SELECT COUNT(*) FROM observation WHERE species_id = s.id) = 0 as isLifer,
+      NOT EXISTS (SELECT 1 FROM species_first_seen WHERE species_id = s.id) as isLifer,
       -- isPhotoLifer: has observations but no photos
-      (SELECT COUNT(*) FROM observation WHERE species_id = s.id) > 0 
-        AND (SELECT COUNT(*) FROM observation o2 
-             INNER JOIN photo ON o2.id = photo.observation_id 
-             WHERE o2.species_id = s.id) = 0 as isPhotoLifer,
+      EXISTS (SELECT 1 FROM species_first_seen WHERE species_id = s.id)
+        AND NOT EXISTS (SELECT 1 FROM species_first_photo WHERE species_id = s.id) as isPhotoLifer,
       -- isYearLifer: no observations this year
-      (SELECT COUNT(*) FROM observation 
-       WHERE species_id = s.id 
+      (SELECT COUNT(*) FROM observation
+       WHERE species_id = s.id
        AND strftime('%Y', seen_at) = ?) = 0 as isYearLifer,
       -- isLocationLifer: no observations at this location/region
       (SELECT COUNT(*) FROM observation o
        INNER JOIN location l ON o.location_id = l.id
-       WHERE o.species_id = s.id 
+       WHERE o.species_id = s.id
        AND ${locationCondition}) = 0 as isLocationLifer
     FROM species s
     ORDER BY s.common_name

@@ -543,7 +543,8 @@ describe('', () => {
         INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
           ('railor5', 'Rainbow Lorikeet', 'Trichoglossus moluccanus', 1, 'RL', 'fam1'),
           ('magpie1', 'Australian Magpie', 'Gymnorhina tibicen', 2, 'AM', 'fam1'),
-          ('cockat1', 'Sulphur-crested Cockatoo', 'Cacatua galerita', 3, 'SC', 'fam1');
+          ('cockat1', 'Sulphur-crested Cockatoo', 'Cacatua galerita', 3, 'SC', 'fam1'),
+          ('neverseen1', 'Never Seen Bird', 'Nunquam visus', 4, 'NS', 'fam1');
         INSERT INTO observation VALUES
           ('obs1', 1, 'railor5', 919153, 1, '2025-01-10T10:00:00', NULL, NULL);
         INSERT INTO observation VALUES
@@ -641,10 +642,19 @@ describe('', () => {
       const response = await SELF.fetch('https://localhost/report/opportunities.json');
       const json: any = await response.json();
       expect(Array.isArray(json)).toBe(true);
-      
+
       // Should work the same as ?region=AU-VIC-MEL
       const cockat = json.find((s: any) => s.id === 'cockat1');
       expect(cockat.isLocationLifer).toBe(true);  // NOT seen in Melbourne
+    });
+
+    it('marks a species with zero observations as a lifer, not a photo lifer', async () => {
+      const response = await SELF.fetch('https://localhost/report/opportunities.json?region=AU-VIC-MEL');
+      const json: any = await response.json();
+      const never = json.find((s: any) => s.id === 'neverseen1');
+      expect(never).toBeDefined();
+      expect(never.isLifer).toBe(true);
+      expect(never.isPhotoLifer).toBe(false);
     });
   });
 
