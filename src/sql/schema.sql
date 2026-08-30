@@ -18,6 +18,7 @@ CREATE TABLE observation (
 
 CREATE INDEX idx_observation_location_id ON observation(location_id);
 CREATE INDEX idx_observation_checklist_id ON observation(checklist_id);
+CREATE INDEX idx_observation_species_id ON observation(species_id);
 
 -- TODO: Load this
 DROP TABLE IF EXISTS family;
