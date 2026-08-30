@@ -389,6 +389,11 @@ const observationSQLStatements : any[] = [];
   }
 })();
 
+// Recompute derived "first sighting" / "first photo" summary tables from
+// the observation/photo data just loaded above. Kept as a single shared
+// SQL file (also used by test/index.spec.ts) rather than duplicated logic.
+console.log(readFileSync('src/sql/populate_summary_tables.sql', 'utf-8'));
+
 console.log(generateSQL(
   `INSERT INTO metadata (id, value)
    VALUES ("version", ?)
