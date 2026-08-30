@@ -62,7 +62,7 @@ export default {
         response = await handleRequest(request, env);
         // Only cache if it's a GET or HEAD request
         if (method === 'GET' || method === 'HEAD') {
-          response.headers.append("Cache-Control", "s-maxage=180");
+          response.headers.append("Cache-Control", "s-maxage=31536000");
           // Store the GET version in cache
           ctx.waitUntil(cache.put(cacheKey, response.clone()));
         }
