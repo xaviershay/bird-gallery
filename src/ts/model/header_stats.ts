@@ -6,15 +6,14 @@ export type HeaderStats = {
 export async function fetchHeaderStats(
   env: Env,
 ): Promise<HeaderStats> {
-  let query = `
+  const query = `
   SELECT
-    COUNT(distinct species_id) as seenCount,
-    COUNT(distinct CASE WHEN has_photo THEN species_id ELSE NULL END) as photoCount
-  FROM observation_wide
+    (SELECT COUNT(*) FROM species_first_seen) as seenCount,
+    (SELECT COUNT(*) FROM species_first_photo) as photoCount
   `;
 
   const statement = env.DB.prepare(query);
   const result = await statement.first<HeaderStats>();
-  
+
   return result ?? {seenCount: 0, photoCount: 0};
 }

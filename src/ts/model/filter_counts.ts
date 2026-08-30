@@ -221,18 +221,15 @@ export async function fetchLocationFilterCounts(
 ): Promise<Record<string, number>> {
   const counts: Record<string, number> = {};
 
-  // Query 1: Overall counts (all time) for sightings and photos
+  // Query 1: Overall sightings counts (all time)
   let query = `
       SELECT
-        COUNT(DISTINCT species_id) as allSightings,
-        COUNT(DISTINCT CASE WHEN has_photo THEN species_id END) as allPhotos,
-        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstSightings,
-        COUNT(CASE WHEN has_photo AND row_num = 1 THEN 1 END) as allFirstPhotos
-      FROM (
-        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
-        FROM observation_wide
-      )
-      WHERE location_id = ?
+        COUNT(DISTINCT o.species_id) as allSightings,
+        COUNT(DISTINCT CASE WHEN sfs.species_id IS NOT NULL THEN o.species_id END) as allFirstSightings
+      FROM observation o
+      LEFT JOIN species_first_seen sfs
+        ON sfs.species_id = o.species_id AND sfs.first_seen_observation_id = o.id
+      WHERE o.location_id = ?
     `;
 
   let statement = env.DB.prepare(query);
@@ -243,18 +240,16 @@ export async function fetchLocationFilterCounts(
   counts[Filter.create({ type: ObsType.Sighting, view: "firsts" }).toQueryString()] =
     result.allFirstSightings;
 
-  // Query 2: Photo-only overall counts
+  // Query 2: Overall photo counts (all time)
   query = `
       SELECT
-        COUNT(DISTINCT species_id) as allPhotos,
-        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstPhotos
-      FROM (
-        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
-        FROM observation_wide
-        WHERE has_photo
-      )
-      WHERE
-        location_id = ?
+        COUNT(DISTINCT o.species_id) as allPhotos,
+        COUNT(DISTINCT CASE WHEN sfp.species_id IS NOT NULL THEN o.species_id END) as allFirstPhotos
+      FROM observation o
+      INNER JOIN photo p ON p.observation_id = o.id
+      LEFT JOIN species_first_photo sfp
+        ON sfp.species_id = o.species_id AND sfp.first_photo_observation_id = o.id
+      WHERE o.location_id = ?
     `;
 
   statement = env.DB.prepare(query);
@@ -268,22 +263,19 @@ export async function fetchLocationFilterCounts(
   // Query 3: Year-grouped sightings counts
   query = `
       SELECT
-        STRFTIME("%Y", seen_at) as year,
-        COUNT(DISTINCT species_id) as allSightings,
-        COUNT(DISTINCT CASE WHEN has_photo THEN species_id END) as allPhotos,
-        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstSightings,
-        COUNT(CASE WHEN has_photo AND row_num = 1 THEN 1 END) as allFirstPhotos
-      FROM (
-        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id, STRFTIME("%Y", seen_at) ORDER BY seen_at ASC) AS row_num
-        FROM observation_wide
-      )
-      WHERE location_id = ?
+        STRFTIME('%Y', o.seen_at) as year,
+        COUNT(DISTINCT o.species_id) as allSightings,
+        COUNT(DISTINCT CASE WHEN syfs.first_seen_at = o.seen_at THEN o.species_id END) as allFirstSightings
+      FROM observation o
+      LEFT JOIN species_year_first_seen syfs
+        ON syfs.species_id = o.species_id AND syfs.year = STRFTIME('%Y', o.seen_at)
+      WHERE o.location_id = ?
       GROUP BY 1
     `;
   statement = env.DB.prepare(query);
   let results = await statement.bind(locationId).all<any>();
 
-  results.results.forEach((result : any) => {
+  results.results.forEach((result: any) => {
     counts[
       Filter.create({ type: ObsType.Sighting, period: result.year }).toQueryString()
     ] = result.allSightings;
@@ -295,21 +287,20 @@ export async function fetchLocationFilterCounts(
   // Query 4: Year-grouped photo counts
   query = `
       SELECT
-        STRFTIME("%Y", seen_at) as year,
-        COUNT(DISTINCT species_id) as allPhotos,
-        COUNT(CASE WHEN row_num = 1 THEN 1 END) as allFirstPhotos
-      FROM (
-        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id, STRFTIME("%Y", seen_at) ORDER BY seen_at ASC) AS row_num
-        FROM observation_wide
-        WHERE has_photo
-      )
-      WHERE location_id = ?
+        STRFTIME('%Y', o.seen_at) as year,
+        COUNT(DISTINCT o.species_id) as allPhotos,
+        COUNT(DISTINCT CASE WHEN syfp.first_photo_at = o.seen_at THEN o.species_id END) as allFirstPhotos
+      FROM observation o
+      INNER JOIN photo p ON p.observation_id = o.id
+      LEFT JOIN species_year_first_photo syfp
+        ON syfp.species_id = o.species_id AND syfp.year = STRFTIME('%Y', o.seen_at)
+      WHERE o.location_id = ?
       GROUP BY 1
     `;
   statement = env.DB.prepare(query);
   results = await statement.bind(locationId).all<any>();
 
-  results.results.forEach((result : any) => {
+  results.results.forEach((result: any) => {
     counts[Filter.create({ type: ObsType.Photo, period: result.year }).toQueryString()] =
       result.allPhotos;
     counts[

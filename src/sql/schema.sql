@@ -16,6 +16,9 @@ CREATE TABLE observation (
   comment TEXT
 ) STRICT;
 
+CREATE INDEX idx_observation_location_id ON observation(location_id);
+CREATE INDEX idx_observation_checklist_id ON observation(checklist_id);
+
 -- TODO: Load this
 DROP TABLE IF EXISTS family;
 CREATE TABLE family (
@@ -61,6 +64,8 @@ CREATE TABLE photo (
   lens TEXT
 );
 
+CREATE INDEX idx_photo_observation_id ON photo(observation_id);
+
 DROP TABLE IF EXISTS trip_report_checklist;
 DROP TABLE IF EXISTS trip_report;
 CREATE TABLE trip_report (
@@ -77,6 +82,41 @@ CREATE TABLE trip_report_checklist (
   checklist_id INTEGER NOT NULL,
   PRIMARY KEY (trip_report_id, checklist_id),
   FOREIGN KEY (trip_report_id) REFERENCES trip_report(id)
+) STRICT;
+
+-- Precomputed "first ever seen" / "first ever photographed" per species.
+-- Recomputed wholesale from observation/photo by src/sql/populate_summary_tables.sql
+-- every time data is (re)loaded — never written to incrementally.
+DROP TABLE IF EXISTS species_first_seen;
+CREATE TABLE species_first_seen (
+  species_id TEXT PRIMARY KEY,
+  first_seen_at TEXT NOT NULL,
+  first_seen_observation_id TEXT NOT NULL
+) STRICT;
+
+DROP TABLE IF EXISTS species_first_photo;
+CREATE TABLE species_first_photo (
+  species_id TEXT PRIMARY KEY,
+  first_photo_at TEXT NOT NULL,
+  first_photo_observation_id TEXT NOT NULL
+) STRICT;
+
+-- Precomputed "first seen this calendar year" / "first photographed this
+-- calendar year", per species. Same recomputation rule as above.
+DROP TABLE IF EXISTS species_year_first_seen;
+CREATE TABLE species_year_first_seen (
+  species_id TEXT NOT NULL,
+  year TEXT NOT NULL,
+  first_seen_at TEXT NOT NULL,
+  PRIMARY KEY (species_id, year)
+) STRICT;
+
+DROP TABLE IF EXISTS species_year_first_photo;
+CREATE TABLE species_year_first_photo (
+  species_id TEXT NOT NULL,
+  year TEXT NOT NULL,
+  first_photo_at TEXT NOT NULL,
+  PRIMARY KEY (species_id, year)
 ) STRICT;
 
 DROP VIEW IF EXISTS observation_wide;

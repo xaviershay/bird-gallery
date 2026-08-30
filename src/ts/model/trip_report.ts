@@ -61,14 +61,10 @@ export async function fetchTripReportStats(env: Env, id: string): Promise<TripRe
   // Calculate firsts seen
   const firstsSeenQuery = `
     SELECT COUNT(*) as count
-    FROM (
-      SELECT species_id, MIN(seen_at) as first_seen
-      FROM observation
-      GROUP BY species_id
-    ) all_firsts
-    INNER JOIN trip_report_observation tro
-      ON all_firsts.species_id = tro.species_id
-      AND all_firsts.first_seen = tro.seen_at
+    FROM trip_report_observation tro
+    INNER JOIN species_first_seen sfs
+      ON sfs.species_id = tro.species_id
+      AND sfs.first_seen_observation_id = tro.id
     WHERE tro.trip_report_id = ?;
   `;
   const firstsSeenResult = await env.DB.prepare(firstsSeenQuery).bind(id).first<any>();
@@ -76,15 +72,10 @@ export async function fetchTripReportStats(env: Env, id: string): Promise<TripRe
   // Calculate firsts photographed
   const firstsPhotographedQuery = `
     SELECT COUNT(*) as count
-    FROM (
-      SELECT species_id, MIN(seen_at) as first_photo
-      FROM observation_wide
-      WHERE has_photo = 1
-      GROUP BY species_id
-    ) all_first_photos
-    INNER JOIN trip_report_observation tro
-      ON all_first_photos.species_id = tro.species_id
-      AND all_first_photos.first_photo = tro.seen_at
+    FROM trip_report_observation tro
+    INNER JOIN species_first_photo sfp
+      ON sfp.species_id = tro.species_id
+      AND sfp.first_photo_observation_id = tro.id
     WHERE tro.trip_report_id = ?
       AND tro.has_photo = 1;
   `;
