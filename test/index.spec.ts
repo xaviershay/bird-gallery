@@ -1,16 +1,26 @@
 import { env, SELF } from 'cloudflare:test';
 import { describe, it, expect, beforeEach } from 'vitest';
 import schemaSql from '../src/sql/schema.sql?raw'; // Import SQL as raw string
+import summarySql from '../src/sql/populate_summary_tables.sql?raw';
+
+function toStatements(sql: string) {
+  return sql
+    .split(';')
+    .map(s => s.trim())
+    .filter(s => s.length > 0)
+    .map(s => env.DB.prepare(s));
+}
 
 async function execSql(sql: string) {
-  const statements = sql
-    .split(';')
-    .map(sql => sql.trim())
-    .filter(sql => sql.length > 0)
-    .map(sql => env.DB.prepare(sql));
-
   // Execute the statements in a batch
-  await env.DB.batch(statements);
+  await env.DB.batch(toStatements(sql));
+
+  // Every insert/update to observation or photo data needs the derived
+  // species_first_seen/species_first_photo/species_year_first_* tables
+  // refreshed to match — same rule production's load pipeline follows.
+  // Running this unconditionally (even right after schema.sql, when the
+  // tables are empty) is harmless and keeps this a single change point.
+  await env.DB.batch(toStatements(summarySql));
 }
 
 describe('', () => {
