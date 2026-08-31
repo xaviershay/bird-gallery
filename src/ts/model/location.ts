@@ -62,7 +62,7 @@ export async function fetchLocationObservations(
           l.lat,
           l.lng,
           o.seen_at as seenAt,
-          o.seen_at as lastSeenAt
+          o.seen_at as lastSeenAt -- TODO
         FROM species_first_photo sfp
         INNER JOIN observation o ON o.id = sfp.first_photo_observation_id
         INNER JOIN species sp ON sp.id = o.species_id
@@ -80,7 +80,7 @@ export async function fetchLocationObservations(
           l.lat,
           l.lng,
           o.seen_at as seenAt,
-          o.seen_at as lastSeenAt
+          o.seen_at as lastSeenAt -- TODO
         FROM species_first_seen sfs
         INNER JOIN observation o ON o.id = sfs.first_seen_observation_id
         INNER JOIN species sp ON sp.id = o.species_id
