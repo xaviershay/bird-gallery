@@ -80,13 +80,10 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
   });
 
   // Get lifetime first sightings (not per-year)
-  query = `
-      SELECT COUNT(DISTINCT species_id) as lifetimeFirstSightings
-      FROM observation_wide
-    `;
+  query = `SELECT COUNT(*) as lifetimeFirstSightings FROM species_first_seen`;
   statement = env.DB.prepare(query);
   const lifetimeSightingsResult = await statement.first<any>();
-  counts[Filter.create({ type: ObsType.Sighting }).toQueryString()] = 
+  counts[Filter.create({ type: ObsType.Sighting }).toQueryString()] =
     lifetimeSightingsResult?.lifetimeFirstSightings ?? 0;
 
   query = `
@@ -128,14 +125,10 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
   });
 
   // Get lifetime first photos (not per-year)
-  query = `
-      SELECT COUNT(DISTINCT species_id) as lifetimeFirstPhotos
-      FROM observation_wide
-      WHERE has_photo
-    `;
+  query = `SELECT COUNT(*) as lifetimeFirstPhotos FROM species_first_photo`;
   statement = env.DB.prepare(query);
   const lifetimePhotosResult = await statement.first<any>();
-  counts[Filter.create({ type: ObsType.Photo }).toQueryString()] = 
+  counts[Filter.create({ type: ObsType.Photo }).toQueryString()] =
     lifetimePhotosResult?.lifetimeFirstPhotos ?? 0;
 
   // County = Melbourne (sightings)
