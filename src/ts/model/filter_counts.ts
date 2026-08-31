@@ -71,20 +71,31 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
     counts[
       Filter.create({ type: ObsType.Sighting, period: result.year }).toQueryString()
     ] += result.allFirstSightings;
-    counts[
-      Filter.create({ type: ObsType.Sighting, region: result.state }).toQueryString()
-    ] ||= 0;
-    counts[
-      Filter.create({ type: ObsType.Sighting, region: result.state }).toQueryString()
-    ] += result.allRegionFirstSightings;
   });
 
   // Get lifetime first sightings (not per-year)
   query = `SELECT COUNT(*) as lifetimeFirstSightings FROM species_first_seen`;
   statement = env.DB.prepare(query);
   const lifetimeSightingsResult = await statement.first<any>();
-  counts[Filter.create({ type: ObsType.Sighting }).toQueryString()] = 
+  counts[Filter.create({ type: ObsType.Sighting }).toQueryString()] =
     lifetimeSightingsResult?.lifetimeFirstSightings ?? 0;
+
+  // Get lifetime first sightings per region (not per-year). Must be a genuine distinct
+  // count, not a sum of the per-year "first this year, in this state" counts above --
+  // a species seen in the same region across multiple different years must only count
+  // once here, the same way the county lifetime query below already does it correctly.
+  query = `
+      SELECT LOWER(state) as state, COUNT(DISTINCT species_id) as lifetimeRegionFirstSightings
+      FROM observation_wide
+      GROUP BY LOWER(state)
+    `;
+  statement = env.DB.prepare(query);
+  results = await statement.bind().all<any>();
+  results.results.forEach((result) => {
+    counts[
+      Filter.create({ type: ObsType.Sighting, region: result.state }).toQueryString()
+    ] = result.lifetimeRegionFirstSightings;
+  });
 
   query = `
       SELECT
@@ -116,20 +127,30 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
     counts[
       Filter.create({ type: ObsType.Photo, period: result.year }).toQueryString()
     ] += result.allFirstPhotos;
-    counts[
-      Filter.create({ type: ObsType.Photo, region: result.state }).toQueryString()
-    ] ||= 0;
-    counts[
-      Filter.create({ type: ObsType.Photo, region: result.state }).toQueryString()
-    ] += result.allRegionFirstPhotos;
   });
 
   // Get lifetime first photos (not per-year)
   query = `SELECT COUNT(*) as lifetimeFirstPhotos FROM species_first_photo`;
   statement = env.DB.prepare(query);
   const lifetimePhotosResult = await statement.first<any>();
-  counts[Filter.create({ type: ObsType.Photo }).toQueryString()] = 
+  counts[Filter.create({ type: ObsType.Photo }).toQueryString()] =
     lifetimePhotosResult?.lifetimeFirstPhotos ?? 0;
+
+  // Get lifetime first photos per region (not per-year) -- same reasoning as the
+  // sightings version above: must be a genuine distinct count, not a sum across years.
+  query = `
+      SELECT LOWER(state) as state, COUNT(DISTINCT species_id) as lifetimeRegionFirstPhotos
+      FROM observation_wide
+      WHERE has_photo
+      GROUP BY LOWER(state)
+    `;
+  statement = env.DB.prepare(query);
+  results = await statement.bind().all<any>();
+  results.results.forEach((result) => {
+    counts[
+      Filter.create({ type: ObsType.Photo, region: result.state }).toQueryString()
+    ] = result.lifetimeRegionFirstPhotos;
+  });
 
   // County = Melbourne (sightings)
   query = `

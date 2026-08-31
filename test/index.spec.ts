@@ -484,6 +484,23 @@ describe('', () => {
       expect(counts[3]).toBe(1); // State(au-vic)/Seen: spa only
       expect(counts[5]).toBe(2); // World/Seen: spa, spb (spc was 2024, excluded)
     });
+
+    it('does not double-count a species seen in the same region across multiple years for the Life total', async () => {
+      // spa already has a 2025 observation in au-vic (from the outer fixture). Add a 2026
+      // observation of the same species, also in au-vic. The true lifetime distinct-species
+      // count for au-vic must still be 2 (spa, spc) -- not 3 -- since spa is only one species,
+      // regardless of how many different years it was seen there.
+      await execSql(`
+        INSERT INTO observation VALUES
+            ('obs-a-2026', 4, 'spa', 1111111, 1, '2026-01-01T08:00:00', null, null);
+      `);
+
+      const response = await SELF.fetch('https://localhost/firsts');
+      const content = await response.text();
+      const counts = rowCounts(content, 'Life');
+
+      expect(counts[3]).toBe(2); // State(au-vic)/Seen: spa, spc (not 3)
+    });
   });
 
   describe('/species', () => {
