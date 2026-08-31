@@ -7,7 +7,7 @@ if [[ "$1" == "--dry-run" ]]; then
   DRY_RUN="--dry-run"
 fi
 
-RCLONE_OPTS="--transfers=2 --checkers=4"
+RCLONE_OPTS="--transfers=1 --checkers=1"
 
 rclone sync -v $DRY_RUN $RCLONE_OPTS data/photos/ r2:bird-gallery/photos
 rclone sync -v $DRY_RUN $RCLONE_OPTS data/thumbnails/ r2:bird-gallery/thumbnails
