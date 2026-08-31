@@ -278,6 +278,27 @@ describe('', () => {
       expect(content).not.toContain('Musk Lorikeet');
     });
 
+    it('view=firsts with a period filter still excludes a species not first-seen at this location that year', async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (9999999, 'Elsewhere Park', -38.0, 145.0, 'AU-VIC', 'Geelong', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor7', 'Musk Lorikeet', 'Glossopsitta concinna', 12563, 'MULO', 'psitta4');
+        INSERT INTO observation VALUES
+            ('219171580-railor7-a', 219171580, 'railor7', 9999999, 1, '2025-01-01T08:00:00', null, null);
+        INSERT INTO observation VALUES
+            ('219171581-railor7-b', 219171581, 'railor7', 2552179, 1, '2025-06-01T08:00:00', null, null);
+      `);
+
+      const response = await SELF.fetch('https://localhost/location/2552179?view=firsts&period=2025');
+      const content = await response.text();
+
+      // railor5's only 2025 sighting is at Royal Park, so it's trivially its own 2025-year-first here.
+      expect(content).toContain('Rainbow Lorikeet');
+      // railor7's earliest 2025 sighting was at Elsewhere Park, not Royal Park, so it should be excluded here.
+      expect(content).not.toContain('Musk Lorikeet');
+    });
+
     it('correctly computes year-row firsts and photo counts, isolated from other locations', async () => {
       await execSql(`
         INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
@@ -350,6 +371,40 @@ describe('', () => {
       const content = await response.text();
       expect(content).toContain("Firsts");
       expect(content).toContain("thumbnails");
+    });
+
+    it('unfiltered: excludes a species whose lifetime-first sighting is not in this fixture at all', async () => {
+      // railor6 is seen twice — the earlier sighting (2024) is its true lifetime-first,
+      // so only that one row should appear in the unfiltered firsts list, not the 2025 repeat.
+      await execSql(`
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12563, 'OLLO', 'psitta4');
+        INSERT INTO observation VALUES
+            ('219171570-railor6-first', 219171570, 'railor6', 2552179, 1, '2024-01-01T08:00:00', null, null);
+        INSERT INTO observation VALUES
+            ('219171571-railor6-again', 219171571, 'railor6', 2552179, 1, '2025-06-01T08:00:00', null, null);
+      `);
+
+      const response = await SELF.fetch('https://localhost/firsts.json');
+      const json: any = await response.json();
+      const railor6Rows = json.data.filter((o: any) => o.speciesId === 'railor6');
+      expect(railor6Rows.length).toBe(1);
+      expect(railor6Rows[0].id).toBe('219171570-railor6-first');
+    });
+
+    it('filtered: period filter still excludes a species not first-seen that year', async () => {
+      await execSql(`
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12563, 'OLLO', 'psitta4');
+        INSERT INTO observation VALUES
+            ('219171570-railor6', 219171570, 'railor6', 2552179, 1, '2024-01-01T08:00:00', null, null);
+      `);
+
+      const response = await SELF.fetch('https://localhost/firsts.json?period=2025');
+      const json: any = await response.json();
+      const ids = json.data.map((o: any) => o.speciesId);
+      expect(ids).toContain('railor5');
+      expect(ids).not.toContain('railor6');
     });
   });
 

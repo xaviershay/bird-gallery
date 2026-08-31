@@ -49,8 +49,48 @@ export async function fetchLocationObservations(
   let query = "";
   const params: (number | string)[] = [];
 
-  if (filter.view == "firsts") {
-    // Only birds first seen at this location
+  if (filter.view == "firsts" && !filter.period) {
+    // Only birds first seen at this location (no year filter: fast path via summary tables)
+    query = filter.type === ObsType.Photo
+      ? `
+        SELECT
+          o.id,
+          o.checklist_id as checklistId,
+          o.species_id as speciesId,
+          sp.common_name as name,
+          o.location_id as locationId,
+          l.lat,
+          l.lng,
+          o.seen_at as seenAt,
+          o.seen_at as lastSeenAt
+        FROM species_first_photo sfp
+        INNER JOIN observation o ON o.id = sfp.first_photo_observation_id
+        INNER JOIN species sp ON sp.id = o.species_id
+        INNER JOIN location l ON l.id = o.location_id
+        WHERE o.location_id = ?
+        ORDER BY o.seen_at DESC, sp.common_name ASC;
+      `
+      : `
+        SELECT
+          o.id,
+          o.checklist_id as checklistId,
+          o.species_id as speciesId,
+          sp.common_name as name,
+          o.location_id as locationId,
+          l.lat,
+          l.lng,
+          o.seen_at as seenAt,
+          o.seen_at as lastSeenAt
+        FROM species_first_seen sfs
+        INNER JOIN observation o ON o.id = sfs.first_seen_observation_id
+        INNER JOIN species sp ON sp.id = o.species_id
+        INNER JOIN location l ON l.id = o.location_id
+        WHERE o.location_id = ?
+        ORDER BY o.seen_at DESC, sp.common_name ASC;
+      `;
+    params.push(locationId);
+  } else if (filter.view == "firsts") {
+    // Only birds first seen at this location, filtered to a specific year
     query = `
       SELECT
         id,
