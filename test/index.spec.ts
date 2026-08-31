@@ -421,6 +421,22 @@ describe('', () => {
       const content = await response.text();
       expect(content).toContain("Rainbow Lorikeet</h2>");
     });
+
+    it('lists multiple observations most-recent first', async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (9999999, 'Elsewhere Park', -38.0, 145.0, 'AU-VIC', 'Geelong', 1);
+        INSERT INTO observation VALUES
+            ('219171570-railor5', 219171570, 'railor5', 9999999, 1, '2025-05-01T10:00:00', null, null);
+      `);
+
+      const response = await SELF.fetch('https://localhost/species/railor5');
+      const content = await response.text();
+
+      // Most recent observation (Elsewhere Park, 2025-05-01) should appear before
+      // the older one (Royal Park, 2025-03-18) in the rendered table.
+      expect(content.indexOf('Elsewhere Park')).toBeLessThan(content.indexOf('Royal Park'));
+    });
   });
 
   describe('/photo', () => {

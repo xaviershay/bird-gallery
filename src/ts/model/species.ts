@@ -67,13 +67,8 @@ export async function fetchSpeciesObservations(
         lat,
         lng,
         seen_at as seenAt
-      FROM (
-        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
-        FROM observation_wide
-        WHERE 1=1
-      ) AS ranked
-      WHERE 1=1
-        AND species_id = ?
+      FROM observation_wide
+      WHERE species_id = ?
       ORDER BY seen_at DESC, name ASC;
     `;
   params.push(speciesId);
