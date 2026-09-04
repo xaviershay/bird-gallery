@@ -58,3 +58,16 @@ SELECT species_id, year, seen_at FROM (
   INNER JOIN photo p ON p.observation_id = o.id
 )
 WHERE rn = 1;
+
+-- Precomputed header-stat counts (species ever seen / ever photographed).
+-- Read by fetchHeaderStats on nearly every request, so this trades a live
+-- COUNT(*) scan on every page load for a single-row lookup, at the cost of
+-- only being fresh as of the last data (re)load -- same tradeoff as every
+-- other table in this file.
+DELETE FROM metadata WHERE id = 'header_seen_count';
+INSERT INTO metadata (id, value)
+  SELECT 'header_seen_count', CAST(COUNT(*) AS TEXT) FROM species_first_seen;
+
+DELETE FROM metadata WHERE id = 'header_photo_count';
+INSERT INTO metadata (id, value)
+  SELECT 'header_photo_count', CAST(COUNT(*) AS TEXT) FROM species_first_photo;
