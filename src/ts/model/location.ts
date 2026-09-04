@@ -130,9 +130,9 @@ export async function fetchLocationObservations(
         WHERE syfs.year = ? AND o.location_id = ?
         ORDER BY o.seen_at DESC, sp.common_name ASC;
       `;
-    if (filter.period) {
-      params.push(filter.period);
-    }
+    // Non-null assertion is safe: this branch only runs when filter.period is set
+    // (the !filter.period case is handled by the branch above).
+    params.push(filter.period!);
     params.push(locationId);
   } else {
     // All birds seen at this location

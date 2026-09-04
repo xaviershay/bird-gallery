@@ -8,8 +8,8 @@ export async function fetchHeaderStats(
 ): Promise<HeaderStats> {
   const query = `
   SELECT
-    MAX(CASE WHEN id = 'header_seen_count' THEN CAST(value AS INTEGER) END) as seenCount,
-    MAX(CASE WHEN id = 'header_photo_count' THEN CAST(value AS INTEGER) END) as photoCount
+    COALESCE(MAX(CASE WHEN id = 'header_seen_count' THEN CAST(value AS INTEGER) END), 0) as seenCount,
+    COALESCE(MAX(CASE WHEN id = 'header_photo_count' THEN CAST(value AS INTEGER) END), 0) as photoCount
   FROM metadata
   WHERE id IN ('header_seen_count', 'header_photo_count')
   `;
