@@ -29,5 +29,5 @@ if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
 	fi
 fi
 
-npx wrangler deploy --env=prod
 bin/load-data-remote
+npx wrangler deploy --env=prod
