@@ -459,6 +459,33 @@ describe('', () => {
       expect(ids).toContain('railor5');
       expect(ids).not.toContain('railor6');
     });
+
+    it('filtered photos: period filter with type=photo excludes a species not first-photographed that year', async () => {
+      // railor5 (outer fixture) has its only photo in 2025 -- true year-first for 2025.
+      // railor6 is photographed in both 2024 and 2025; its true year-2025-first-photo
+      // is the 2025 one, so it should also appear under period=2025&type=photo. railor7
+      // is only ever photographed in 2024, so it must be excluded under period=2025.
+      await execSql(`
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12563, 'OLLO', 'psitta4'),
+            ('railor7', 'Musk Lorikeet', 'Glossopsitta concinna', 12564, 'MULO', 'psitta4');
+        INSERT INTO observation VALUES
+            ('219171570-railor6-2025', 219171570, 'railor6', 2552179, 1, '2025-02-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor6-2025.jpg', '219171570-railor6-2025', '2025-02-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
+            ('219171571-railor7-2024', 219171571, 'railor7', 2552179, 1, '2024-03-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor7-2024.jpg', '219171571-railor7-2024', '2024-03-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+      `);
+
+      const response = await SELF.fetch('https://localhost/firsts.json?period=2025&type=photo');
+      const json: any = await response.json();
+      const ids = json.data.map((o: any) => o.speciesId);
+      expect(ids).toContain('railor5');
+      expect(ids).toContain('railor6');
+      expect(ids).not.toContain('railor7');
+    });
   });
 
   describe('/firsts filter counts', () => {
