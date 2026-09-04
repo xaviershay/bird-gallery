@@ -470,6 +470,10 @@ describe('', () => {
             ('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12563, 'OLLO', 'psitta4'),
             ('railor7', 'Musk Lorikeet', 'Glossopsitta concinna', 12564, 'MULO', 'psitta4');
         INSERT INTO observation VALUES
+            ('219171572-railor6-2024', 219171572, 'railor6', 2552179, 1, '2024-04-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor6-2024.jpg', '219171572-railor6-2024', '2024-04-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
             ('219171570-railor6-2025', 219171570, 'railor6', 2552179, 1, '2025-02-01T08:00:00', null, null);
         INSERT INTO photo VALUES
             ('railor6-2025.jpg', '219171570-railor6-2025', '2025-02-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
