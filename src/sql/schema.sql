@@ -51,7 +51,7 @@ CREATE TABLE location (
 DROP TABLE IF EXISTS photo;
 CREATE TABLE photo (
   file_name TEXT PRIMARY KEY,
-  observation_id INTEGER NOT NULL,
+  observation_id TEXT NOT NULL,
   taken_at TEXT NOT NULL,
   rating INTEGER NOT NULL,
   height INTEGER NOT NULL,
