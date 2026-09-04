@@ -85,11 +85,9 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
   // a species seen in the same region across multiple different years must only count
   // once here, the same way the county lifetime query below already does it correctly.
   query = `
-      SELECT LOWER(l.state) as state, COUNT(*) as lifetimeRegionFirstSightings
-      FROM species_first_seen sfs
-      INNER JOIN observation o ON o.id = sfs.first_seen_observation_id
-      INNER JOIN location l ON l.id = o.location_id
-      GROUP BY LOWER(l.state)
+      SELECT LOWER(state) as state, COUNT(DISTINCT species_id) as lifetimeRegionFirstSightings
+      FROM observation_wide
+      GROUP BY LOWER(state)
     `;
   statement = env.DB.prepare(query);
   results = await statement.bind().all<any>();
@@ -141,11 +139,10 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
   // Get lifetime first photos per region (not per-year) -- same reasoning as the
   // sightings version above: must be a genuine distinct count, not a sum across years.
   query = `
-      SELECT LOWER(l.state) as state, COUNT(*) as lifetimeRegionFirstPhotos
-      FROM species_first_photo sfp
-      INNER JOIN observation o ON o.id = sfp.first_photo_observation_id
-      INNER JOIN location l ON l.id = o.location_id
-      GROUP BY LOWER(l.state)
+      SELECT LOWER(state) as state, COUNT(DISTINCT species_id) as lifetimeRegionFirstPhotos
+      FROM observation_wide
+      WHERE has_photo
+      GROUP BY LOWER(state)
     `;
   statement = env.DB.prepare(query);
   results = await statement.bind().all<any>();
@@ -180,11 +177,9 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
 
   // Get lifetime first sightings for Melbourne county (not per-year)
   query = `
-      SELECT COUNT(*) as lifetimeCountyFirstSightings
-      FROM species_first_seen sfs
-      INNER JOIN observation o ON o.id = sfs.first_seen_observation_id
-      INNER JOIN location l ON l.id = o.location_id
-      WHERE LOWER(l.county) = 'melbourne'
+      SELECT COUNT(DISTINCT species_id) as lifetimeCountyFirstSightings
+      FROM observation_wide
+      WHERE LOWER(county) = 'melbourne'
     `;
   statement = env.DB.prepare(query);
   const lifetimeCountySightingsResult = await statement.first<any>();
@@ -217,11 +212,9 @@ export async function fetchGlobalFilterCounts(env: Env): Promise<Record<string, 
 
   // Get lifetime first photos for Melbourne county (not per-year)
   query = `
-      SELECT COUNT(*) as lifetimeCountyFirstPhotos
-      FROM species_first_photo sfp
-      INNER JOIN observation o ON o.id = sfp.first_photo_observation_id
-      INNER JOIN location l ON l.id = o.location_id
-      WHERE LOWER(l.county) = 'melbourne'
+      SELECT COUNT(DISTINCT species_id) as lifetimeCountyFirstPhotos
+      FROM observation_wide
+      WHERE has_photo AND LOWER(county) = 'melbourne'
     `;
   statement = env.DB.prepare(query);
   const lifetimeCountyPhotosResult = await statement.first<any>();
