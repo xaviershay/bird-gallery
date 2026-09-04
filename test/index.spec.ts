@@ -299,6 +299,33 @@ describe('', () => {
       expect(content).not.toContain('Musk Lorikeet');
     });
 
+    it('view=firsts with type=photo and period filter excludes a species not first-photographed at this location that year', async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (9999999, 'Elsewhere Park', -38.0, 145.0, 'AU-VIC', 'Geelong', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor7', 'Musk Lorikeet', 'Glossopsitta concinna', 12563, 'MULO', 'psitta4');
+        INSERT INTO photo VALUES
+            ('railor5.jpg', '219171569-railor5', '2025-04-01T08:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
+            ('219171580-railor7-a', 219171580, 'railor7', 9999999, 1, '2025-01-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor7-a.jpg', '219171580-railor7-a', '2025-01-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
+            ('219171581-railor7-b', 219171581, 'railor7', 2552179, 1, '2025-06-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor7-b.jpg', '219171581-railor7-b', '2025-06-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+      `);
+
+      const response = await SELF.fetch('https://localhost/location/2552179?view=firsts&type=photo&period=2025');
+      const content = await response.text();
+
+      // railor5's only 2025 photo is at Royal Park, so it's trivially its own 2025-year-first-photo here.
+      expect(content).toContain('Rainbow Lorikeet');
+      // railor7's earliest 2025 photo was at Elsewhere Park, not Royal Park, so it should be excluded here.
+      expect(content).not.toContain('Musk Lorikeet');
+    });
+
     it('view=firsts with type=photo only shows species first photographed at this location', async () => {
       await execSql(`
         INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
