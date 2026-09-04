@@ -91,28 +91,45 @@ export async function fetchLocationObservations(
     params.push(locationId);
   } else if (filter.view == "firsts") {
     // Only birds first seen at this location, filtered to a specific year
-    query = `
-      SELECT
-        id,
-        checklist_id as checklistId,
-        species_id as speciesId,
-        common_name as name,
-        location_id as locationId,
-        lat,
-        lng,
-        seen_at as seenAt,
-        seen_at as lastSeenAt -- TODO
-      FROM (
-        SELECT *, ROW_NUMBER() OVER (PARTITION BY species_id ORDER BY seen_at ASC) AS row_num
-        FROM observation_wide
-        WHERE 1=1
-          ${periodCondition}
-          ${filter.type === ObsType.Photo ? "AND has_photo" : ""}
-      ) AS ranked
-      WHERE row_num = 1
-        AND location_id = ?
-      ORDER BY seen_at DESC, name ASC;
-    `;
+    // (fast path: this branch only runs when filter.period is set, so it's
+    // exactly the year-first stored in species_year_first_seen/photo)
+    query = filter.type === ObsType.Photo
+      ? `
+        SELECT
+          o.id,
+          o.checklist_id as checklistId,
+          o.species_id as speciesId,
+          sp.common_name as name,
+          o.location_id as locationId,
+          l.lat,
+          l.lng,
+          o.seen_at as seenAt,
+          o.seen_at as lastSeenAt -- TODO
+        FROM species_year_first_photo syfp
+        INNER JOIN observation o ON o.id = syfp.first_photo_observation_id
+        INNER JOIN species sp ON sp.id = o.species_id
+        INNER JOIN location l ON l.id = o.location_id
+        WHERE syfp.year = ? AND o.location_id = ?
+        ORDER BY o.seen_at DESC, sp.common_name ASC;
+      `
+      : `
+        SELECT
+          o.id,
+          o.checklist_id as checklistId,
+          o.species_id as speciesId,
+          sp.common_name as name,
+          o.location_id as locationId,
+          l.lat,
+          l.lng,
+          o.seen_at as seenAt,
+          o.seen_at as lastSeenAt -- TODO
+        FROM species_year_first_seen syfs
+        INNER JOIN observation o ON o.id = syfs.first_seen_observation_id
+        INNER JOIN species sp ON sp.id = o.species_id
+        INNER JOIN location l ON l.id = o.location_id
+        WHERE syfs.year = ? AND o.location_id = ?
+        ORDER BY o.seen_at DESC, sp.common_name ASC;
+      `;
     if (filter.period) {
       params.push(filter.period);
     }
