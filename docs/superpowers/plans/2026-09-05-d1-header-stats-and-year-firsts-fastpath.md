@@ -143,7 +143,9 @@ git commit -m "Precompute header stats counts into metadata table"
 
 ---
 
-### Task 2: Rewrite `fetchGlobalFilterCounts`'s lifetime region/county queries
+### Task 2: Rewrite `fetchGlobalFilterCounts`'s lifetime region/county queries — ABANDONED
+
+> **Post-execution note:** This task was implemented, reviewed, and found Critically wrong: it silently changes the meaning of "lifetime region/county firsts" from "any species ever observed in this state/county" (the original, correct semantics, established by commit `57d5503`) to "species whose single lifetime-first sighting happened to be in this state/county" — undercounting any species observed in more than one region/county over its lifetime, since `species_first_seen`/`species_first_photo` each store only one row per species. Verified against a local fixture (a species seen in two different states): old query counted it in both states; this rewrite counted it in only one. **Reverted** (commit `65fbd3b` → `ebbd46d`). `filter_counts.ts` stays on its original, correct `observation_wide`-based query for these 4 values. See the plan's SDD ledger (`.superpowers/sdd/2026-09-05-d1-header-stats-and-year-firsts-fastpath/progress.md`) for full detail. The task text below is preserved as-written for the record — do not execute it.
 
 **Files:**
 - Modify: `src/ts/model/filter_counts.ts`
