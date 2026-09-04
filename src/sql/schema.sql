@@ -109,16 +109,22 @@ CREATE TABLE species_year_first_seen (
   species_id TEXT NOT NULL,
   year TEXT NOT NULL,
   first_seen_at TEXT NOT NULL,
+  first_seen_observation_id TEXT NOT NULL,
   PRIMARY KEY (species_id, year)
 ) STRICT;
+
+CREATE INDEX idx_species_year_first_seen_year ON species_year_first_seen(year);
 
 DROP TABLE IF EXISTS species_year_first_photo;
 CREATE TABLE species_year_first_photo (
   species_id TEXT NOT NULL,
   year TEXT NOT NULL,
   first_photo_at TEXT NOT NULL,
+  first_photo_observation_id TEXT NOT NULL,
   PRIMARY KEY (species_id, year)
 ) STRICT;
+
+CREATE INDEX idx_species_year_first_photo_year ON species_year_first_photo(year);
 
 DROP VIEW IF EXISTS observation_wide;
 CREATE VIEW observation_wide AS

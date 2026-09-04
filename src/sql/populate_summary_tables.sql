@@ -35,25 +35,27 @@ SELECT species_id, seen_at, id FROM (
 WHERE rn = 1;
 
 DELETE FROM species_year_first_seen;
-INSERT INTO species_year_first_seen (species_id, year, first_seen_at)
-SELECT species_id, year, seen_at FROM (
+INSERT INTO species_year_first_seen (species_id, year, first_seen_at, first_seen_observation_id)
+SELECT species_id, year, seen_at, id FROM (
   SELECT
     species_id,
     STRFTIME('%Y', seen_at) AS year,
     seen_at,
-    ROW_NUMBER() OVER (PARTITION BY species_id, STRFTIME('%Y', seen_at) ORDER BY seen_at ASC) AS rn
+    id,
+    ROW_NUMBER() OVER (PARTITION BY species_id, STRFTIME('%Y', seen_at) ORDER BY seen_at ASC, id ASC) AS rn
   FROM observation
 )
 WHERE rn = 1;
 
 DELETE FROM species_year_first_photo;
-INSERT INTO species_year_first_photo (species_id, year, first_photo_at)
-SELECT species_id, year, seen_at FROM (
+INSERT INTO species_year_first_photo (species_id, year, first_photo_at, first_photo_observation_id)
+SELECT species_id, year, seen_at, id FROM (
   SELECT
     o.species_id AS species_id,
     STRFTIME('%Y', o.seen_at) AS year,
     o.seen_at AS seen_at,
-    ROW_NUMBER() OVER (PARTITION BY o.species_id, STRFTIME('%Y', o.seen_at) ORDER BY o.seen_at ASC) AS rn
+    o.id AS id,
+    ROW_NUMBER() OVER (PARTITION BY o.species_id, STRFTIME('%Y', o.seen_at) ORDER BY o.seen_at ASC, o.id ASC) AS rn
   FROM observation o
   INNER JOIN photo p ON p.observation_id = o.id
 )
