@@ -299,6 +299,33 @@ describe('', () => {
       expect(content).not.toContain('Musk Lorikeet');
     });
 
+    it('view=firsts with type=photo and period filter excludes a species not first-photographed at this location that year', async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+            (9999999, 'Elsewhere Park', -38.0, 145.0, 'AU-VIC', 'Geelong', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor7', 'Musk Lorikeet', 'Glossopsitta concinna', 12563, 'MULO', 'psitta4');
+        INSERT INTO photo VALUES
+            ('railor5.jpg', '219171569-railor5', '2025-04-01T08:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
+            ('219171580-railor7-a', 219171580, 'railor7', 9999999, 1, '2025-01-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor7-a.jpg', '219171580-railor7-a', '2025-01-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
+            ('219171581-railor7-b', 219171581, 'railor7', 2552179, 1, '2025-06-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor7-b.jpg', '219171581-railor7-b', '2025-06-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+      `);
+
+      const response = await SELF.fetch('https://localhost/location/2552179?view=firsts&type=photo&period=2025');
+      const content = await response.text();
+
+      // railor5's only 2025 photo is at Royal Park, so it's trivially its own 2025-year-first-photo here.
+      expect(content).toContain('Rainbow Lorikeet');
+      // railor7's earliest 2025 photo was at Elsewhere Park, not Royal Park, so it should be excluded here.
+      expect(content).not.toContain('Musk Lorikeet');
+    });
+
     it('view=firsts with type=photo only shows species first photographed at this location', async () => {
       await execSql(`
         INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
@@ -431,6 +458,37 @@ describe('', () => {
       const ids = json.data.map((o: any) => o.speciesId);
       expect(ids).toContain('railor5');
       expect(ids).not.toContain('railor6');
+    });
+
+    it('filtered photos: period filter with type=photo excludes a species not first-photographed that year', async () => {
+      // railor5 (outer fixture) has its only photo in 2025 -- true year-first for 2025.
+      // railor6 is photographed in both 2024 and 2025; its true year-2025-first-photo
+      // is the 2025 one, so it should also appear under period=2025&type=photo. railor7
+      // is only ever photographed in 2024, so it must be excluded under period=2025.
+      await execSql(`
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+            ('railor6', 'Old Lorikeet', 'Trichoglossus moluccanus', 12563, 'OLLO', 'psitta4'),
+            ('railor7', 'Musk Lorikeet', 'Glossopsitta concinna', 12564, 'MULO', 'psitta4');
+        INSERT INTO observation VALUES
+            ('219171572-railor6-2024', 219171572, 'railor6', 2552179, 1, '2024-04-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor6-2024.jpg', '219171572-railor6-2024', '2024-04-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
+            ('219171570-railor6-2025', 219171570, 'railor6', 2552179, 1, '2025-02-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor6-2025.jpg', '219171570-railor6-2025', '2025-02-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+        INSERT INTO observation VALUES
+            ('219171571-railor7-2024', 219171571, 'railor7', 2552179, 1, '2024-03-01T08:00:00', null, null);
+        INSERT INTO photo VALUES
+            ('railor7-2024.jpg', '219171571-railor7-2024', '2024-03-01T09:00:00.000Z', 3, 2991, 2136, 0.004, 5, 220, 600, '', 'TESTCAM', NULL);
+      `);
+
+      const response = await SELF.fetch('https://localhost/firsts.json?period=2025&type=photo');
+      const json: any = await response.json();
+      const ids = json.data.map((o: any) => o.speciesId);
+      expect(ids).toContain('railor5');
+      expect(ids).toContain('railor6');
+      expect(ids).not.toContain('railor7');
     });
   });
 

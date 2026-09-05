@@ -8,8 +8,10 @@ export async function fetchHeaderStats(
 ): Promise<HeaderStats> {
   const query = `
   SELECT
-    (SELECT COUNT(*) FROM species_first_seen) as seenCount,
-    (SELECT COUNT(*) FROM species_first_photo) as photoCount
+    COALESCE(MAX(CASE WHEN id = 'header_seen_count' THEN CAST(value AS INTEGER) END), 0) as seenCount,
+    COALESCE(MAX(CASE WHEN id = 'header_photo_count' THEN CAST(value AS INTEGER) END), 0) as photoCount
+  FROM metadata
+  WHERE id IN ('header_seen_count', 'header_photo_count')
   `;
 
   const statement = env.DB.prepare(query);

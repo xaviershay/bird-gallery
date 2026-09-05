@@ -6,6 +6,9 @@ export async function fetchFirsts(env: Env, filter: Filter): Promise<Observation
   if (!filter.period && !filter.region && !filter.county) {
     return fetchFirstsUnfiltered(env, filter.type);
   }
+  if (filter.period && !filter.region && !filter.county) {
+    return fetchFirstsYearFiltered(env, filter.type, filter.period);
+  }
   return fetchFirstsFiltered(env, filter);
 }
 
@@ -50,6 +53,61 @@ async function fetchFirstsUnfiltered(env: Env, type: ObsType): Promise<Observati
       ORDER BY o.seen_at DESC, sp.common_name ASC;
     `;
   const statement = env.DB.prepare(query);
+  const { results } = await statement.all<any>();
+  return results.map((record) => ({
+    ...record,
+    location: {
+      id: record.locationId,
+      name: record.locationName,
+    },
+    hasPhoto: record.hasPhoto == 1,
+    seenAt: parseDbDate(record.seenAt),
+  }));
+}
+
+async function fetchFirstsYearFiltered(env: Env, type: ObsType, year: string): Promise<Observation[]> {
+  const query = type === ObsType.Photo
+    ? `
+      SELECT
+        o.id,
+        o.checklist_id as checklistId,
+        o.species_id as speciesId,
+        sp.common_name as name,
+        o.location_id as locationId,
+        l.name as locationName,
+        l.lat,
+        l.lng,
+        o.seen_at as seenAt,
+        1 as hasPhoto,
+        o.comment
+      FROM species_year_first_photo syfp
+      INNER JOIN observation o ON o.id = syfp.first_photo_observation_id
+      INNER JOIN species sp ON sp.id = o.species_id
+      INNER JOIN location l ON l.id = o.location_id
+      WHERE syfp.year = ?
+      ORDER BY o.seen_at DESC, sp.common_name ASC;
+    `
+    : `
+      SELECT
+        o.id,
+        o.checklist_id as checklistId,
+        o.species_id as speciesId,
+        sp.common_name as name,
+        o.location_id as locationId,
+        l.name as locationName,
+        l.lat,
+        l.lng,
+        o.seen_at as seenAt,
+        EXISTS(SELECT 1 FROM photo p WHERE p.observation_id = o.id) as hasPhoto,
+        o.comment
+      FROM species_year_first_seen syfs
+      INNER JOIN observation o ON o.id = syfs.first_seen_observation_id
+      INNER JOIN species sp ON sp.id = o.species_id
+      INNER JOIN location l ON l.id = o.location_id
+      WHERE syfs.year = ?
+      ORDER BY o.seen_at DESC, sp.common_name ASC;
+    `;
+  const statement = env.DB.prepare(query).bind(year);
   const { results } = await statement.all<any>();
   return results.map((record) => ({
     ...record,
