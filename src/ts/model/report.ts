@@ -1,5 +1,6 @@
 import { Observation, Species } from "../types";
 import { parseDbDate } from "../helpers/date_utils";
+import { REGIONS } from "../config/constants";
 
 export async function fetchSpeciesMissingPhotos(
   env: Env,
@@ -126,6 +127,8 @@ export interface SpeciesWithTags {
   isPhotoLifer: boolean;   // Seen but not photographed
   isYearLifer: boolean;    // Not seen this year
   isLocationLifer: boolean; // Not seen at this region/location
+  isStateLifer: boolean;   // Not seen in Victoria (fixed, independent of region/location params)
+  isCountyLifer: boolean;  // Not seen in Melbourne (fixed, independent of region/location params)
 }
 
 /**
@@ -170,7 +173,32 @@ export async function fetchBirdingOpportunitiesTags(
     locationCondition = `UPPER(l.state) LIKE ? || '%'`;
     bindings.push(stateCode);
   }
-  
+
+  // isStateLifer/isCountyLifer are only meaningful when the region/location
+  // currently being viewed is itself within Victoria/Melbourne -- e.g. telling
+  // someone birding in Sydney that a bird would be a "Melbourne lifer" isn't
+  // relevant to what they're looking at. Resolve what the current view's
+  // state/county actually is, then gate the tags on that below.
+  let viewingInState = false;
+  let viewingInCounty = false;
+
+  if (location) {
+    const locationId = location.startsWith('L') ? location.substring(1) : location;
+    const locationRow = await env.DB.prepare(
+      `SELECT state, county FROM location WHERE id = ?`
+    ).bind(parseInt(locationId, 10)).first<any>();
+    if (locationRow) {
+      viewingInState = locationRow.state.toUpperCase() === REGIONS.STATE.id.toUpperCase();
+      viewingInCounty = viewingInState
+        && locationRow.county.toUpperCase() === REGIONS.COUNTY.id.toUpperCase();
+    }
+  } else {
+    viewingInState = stateCode === REGIONS.STATE.id.toUpperCase();
+    viewingInCounty = viewingInState
+      && countyName !== null
+      && REGIONS.COUNTY.id.toUpperCase().startsWith(countyName);
+  }
+
   const currentYear = new Date().getFullYear().toString();
 
   // Query all species with their lifer status
@@ -191,13 +219,32 @@ export async function fetchBirdingOpportunitiesTags(
       -- isLocationLifer: no observations at this location/region
       (SELECT COUNT(*) FROM observation o
        INNER JOIN location l ON o.location_id = l.id
-       WHERE o.species_id = s.id 
-       AND ${locationCondition}) = 0 as isLocationLifer
+       WHERE o.species_id = s.id
+       AND ${locationCondition}) = 0 as isLocationLifer,
+      -- isStateLifer: no observations in Victoria, fixed regardless of region/location params
+      NOT EXISTS (
+        SELECT 1 FROM observation o
+        INNER JOIN location l ON o.location_id = l.id
+        WHERE o.species_id = s.id
+        AND UPPER(l.state) = ?
+      ) as isStateLifer,
+      -- isCountyLifer: no observations in Melbourne, fixed regardless of region/location params
+      NOT EXISTS (
+        SELECT 1 FROM observation o
+        INNER JOIN location l ON o.location_id = l.id
+        WHERE o.species_id = s.id
+        AND LOWER(l.county) = ?
+      ) as isCountyLifer
     FROM species s
     ORDER BY s.common_name
   `;
 
-  const statement = env.DB.prepare(query).bind(currentYear, ...bindings);
+  const statement = env.DB.prepare(query).bind(
+    currentYear,
+    ...bindings,
+    REGIONS.STATE.id.toUpperCase(),
+    REGIONS.COUNTY.id.toLowerCase()
+  );
   const result = await statement.all<any>();
   
   return result.results.map((r: any) => ({
@@ -207,5 +254,7 @@ export async function fetchBirdingOpportunitiesTags(
     isPhotoLifer: Boolean(r.isPhotoLifer),
     isYearLifer: Boolean(r.isYearLifer),
     isLocationLifer: Boolean(r.isLocationLifer),
+    isStateLifer: viewingInState && Boolean(r.isStateLifer),
+    isCountyLifer: viewingInCounty && Boolean(r.isCountyLifer),
   }));
 }

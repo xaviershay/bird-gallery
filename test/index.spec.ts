@@ -828,6 +828,92 @@ describe('', () => {
       expect(never.isLifer).toBe(true);
       expect(never.isPhotoLifer).toBe(false);
     });
+
+    it('computes fixed VIC/Melbourne lifer criteria when viewing a Melbourne region, regardless of eBird abbreviation', async () => {
+      // Geelong is in VIC but not Melbourne county -- a species seen only there
+      // should be a county lifer (never in Melbourne) but not a state lifer (has been in VIC).
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+          (777777, 'Geelong Waterfront', -38.15, 144.36, 'AU-VIC', 'Geelong', 1);
+        INSERT INTO species (id, common_name, scientific_name, taxonomic_order, common_name_codes, family_id) VALUES
+          ('geelbird1', 'Geelong Only Bird', 'Geelongus onlyus', 5, 'GO', 'fam1');
+        INSERT INTO observation VALUES
+          ('obs4', 4, 'geelbird1', 777777, 1, '2025-01-13T10:00:00', NULL, NULL);
+      `);
+
+      // Default region param is AU-VIC-MEL (Melbourne) -- both tags are relevant here.
+      const response = await SELF.fetch('https://localhost/report/opportunities.json?region=AU-VIC-MEL');
+      const json: any = await response.json();
+
+      const railor = json.find((s: any) => s.id === 'railor5'); // seen at Melbourne Park
+      expect(railor.isStateLifer).toBe(false);
+      expect(railor.isCountyLifer).toBe(false);
+
+      const geel = json.find((s: any) => s.id === 'geelbird1'); // seen only at Geelong (VIC, not Melbourne)
+      expect(geel.isStateLifer).toBe(false);
+      expect(geel.isCountyLifer).toBe(true);
+
+      const cockat = json.find((s: any) => s.id === 'cockat1'); // seen only in Sydney (NSW)
+      expect(cockat.isStateLifer).toBe(true);
+      expect(cockat.isCountyLifer).toBe(true);
+
+      const never = json.find((s: any) => s.id === 'neverseen1'); // never observed anywhere
+      expect(never.isStateLifer).toBe(true);
+      expect(never.isCountyLifer).toBe(true);
+    });
+
+    it('suppresses both VIC/Melbourne tags entirely when viewing a region outside Victoria', async () => {
+      // Even a species that would otherwise be a true state/county lifer (never
+      // observed anywhere) should not carry these tags when the report is for
+      // a region outside VIC -- they're not relevant to what's being viewed.
+      const response = await SELF.fetch('https://localhost/report/opportunities.json?region=AU-NSW');
+      const json: any = await response.json();
+
+      const never = json.find((s: any) => s.id === 'neverseen1');
+      expect(never.isStateLifer).toBe(false);
+      expect(never.isCountyLifer).toBe(false);
+
+      const cockat = json.find((s: any) => s.id === 'cockat1');
+      expect(cockat.isStateLifer).toBe(false);
+      expect(cockat.isCountyLifer).toBe(false);
+    });
+
+    it('shows the state tag but suppresses the county tag when viewing VIC outside Melbourne', async () => {
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+          (777777, 'Geelong Waterfront', -38.15, 144.36, 'AU-VIC', 'Geelong', 1);
+      `);
+
+      // Region is the whole state (no county segment).
+      const response = await SELF.fetch('https://localhost/report/opportunities.json?region=AU-VIC');
+      const json: any = await response.json();
+
+      const cockat = json.find((s: any) => s.id === 'cockat1'); // seen only in Sydney (NSW)
+      expect(cockat.isStateLifer).toBe(true);   // relevant: viewing within VIC
+      expect(cockat.isCountyLifer).toBe(false); // suppressed: not specifically viewing Melbourne
+    });
+
+    it('gates VIC/Melbourne tags by the viewed hotspot location, not just the region param', async () => {
+      // Viewing a specific Geelong hotspot (VIC, not Melbourne) via the `location`
+      // param should behave the same as viewing that region by code.
+      await execSql(`
+        INSERT INTO location (id, name, lat, lng, state, county, hotspot) VALUES
+          (777777, 'Geelong Waterfront', -38.15, 144.36, 'AU-VIC', 'Geelong', 1);
+      `);
+
+      const response = await SELF.fetch('https://localhost/report/opportunities.json?location=L777777');
+      const json: any = await response.json();
+
+      const cockat = json.find((s: any) => s.id === 'cockat1'); // seen only in Sydney (NSW)
+      expect(cockat.isStateLifer).toBe(true);
+      expect(cockat.isCountyLifer).toBe(false);
+
+      const sydneyLocResponse = await SELF.fetch('https://localhost/report/opportunities.json?location=999999');
+      const sydneyJson: any = await sydneyLocResponse.json();
+      const railor = sydneyJson.find((s: any) => s.id === 'railor5'); // seen only at Melbourne Park
+      expect(railor.isStateLifer).toBe(false);
+      expect(railor.isCountyLifer).toBe(false);
+    });
   });
 
   describe('caching', () => {

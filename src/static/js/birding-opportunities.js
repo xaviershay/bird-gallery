@@ -25,6 +25,8 @@ let region = null; // Current region code
 let locationId = null; // Current location ID (null if region view)
 let tagFilters = {
     lifer: true,
+    "state-lifer": true,
+    "county-lifer": true,
     "photo-lifer": true,
     "year-lifer": true,
     "location-lifer": true,
@@ -41,13 +43,16 @@ let isSnapshotData = false; // True if displaying shared snapshot data
  * @returns {Promise<string>} Promise resolving to base64-encoded gzipped snapshot data
  */
 async function encodeSnapshot(observations, region, location) {
-    // Tag bitmask: bit 0=lifer, 1=photoLifer, 2=yearLifer, 3=locationLifer
+    // Tag bitmask: bit 0=lifer, 1=photoLifer, 2=yearLifer, 3=locationLifer,
+    // 4=stateLifer, 5=countyLifer
     const tagsToBitmask = (tags) => {
         let mask = 0;
         if (tags?.isLifer) mask |= 1;
         if (tags?.isPhotoLifer) mask |= 2;
         if (tags?.isYearLifer) mask |= 4;
         if (tags?.isLocationLifer) mask |= 8;
+        if (tags?.isStateLifer) mask |= 16;
+        if (tags?.isCountyLifer) mask |= 32;
         return mask;
     };
 
@@ -153,6 +158,8 @@ async function decodeSnapshot(encoded) {
             isPhotoLifer: !!(mask & 2),
             isYearLifer: !!(mask & 4),
             isLocationLifer: !!(mask & 8),
+            isStateLifer: !!(mask & 16),
+            isCountyLifer: !!(mask & 32),
         });
 
         // Reconstruct observations from grouped format
@@ -264,6 +271,21 @@ function getDisplayTags(tags) {
         // Lifer implies everything else, so just show Lifer
         result.push({ class: "tag-lifer", icon: "🏆", title: "Lifer" });
     } else {
+        if (tags.isStateLifer) {
+            // Never seen in Victoria implies never seen in Melbourne (Melbourne
+            // is within Victoria), so just show the broader State tag.
+            result.push({
+                class: "tag-state-lifer",
+                icon: "🗺️",
+                title: "Victoria Lifer",
+            });
+        } else if (tags.isCountyLifer) {
+            result.push({
+                class: "tag-county-lifer",
+                icon: "🏙️",
+                title: "Melbourne Lifer",
+            });
+        }
         if (tags.isPhotoLifer) {
             result.push({
                 class: "tag-photo-lifer",
@@ -297,6 +319,8 @@ function hasAnyTag(tags) {
     if (!tags) return false;
     return (
         tags.isLifer ||
+        tags.isStateLifer ||
+        tags.isCountyLifer ||
         tags.isPhotoLifer ||
         tags.isYearLifer ||
         tags.isLocationLifer
@@ -342,6 +366,15 @@ async function initBirdingOpportunities() {
                 } else if (snapshot.region) {
                     // Region snapshot - use the region name
                     locationDisplay.textContent = snapshot.region;
+                }
+            }
+
+            // Repopulate the location ID field so a location-specific
+            // snapshot doesn't look like an empty/region search.
+            if (snapshot.location) {
+                const locationInput = document.getElementById("location-input");
+                if (locationInput) {
+                    locationInput.value = snapshot.location;
                 }
             }
 
@@ -427,6 +460,8 @@ async function initBirdingOpportunities() {
                 isPhotoLifer: false,
                 isYearLifer: true,
                 isLocationLifer: true,
+                isStateLifer: true,
+                isCountyLifer: true,
             };
 
             // Only include if it has at least one tag and isn't Rock Pigeon
@@ -923,6 +958,15 @@ async function copyShareLink() {
             if (!tags) return false;
 
             if (tags.isLifer && tagFilters["lifer"]) return true;
+            if (tags.isStateLifer && !tags.isLifer && tagFilters["state-lifer"])
+                return true;
+            if (
+                tags.isCountyLifer &&
+                !tags.isLifer &&
+                !tags.isStateLifer &&
+                tagFilters["county-lifer"]
+            )
+                return true;
             if (tags.isPhotoLifer && !tags.isLifer && tagFilters["photo-lifer"])
                 return true;
             if (tags.isYearLifer && !tags.isLifer && tagFilters["year-lifer"])
@@ -1029,6 +1073,15 @@ function applyTagFilters() {
 
         // Check if observation has any enabled tag
         if (tags.isLifer && tagFilters["lifer"]) return true;
+        if (tags.isStateLifer && !tags.isLifer && tagFilters["state-lifer"])
+            return true;
+        if (
+            tags.isCountyLifer &&
+            !tags.isLifer &&
+            !tags.isStateLifer &&
+            tagFilters["county-lifer"]
+        )
+            return true;
         if (tags.isPhotoLifer && !tags.isLifer && tagFilters["photo-lifer"])
             return true;
         if (tags.isYearLifer && !tags.isLifer && tagFilters["year-lifer"])

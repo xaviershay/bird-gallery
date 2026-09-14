@@ -37,6 +37,8 @@ export const BirdingOpportunitiesView = ({ region, location }: BirdingOpportunit
 
         <div className="tag-legend" id="tag-legend">
           <div className="tag-filter active" data-tag="lifer"><span className="tag tag-lifer">🏆</span> Never seen</div>
+          <div className="tag-filter active" data-tag="state-lifer"><span className="tag tag-state-lifer">🗺️</span> Not seen in Victoria</div>
+          <div className="tag-filter active" data-tag="county-lifer"><span className="tag tag-county-lifer">🏙️</span> Not seen in Melbourne</div>
           <div className="tag-filter active" data-tag="photo-lifer"><span className="tag tag-photo-lifer">📸</span> Not photographed</div>
           <div className="tag-filter active" data-tag="year-lifer"><span className="tag tag-year-lifer">🎉</span> Not seen this year</div>
           <div className="tag-filter active" data-tag="location-lifer"><span className="tag tag-location-lifer">📍</span> Not seen at this location</div>

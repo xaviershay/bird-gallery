@@ -459,6 +459,16 @@ td a {
   color: #5a3d7a;
 }
 
+.tag-state-lifer {
+  background: #ffe0cc;
+  color: #a34700;
+}
+
+.tag-county-lifer {
+  background: #cceeee;
+  color: #0d6b6b;
+}
+
 .species-tags {
   margin-top: 0.3em;
 }
