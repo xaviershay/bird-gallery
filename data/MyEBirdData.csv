@@ -1476,7 +1476,7 @@ S327501571,Black Kite,Milvus migrans,8345,1,HK-,,L63962499,"Lugard Road, Hong Ko
 S323274689,Black Kite,Milvus migrans,8345,2,HK-,,L58123783,Shing Fung Road Park 承豐道公園,22.3208896,114.1998178,2026-04-18,09:09 AM,eBird - Casual Observation,,0,,,1,,,while running
 S326798932,Black Kite,Milvus migrans,8345,2,HK-,,L10367430,Tai Po Kau Park 大埔滘公園,22.4329697,114.1891249,2026-04-25,07:06 AM,eBird - Traveling Count,233,1,2.577,,1
 S225041824,Whistling Kite,Haliastur sphenurus,8363,1,AU-VIC,Glenelg,L42529378,"Beaugleholes Road, Gorae, Victoria, AU (-38.224, 141.494)",-38.2243354,141.4939189,2025-04-13,09:27 AM,eBird - Casual Observation,,0,,,1
-S377865165,Whistling Kite,Haliastur sphenurus,8363,1,AU-QLD,Gold Coast,L1357612,Coombabah Wastewater Treatment Plant,-27.9136922,153.3638426,2026-07-30,11:33 AM,eBird - Traveling Count,35,1,.528,,1
+S377865165,Whistling Kite,Haliastur sphenurus,8363,1,AU-QLD,Gold Coast,L1357612,Coombabah Wastewater Treatment Plant,-27.9136922,153.3638426,2026-07-30,11:33 AM,eBird - Traveling Count,35,1,.528,,1,,,,664872604
 S254682459,Whistling Kite,Haliastur sphenurus,8363,2,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-06-22,10:18 AM,eBird - Traveling Count,54,1,.99,,1
 S264317177,Whistling Kite,Haliastur sphenurus,8363,1,AU-VIC,Greater Geelong,L1818531,Serendip Sanctuary,-38.0052428,144.4125366,2025-08-02,08:37 AM,eBird - Traveling Count,102,1,1.944,,1,,,,639699459
 S226481183,Whistling Kite,Haliastur sphenurus,8363,1,AU-VIC,Greater Geelong,L3138097,Western Treatment Plant--Little River Bird Hide,-38.0052031,144.5908579,2025-04-18,10:10 AM,eBird - Stationary Count,11,1,,,1,,,,633948534
@@ -3322,7 +3322,7 @@ S226499224,European Starling,Sturnus vulgaris,27813,X,AU-VIC,Wyndham,L42826608,"
 S240745060,European Starling,Sturnus vulgaris,27813,X,AU-VIC,Wyndham,L7895962,Western Treatment Plant--Conservation Ponds east of Little River (restricted access),-37.9948715,144.5807049,2025-05-21,07:04 AM,eBird - Traveling Count,126,1,18.1,,1
 S327519340,Black-collared Starling,Gracupica nigricollis,27833,3,HK-,,L63965944,Cheung Kong Park,22.2790033,114.1601536,2026-04-26,02:34 PM,eBird - Traveling Count,21,1,.313,,1
 S323273364,Black-collared Starling,Gracupica nigricollis,27833,2,HK-,,L1435080,Kowloon Park 九龍公園,22.3003965,114.1701699,2026-04-18,01:05 PM,eBird - Traveling Count,33,1,.535,,1,,On the path near aptly named Bird Lake
-S326895676,Black-collared Starling,Gracupica nigricollis,27833,X,HK-,,L1435080,Kowloon Park 九龍公園,22.3003965,114.1701699,2026-04-25,04:51 PM,eBird - Traveling Count,74,1,1.005,,1
+S326895676,Black-collared Starling,Gracupica nigricollis,27833,X,HK-,,L1435080,Kowloon Park 九龍公園,22.3003965,114.1701699,2026-04-25,04:51 PM,eBird - Traveling Count,74,1,1.005,,1,,,,664872532
 S326809363,Black-collared Starling,Gracupica nigricollis,27833,1,HK-,,L1772531,Long Valley 塱原,22.5088303,114.113338,2026-04-25,11:25 AM,eBird - Traveling Count,66,1,1.569,,1
 S292200350,Common Myna,Acridotheres tristis,27859,X,AU-VIC,Banyule,L2552315,Yarra Trail at Ivanhoe Public Golf Course,-37.78082,145.05841,2026-01-04,07:00 AM,eBird - Casual Observation,,0,,,1,,,running
 S287737762,Common Myna,Acridotheres tristis,27859,3,AU-NSW,Blue Mountains,L2041020,Blue Mountains National Park--Scenic World,-33.7289416,150.3016128,2025-12-08,10:30 AM,eBird - Casual Observation,,0,,,1
