@@ -23,13 +23,13 @@ const taxonomyRecords = parse(taxonomyData, { columns: true, skip_empty_lines: t
 // Create a lookup map for taxonomy data
 const taxonomyMap = new Map(
   taxonomyRecords.map((record: any) => {
-    const primaryComName = record['PRIMARY_COM_NAME'];
-    const speciesCode = record['SPECIES_CODE'];
-    const scientificName = record['SCI_NAME'];
-    const taxonOrderRaw = record['TAXON_ORDER'];
-    const commonNameCodes = record['REPORT_AS'];
-    const familyCode = record['FAMILY'];
-    const category = record['CATEGORY'];
+    const primaryComName = record['primary_com_name'];
+    const speciesCode = record['species_code'];
+    const scientificName = record['sci_name'];
+    const taxonOrderRaw = record['taxon_order'];
+    const commonNameCodes = record['report_as'];
+    const familyCode = record['family'];
+    const category = record['category'];
 
     return [
       primaryComName.toLowerCase(),

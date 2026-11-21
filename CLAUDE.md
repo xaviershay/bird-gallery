@@ -59,7 +59,7 @@ SQLite database with the following core tables (see `src/sql/schema.sql`):
 ### Data Pipeline
 The application operates on exported data that is committed to the repository:
 1. Export eBird data manually to `data/MyEBirdData.csv`
-2. Store taxonomy data in `data/ebird-taxonomy.csv`
+2. Store taxonomy data in `data/ebird-taxonomy.csv` (download the current eBird/Clements taxonomy CSV from Cornell in a browser, since curl is blocked by Cloudflare; columns are lowercase, e.g. `primary_com_name`, `species_code`). Keep it in sync with the `MyEBirdData.csv` export: eBird renames species between taxonomy versions, and species are matched by common name, so a stale taxonomy produces `Taxonomy entry not found` errors. Photo tags (`data/metadata/`) are matched by common name too, so re-tag photos after a rename
 3. Copy photos to `data/photos/`
 4. Run `bin/extract-photo-metadata` to extract EXIF data to `data/metadata/`
 5. Run `bin/generate-load-sql` which uses `src/scripts/load.ts` to parse CSVs and photo metadata, generating SQL INSERT statements
